@@ -1,0 +1,161 @@
+---
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Figure from '../components/Figure.astro';
+import PageHero from '../components/PageHero.astro';
+import { path, type Locale } from '../lib/i18n';
+import { pageFor, uiFor, settingsFor, teamFor } from '../lib/content';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const page = await pageFor(locale, 'about');
+const ui = await uiFor(locale);
+const s = await settingsFor(locale);
+const team = await teamFor(locale);
+const S = page.sections as any;
+const bios = await Promise.all(team.map(async (m) => ({ m, Content: (await render(m)).Content })));
+---
+<Base
+  locale={locale}
+  routeKey="about"
+  title={page.seo?.title ?? ''}
+  description={page.seo?.description ?? s.descriptor}
+>
+  <PageHero
+    locale={locale}
+    eyebrow={page.hero!.eyebrow}
+    title={page.hero!.title}
+    lede={page.hero!.lede}
+    image={page.hero!.image}
+    placeholderLabel={ui.imagePlaceholderLabel}
+  />
+
+  <section class="section--tight">
+    <div class="shell story">
+      <div class="story__head">
+        <span class="eyebrow">{S.story.eyebrow}</span>
+        <h2>{S.story.title}</h2>
+      </div>
+      <div class="story__body">
+        {S.story.paragraphs.map((p: string) => <p>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section values on-dark">
+    <div class="shell">
+      <span class="eyebrow">{S.values.eyebrow}</span>
+      <h2 class="values__title">{S.values.title}</h2>
+      <ol class="values__grid">
+        {S.values.items.map((v: any, i: number) => (
+          <li data-reveal style={`--reveal-delay:${i * 70}ms`}>
+            <span class="values__num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{v.title}</h3>
+            <p>{v.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="team">
+    <div class="shell">
+      <span class="eyebrow">{S.team.eyebrow}</span>
+      <h2 class="team__title">{S.team.title}</h2>
+      <p class="lede team__intro">{S.team.intro}</p>
+
+      <ul class="team__grid">
+        {bios.map(({ m, Content }, i) => (
+          <li class="member" data-reveal style={`--reveal-delay:${i * 60}ms`}>
+            <Figure
+              src={m.data.photo?.src || undefined}
+              alt={m.data.photo?.alt || m.data.name}
+              brief={m.data.photo?.brief}
+              ratio="3 / 4"
+              tone="sabbia"
+              placeholderLabel={ui.imagePlaceholderLabel}
+              sizes="(max-width: 720px) 90vw, 28vw"
+            />
+            <div class="member__body">
+              <h3 class="member__name">{m.data.name}</h3>
+              <p class="member__role">{m.data.role}</p>
+              <div class="member__bio"><Content /></div>
+              {m.data.specialisms.length > 0 && (
+                <ul class="member__tags">
+                  {m.data.specialisms.map((t: string) => <li>{t}</li>)}
+                </ul>
+              )}
+              <ul class="member__contact">
+                {m.data.email && <li><Icon name="mail" size={15} /><a href={`mailto:${m.data.email}`}>{m.data.email}</a></li>}
+                {m.data.phone && <li><Icon name="phone" size={15} /><a href={`tel:${m.data.phone.replace(/\s/g, '')}`}>{m.data.phone}</a></li>}
+              </ul>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="shell">
+      <div class="office">
+        <div>
+          <span class="eyebrow">{S.office.eyebrow}</span>
+          <h2 class="office__title">{S.office.title}</h2>
+          <p class="office__body">{S.office.body}</p>
+          <a class="btn btn--secondary office__cta" href={path(locale, 'contact')}>{S.office.ctaLabel}</a>
+        </div>
+        <dl class="office__facts">
+          <div><dt>{s.address.street}</dt><dd>{s.address.postalCode} {s.address.city}, {s.address.country}</dd></div>
+          {s.openingHours.map((h: any) => (
+            <div><dt>{h.days}</dt><dd>{h.hours}</dd></div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .story { display: grid; gap: var(--sp-6) var(--gutter); }
+  @media (min-width: 900px) { .story { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; } }
+  .story__head h2 { max-width: 16ch; }
+  .story__body p { max-width: 68ch; font-size: var(--step-1); line-height: 1.6; color: var(--ink-soft); }
+  .story__body p:first-child { color: var(--ink); }
+
+  .values__title { margin-top: var(--sp-2); max-width: 18ch; }
+  .values__grid { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--sp-6) var(--gutter); margin-top: var(--sp-8); }
+  .values__grid li { display: grid; gap: var(--sp-3); align-content: start; padding-top: var(--sp-5); border-top: 1px solid var(--rule-invert); }
+  .values__num { font-size: var(--step--2); font-weight: 600; letter-spacing: 0.16em; color: #e4787c; }
+  .values__grid h3 { font-size: var(--step-1); }
+  .values__grid p { margin: 0; font-size: var(--step--1); line-height: 1.62; color: var(--ink-invert-soft); }
+
+  .team__title { margin-top: var(--sp-2); max-width: 18ch; }
+  .team__intro { margin-top: var(--sp-5); }
+  .team__grid { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--sp-7) var(--gutter); margin-top: var(--sp-8); }
+  @media (min-width: 900px) { .team__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+  .member { display: grid; gap: var(--sp-5); align-content: start; }
+  .member__body { display: grid; gap: var(--sp-3); }
+  .member__name { font-size: var(--step-1); }
+  .member__role { margin: -0.4em 0 0; font-size: var(--step--2); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rosso); }
+  .member__bio :global(p) { margin: 0; font-size: var(--step--1); line-height: 1.6; color: var(--ink-soft); }
+  .member__tags { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4em; }
+  .member__tags li { padding: 0.35em 0.7em; font-size: var(--step--2); color: var(--ink-soft); background: var(--avorio); border-radius: 999px; }
+  .member__contact { list-style: none; display: grid; gap: 0.5em; padding-top: var(--sp-3); border-top: 1px solid var(--rule); font-size: var(--step--2); }
+  .member__contact li { display: flex; align-items: center; gap: 0.6em; color: var(--ink-mute); }
+  .member__contact a { color: var(--ink-soft); text-decoration: none; word-break: break-word; }
+  .member__contact a:hover { color: var(--rosso); }
+
+  .office { display: grid; gap: var(--sp-6) var(--gutter); padding: clamp(1.75rem, 1rem + 3vw, 3.25rem); background: var(--avorio); border-radius: var(--radius-lg); }
+  @media (min-width: 880px) { .office { grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; } }
+  .office__title { max-width: 16ch; }
+  .office__body { margin: var(--sp-4) 0 0; max-width: 56ch; color: var(--ink-soft); }
+  .office__cta { margin-top: var(--sp-5); }
+  .office__facts { display: grid; }
+  .office__facts > div { display: flex; justify-content: space-between; gap: var(--sp-5); padding-block: 0.8em; border-top: 1px solid var(--rule); font-size: var(--step--1); }
+  .office__facts > div:last-child { border-bottom: 1px solid var(--rule); }
+  .office__facts dt { color: var(--ink); }
+  .office__facts dd { margin: 0; color: var(--ink-mute); text-align: right; }
+</style>

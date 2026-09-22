@@ -1,0 +1,60 @@
+{
+  "seo": {
+    "title": "About us",
+    "description": "Francorosso SA, a travel agency at Via Canova 19 in Lugano. The team, the way we work, and the people you are writing to."
+  },
+  "hero": {
+    "eyebrow": "About us",
+    "title": "A Lugano agency, made of people who answer.",
+    "lede": "We have been at Via Canova 19 for more than thirty years. We began by taking travellers to Kenya and today we build itineraries anywhere, but the way we work has not changed: we talk, we listen, we propose something specific.",
+    "image": {
+      "src": "",
+      "alt": "",
+      "brief": "Environmental portrait of the agency on Via Canova, portrait format. People working, not posing."
+    }
+  },
+  "sections": {
+    "story": {
+      "eyebrow": "The story",
+      "title": "Thirty years of journeys, from the same address",
+      "paragraphs": [
+        "Francorosso began by introducing Ticino travellers to Kenya, and for years that was our speciality: destinations you did not book alone, where you needed someone who had already been.",
+        "Over time the trade widened. Today we handle tailor-made individual journeys, group departures we organise ourselves, flight ticketing, and all the events and travel of companies across the region.",
+        "What has stayed the same is the scale. We are one office, not a network: the person who answers the phone is the one who wrote your itinerary, and the one who will answer if something goes wrong while you are away."
+      ]
+    },
+    "values": {
+      "eyebrow": "How we work",
+      "title": "Four things we do not bend on",
+      "items": [
+        {
+          "title": "We also say no",
+          "body": "If a destination does not suit the season, the budget or the people travelling, we say so first. A badly sold journey comes back."
+        },
+        {
+          "title": "The price is the price",
+          "body": "What is included, what is not, and what our work is worth. Being open about the cost of the service is part of the service."
+        },
+        {
+          "title": "We know what we sell",
+          "body": "We have seen the hotels and met the guides. When we do not know something, we say so and then find out."
+        },
+        {
+          "title": "We stay reachable",
+          "body": "Before, during and after. The value of an agency is measured on the day the flight is cancelled."
+        }
+      ]
+    },
+    "team": {
+      "eyebrow": "The team",
+      "title": "Who you are writing to",
+      "intro": "Every request reaches one named person. Below is who handles what, with their direct contact."
+    },
+    "office": {
+      "eyebrow": "The office",
+      "title": "Via Canova 19, Lugano",
+      "body": "You can walk in during opening hours. If you would rather have dedicated time, write to us and we will arrange a meeting: for complex journeys it is the quickest way to reach something concrete.",
+      "ctaLabel": "Come and see us"
+    }
+  }
+}

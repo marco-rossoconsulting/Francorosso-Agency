@@ -1,0 +1,62 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Sveltia CMS admin ------------------------------------------------------
+# The admin folder is copied verbatim from /public/admin.
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), interest-cohort=()"
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Legacy URL map from the old francorosso.ch --------------------------------
+[[redirects]]
+  from = "/agenzia-di-viaggi"
+  to = "/servizi/"
+  status = 301
+[[redirects]]
+  from = "/offerte"
+  to = "/le-nostre-partenze/"
+  status = 301
+[[redirects]]
+  from = "/le-nostre-partenze"
+  to = "/le-nostre-partenze/"
+  status = 301
+[[redirects]]
+  from = "/m-i-c-e"
+  to = "/aziende/"
+  status = 301
+[[redirects]]
+  from = "/mice"
+  to = "/aziende/"
+  status = 301
+[[redirects]]
+  from = "/link-utili"
+  to = "/link-utili/"
+  status = 301
+[[redirects]]
+  from = "/contatti"
+  to = "/contatti/"
+  status = 301

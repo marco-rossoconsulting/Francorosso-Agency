@@ -1,0 +1,220 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { path, alternate, type Locale, type RouteKey, type Subs } from '../lib/i18n';
+import { navigationFor, uiFor } from '../lib/content';
+
+interface Props { locale: Locale; routeKey: RouteKey; subs?: Subs }
+const { locale, routeKey, subs } = Astro.props;
+const nav = await navigationFor(locale);
+const ui = await uiFor(locale);
+const others = alternate(locale, routeKey, subs);
+const current = Astro.url.pathname;
+const isActive = (r: string) => {
+  const href = path(locale, r as RouteKey);
+  return href === '/' || href === `/${locale}/` ? current === href : current.startsWith(href);
+};
+---
+<header class="hdr" data-header>
+  <div class="hdr__inner shell">
+    <a class="hdr__brand" href={path(locale, 'home')} aria-label="Francorosso">
+      <Logo variant="rosso" width={186} eager />
+    </a>
+
+    <nav class="hdr__nav" aria-label={ui.menu}>
+      <ul>
+        {nav.primary.map((item) => (
+          <li>
+            <a
+              href={path(locale, item.route as RouteKey)}
+              aria-current={isActive(item.route) ? 'page' : undefined}
+            >{item.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="hdr__end">
+      <div class="langs" role="group" aria-label={ui.languageLabel}>
+        <span class="langs__cur" aria-current="true">{locale.toUpperCase()}</span>
+        {others.map((o) => (
+          <a href={o.href} hreflang={o.locale} lang={o.locale}>{o.short}</a>
+        ))}
+      </div>
+      <a class="btn btn--sm hdr__cta" href={path(locale, nav.headerCta.route as RouteKey)}>
+        {nav.headerCta.label}
+      </a>
+      <button class="hdr__burger" type="button" data-menu-open aria-expanded="false" aria-controls="site-menu">
+        <Icon name="menu" size={22} />
+        <span class="visually-hidden">{ui.menu}</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu" id="site-menu" data-menu hidden>
+  <div class="menu__top shell">
+    <a class="hdr__brand" href={path(locale, 'home')} aria-label="Francorosso">
+      <Logo variant="avorio" width={170} />
+    </a>
+    <button class="menu__close" type="button" data-menu-close>
+      <Icon name="close" size={22} />
+      <span class="visually-hidden">{ui.close}</span>
+    </button>
+  </div>
+  <nav class="menu__nav shell" aria-label={ui.menu}>
+    <ul>
+      {nav.primary.map((item, i) => (
+        <li style={`--i:${i}`}>
+          <a href={path(locale, item.route as RouteKey)}>{item.label}</a>
+        </li>
+      ))}
+    </ul>
+    <div class="menu__actions">
+      <a class="btn btn--block" href={path(locale, nav.headerCta.route as RouteKey)}>
+        {nav.headerCta.label}
+      </a>
+      <div class="menu__langs">
+        <span aria-current="true">{locale.toUpperCase()}</span>
+        {others.map((o) => <a href={o.href} hreflang={o.locale} lang={o.locale}>{o.short}</a>)}
+      </div>
+    </div>
+  </nav>
+</div>
+
+<style>
+  .hdr {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: color-mix(in srgb, var(--canvas) 88%, transparent);
+    backdrop-filter: saturate(150%) blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--dur-fast) ease, background var(--dur-fast) ease;
+  }
+  .hdr[data-scrolled] { border-bottom-color: var(--rule); }
+
+  .hdr__inner {
+    height: var(--header-h);
+    display: flex;
+    align-items: center;
+    gap: var(--sp-6);
+  }
+  .hdr__brand { display: flex; align-items: center; flex: none; }
+  .hdr__brand img { width: clamp(132px, 14vw, 186px); }
+
+  .hdr__nav { margin-left: auto; }
+  .hdr__nav ul { display: flex; align-items: center; gap: clamp(1rem, 2vw, 2rem); list-style: none; }
+  .hdr__nav a {
+    display: block;
+    padding: 0.4em 0;
+    font-size: var(--step--1);
+    font-weight: 500;
+    letter-spacing: 0.005em;
+    text-decoration: none;
+    color: var(--ink-soft);
+    border-bottom: 1px solid transparent;
+    transition: color var(--dur-fast) ease, border-color var(--dur-fast) ease;
+  }
+  .hdr__nav a:hover { color: var(--ink); }
+  .hdr__nav a[aria-current='page'] { color: var(--ink); border-bottom-color: var(--rosso); }
+
+  .hdr__end { display: flex; align-items: center; gap: var(--sp-4); margin-left: auto; }
+  .hdr__nav + .hdr__end { margin-left: 0; }
+
+  .langs { display: flex; align-items: center; gap: 0.5em; font-size: var(--step--2); font-weight: 600; letter-spacing: 0.08em; }
+  .langs__cur { color: var(--ink); }
+  .langs a { color: var(--ink-mute); text-decoration: none; }
+  .langs a:hover { color: var(--rosso); }
+  .langs::before { content: ''; }
+
+  .hdr__burger {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 42px; height: 42px;
+    margin-right: -8px;
+    background: none;
+    border: 0;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  @media (max-width: 1020px) {
+    .hdr__nav { display: none; }
+    .hdr__cta { display: none; }
+    .hdr__burger { display: flex; }
+    .hdr__end { margin-left: auto; }
+  }
+
+  /* Mobile panel ------------------------------------------------------ */
+  .menu {
+    position: fixed;
+    inset: 0;
+    z-index: 150;
+    background: var(--blu);
+    color: var(--ink-invert);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .menu[hidden] { display: none; }
+  .menu__top {
+    height: var(--header-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: none;
+  }
+  .menu__close {
+    width: 42px; height: 42px;
+    margin-right: -8px;
+    display: grid; place-items: center;
+    background: none; border: 0; color: var(--ink-invert); cursor: pointer;
+  }
+  .menu__nav { flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding-block: var(--sp-6) var(--sp-8); gap: var(--sp-7); }
+  .menu__nav ul { list-style: none; display: grid; gap: 0.1em; }
+  .menu__nav li { border-bottom: 1px solid var(--rule-invert); }
+  .menu__nav li a {
+    display: block;
+    padding: 0.62em 0;
+    font-size: var(--step-3);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    color: var(--ink-invert);
+  }
+  .menu__actions { display: grid; gap: var(--sp-5); }
+  .menu__langs { display: flex; gap: 1em; font-size: var(--step--1); font-weight: 600; letter-spacing: 0.08em; }
+  .menu__langs span { color: var(--ink-invert); }
+  .menu__langs a { color: var(--ink-invert-mute); text-decoration: none; }
+</style>
+
+<script>
+  const header = document.querySelector('[data-header]');
+  const onScroll = () => {
+    if (!header) return;
+    if (window.scrollY > 8) header.setAttribute('data-scrolled', '');
+    else header.removeAttribute('data-scrolled');
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  const panel = document.querySelector<HTMLElement>('[data-menu]');
+  const openBtn = document.querySelector<HTMLButtonElement>('[data-menu-open]');
+  const closeBtn = document.querySelector<HTMLButtonElement>('[data-menu-close]');
+  const setOpen = (open: boolean) => {
+    if (!panel || !openBtn) return;
+    panel.hidden = !open;
+    openBtn.setAttribute('aria-expanded', String(open));
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    if (open) panel.querySelector<HTMLAnchorElement>('a')?.focus();
+    else openBtn.focus();
+  };
+  openBtn?.addEventListener('click', () => setOpen(true));
+  closeBtn?.addEventListener('click', () => setOpen(false));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && panel && !panel.hidden) setOpen(false);
+  });
+  panel?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+</script>

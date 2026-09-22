@@ -1,0 +1,25 @@
+{
+  "seo": {
+    "title": "Request a quote",
+    "description": "Tell us about the journey you have in mind. We reply within one working day with a concrete proposal, with no obligation."
+  },
+  "hero": {
+    "eyebrow": "Quote request",
+    "title": "Tell us about the journey. We reply with something concrete.",
+    "lede": "You do not need a firm plan. You need three or four pieces of information: where, when, how many of you, and roughly what budget. We reach the rest together."
+  },
+  "sections": {
+    "reassurance": {
+      "items": [
+        { "icon": "clock", "title": "A reply within one working day", "body": "Not an automated acknowledgement: a first proposal, written by the person who will handle your trip." },
+        { "icon": "check", "title": "No obligation", "body": "The quotation is free. If it is not for you, tell us and that is the end of it." },
+        { "icon": "users", "title": "One person", "body": "The same one from the first message to the flight home. No re-explaining from scratch." }
+      ]
+    },
+    "form": {
+      "eyebrow": "Your journey",
+      "title": "A few details to begin",
+      "body": "The marked fields genuinely help. You can skip the rest — we will fill them in together afterwards."
+    }
+  }
+}

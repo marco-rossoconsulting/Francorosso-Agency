@@ -1,0 +1,386 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Figure from '../components/Figure.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import { path, formatDateRange, formatPrice, type Locale } from '../lib/i18n';
+import { uiFor, settingsFor, pageFor, departureSlugs, baseId } from '../lib/content';
+
+interface Props { locale: Locale; entry: CollectionEntry<'departures'> }
+const { locale, entry } = Astro.props;
+const d = entry.data;
+const ui = await uiFor(locale);
+const s = await settingsFor(locale);
+const index = await pageFor(locale, 'departures');
+const { Content } = await render(entry);
+const subs = await departureSlugs(baseId(entry.id));
+const dates = formatDateRange(d.departureDate, d.returnDate, locale);
+const soldOut = d.status === 'sold-out';
+---
+<Base
+  locale={locale}
+  routeKey="departures"
+  subs={subs}
+  title={d.seo?.title ?? d.title}
+  description={d.seo?.description ?? d.summary}
+  ogImage={d.heroImage?.src}
+  jsonLd={[
+    {
+      '@context': 'https://schema.org',
+      '@type': 'TouristTrip',
+      name: d.title,
+      description: d.summary,
+      touristType: d.category,
+      itinerary: {
+        '@type': 'ItemList',
+        itemListElement: d.destinations.map((p, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          item: { '@type': 'City', name: p },
+        })),
+      },
+      provider: { '@id': `${new URL(Astro.site!).origin}/#organisation` },
+      ...(d.priceFrom
+        ? {
+            offers: {
+              '@type': 'Offer',
+              price: d.priceFrom,
+              priceCurrency: d.currency,
+              availability: soldOut ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock',
+              url: new URL(Astro.url.pathname, Astro.site).href,
+            },
+          }
+        : {}),
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: ui.breadcrumbHome, item: new URL(path(locale, 'home'), Astro.site).href },
+        { '@type': 'ListItem', position: 2, name: index.hero!.eyebrow ?? '', item: new URL(path(locale, 'departures'), Astro.site).href },
+        { '@type': 'ListItem', position: 3, name: d.title },
+      ],
+    },
+  ]}
+>
+  <!-- Head ------------------------------------------------------------- -->
+  <section class="dhero">
+    <div class="shell">
+      <nav class="crumb" aria-label="breadcrumb">
+        <a href={path(locale, 'departures')}>
+          <Icon name="arrow" size={14} class="crumb__back" />
+          {ui.backTo} {index.hero!.eyebrow?.toLowerCase()}
+        </a>
+      </nav>
+
+      <div class="dhero__grid">
+        <div class="dhero__text">
+          <p class="dhero__cat">{d.category}{d.countries.length > 0 && ` · ${d.countries.join(' · ')}`}</p>
+          <h1 class="dhero__title">{d.title}</h1>
+          <p class="lede dhero__summary">{d.summary}</p>
+
+          <dl class="dhero__facts">
+            <div><dt>{ui.itinerary}</dt><dd>{d.destinations.join(' — ')}</dd></div>
+            <div><dt>{ui.datesLabel}</dt><dd>{dates}</dd></div>
+            <div><dt>{ui.durationLabel}</dt><dd>{d.durationDays} {ui.days}{d.durationNights ? `, ${d.durationNights} ${ui.nights}` : ''}</dd></div>
+            {d.departsFrom.length > 0 && <div><dt>{ui.departsFrom}</dt><dd>{d.departsFrom.join(', ')}</dd></div>}
+          </dl>
+        </div>
+
+        <aside class="book">
+          {d.priceFrom && (
+            <p class="book__price">
+              <span class="book__from">{ui.from}</span>
+              <span class="book__amount">{formatPrice(d.priceFrom, locale, d.currency)}</span>
+              <span class="book__pp">{ui.perPerson}</span>
+            </p>
+          )}
+          {d.priceNote && <p class="book__note">{d.priceNote}</p>}
+          <a class="btn btn--block" href="#richiesta">
+            {soldOut ? ui.requestPlaces : ui.requestPlaces}
+            <Icon name="arrow" size={17} />
+          </a>
+          <ul class="book__alt">
+            <li>
+              <a href={`${s.whatsapp.href}?text=${encodeURIComponent(`${s.whatsapp.prefillMessage} (${d.title})`)}`} target="_blank" rel="noopener noreferrer">
+                <Icon name="whatsapp" size={17} />{ui.whatsappCta}
+              </a>
+            </li>
+            <li><a href={s.phoneHref}><Icon name="phone" size={17} />{s.phone}</a></li>
+            {d.programmePdf && (
+              <li><a href={d.programmePdf} target="_blank" rel="noopener"><Icon name="download" size={17} />{ui.downloadProgramme}</a></li>
+            )}
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery + intro --------------------------------------------------- -->
+  <section class="section--tight">
+    <div class="shell">
+      <div class="dintro">
+        <div class="dintro__media">
+          <Figure
+            src={d.heroImage?.src || undefined}
+            alt={d.heroImage?.alt ?? ''}
+            brief={d.heroImage?.brief}
+            ratio="4 / 3"
+            eager
+            placeholderLabel={ui.imagePlaceholderLabel}
+            sizes="(max-width: 900px) 100vw, 52vw"
+          />
+        </div>
+        <div class="dintro__text prose"><Content /></div>
+      </div>
+
+      {d.highlights.length > 0 && (
+        <ul class="hl" data-reveal>
+          {d.highlights.map((h) => (
+            <li><Icon name="check" size={16} />{h}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </section>
+
+  <!-- Itinerary --------------------------------------------------------- -->
+  {d.itinerary.length > 0 && (
+    <section class="section itin on-dark">
+      <div class="shell">
+        <span class="eyebrow">{ui.itinerary}</span>
+        <h2 class="itin__title">{d.destinations.join(' · ')}</h2>
+        <ol class="itin__list">
+          {d.itinerary.map((step, i) => (
+            <li data-reveal style={`--reveal-delay:${i * 60}ms`}>
+              <div class="itin__meta">
+                <span class="itin__day">{ui.day} {step.day}</span>
+                <span class="itin__place">{step.place}</span>
+              </div>
+              <div class="itin__body">
+                {step.title && <h3>{step.title}</h3>}
+                <p>{step.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )}
+
+  <!-- Gallery ----------------------------------------------------------- -->
+  {d.gallery.length > 0 && (
+    <section class="section--tight">
+      <div class="shell">
+        <ul class="gal">
+          {d.gallery.map((g, i) => (
+            <li data-reveal style={`--reveal-delay:${i * 60}ms`}>
+              <Figure
+                src={g.src || undefined}
+                alt={g.alt ?? ''}
+                brief={g.brief}
+                ratio="4 / 3"
+                placeholderLabel={ui.imagePlaceholderLabel}
+                sizes="(max-width: 720px) 90vw, 30vw"
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <!-- Included / excluded ----------------------------------------------- -->
+  {(d.included.length > 0 || d.notIncluded.length > 0) && (
+    <section class="section--tight">
+      <div class="shell">
+        <div class="incl">
+          {d.included.length > 0 && (
+            <div>
+              <h2 class="incl__title">{ui.included}</h2>
+              <ul class="incl__list incl__list--yes">
+                {d.included.map((x) => <li><Icon name="check" size={15} />{x}</li>)}
+              </ul>
+            </div>
+          )}
+          {d.notIncluded.length > 0 && (
+            <div>
+              <h2 class="incl__title">{ui.notIncluded}</h2>
+              <ul class="incl__list incl__list--no">
+                {d.notIncluded.map((x) => <li><Icon name="close" size={14} />{x}</li>)}
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Prices ------------------------------------------------------------ -->
+  {d.priceTable && (
+    <section class="section--tight">
+      <div class="shell">
+        <h2 class="tbl__h">{ui.prices}</h2>
+        {d.priceTable.caption && <p class="tbl__cap meta">{d.priceTable.caption}</p>}
+        <div class="tbl__wrap">
+          <table class="tbl">
+            <thead>
+              <tr><th scope="col">{ui.cabinOrRoom}</th><th scope="col" class="tbl__num">{ui.priceColumn}</th></tr>
+            </thead>
+            <tbody>
+              {d.priceTable.rows.map((r) => (
+                <tr>
+                  <th scope="row">
+                    {r.label}
+                    {r.note && <span class="tbl__note">{r.note}</span>}
+                  </th>
+                  <td class="tbl__num">{r.price}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {d.optionalExtras.length > 0 && (
+          <div class="extras">
+            <h3 class="extras__h">{ui.optionalExtras}</h3>
+            <ul class="extras__list">
+              {d.optionalExtras.map((x) => (
+                <li>
+                  <span class="extras__label">{x.label}{x.note && <span class="extras__note">{x.note}</span>}</span>
+                  <span class="extras__price">{x.price}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  <!-- Practical info ----------------------------------------------------- -->
+  {d.practicalInfo.length > 0 && (
+    <section class="section--tight">
+      <div class="shell">
+        <h2 class="tbl__h">{ui.practicalInfo}</h2>
+        <dl class="pi">
+          {d.practicalInfo.map((p) => (
+            <div><dt>{p.label}</dt><dd>{p.value}</dd></div>
+          ))}
+        </dl>
+      </div>
+    </section>
+  )}
+
+  <!-- Enquiry ------------------------------------------------------------ -->
+  <section class="section req" id="richiesta">
+    <div class="shell req__inner">
+      <div class="req__side">
+        <span class="eyebrow">{ui.requestPlaces}</span>
+        <h2 class="req__title">{d.title}</h2>
+        <p class="req__meta">{dates}{d.departsFrom.length > 0 && ` · ${ui.departsFrom} ${d.departsFrom.join(', ')}`}</p>
+        <a class="link-arrow req__ins" href={path(locale, 'insurance')}>
+          <Icon name="shield" size={16} />
+          {ui.form.insuranceSubject}
+        </a>
+      </div>
+      <div class="req__form">
+        <EnquiryForm locale={locale} variant="quote" subject={d.title} id="dep-enquiry" />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .dhero { padding-block: var(--sp-6) var(--sp-7); }
+  .crumb { margin-bottom: var(--sp-6); font-size: var(--step--1); }
+  .crumb a { display: inline-flex; align-items: center; gap: 0.5em; color: var(--ink-mute); text-decoration: none; }
+  .crumb a:hover { color: var(--rosso); }
+  .crumb__back { transform: rotate(180deg); }
+
+  .dhero__grid { display: grid; gap: var(--sp-7) var(--gutter); }
+  @media (min-width: 960px) { .dhero__grid { grid-template-columns: minmax(0, 1fr) 340px; gap: clamp(2rem, 5vw, 4.5rem); align-items: start; } }
+
+  .dhero__cat { margin: 0 0 var(--sp-4); font-size: var(--step--2); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rosso); }
+  .dhero__title { max-width: 16ch; font-size: var(--step-5); }
+  .dhero__summary { margin-top: var(--sp-5); }
+  .dhero__facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--sp-5); margin: var(--sp-7) 0 0; padding-top: var(--sp-5); border-top: 1px solid var(--rule); }
+  .dhero__facts dt { font-size: var(--step--2); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); }
+  .dhero__facts dd { margin: 0.45em 0 0; font-size: var(--step--1); color: var(--ink); }
+
+  .book { padding: var(--sp-6); background: var(--bianco); border: 1px solid var(--rule); border-radius: var(--radius-lg); position: sticky; top: calc(var(--header-h) + 1rem); }
+  @media (max-width: 959px) { .book { position: static; } }
+  .book__price { margin: 0 0 var(--sp-3); display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.4em; }
+  .book__from { font-size: var(--step--2); color: var(--ink-mute); }
+  .book__amount { font-size: var(--step-3); font-weight: 600; letter-spacing: -0.03em; }
+  .book__pp { font-size: var(--step--2); color: var(--ink-mute); }
+  .book__note { margin: 0 0 var(--sp-5); font-size: var(--step--2); line-height: 1.5; color: var(--ink-mute); }
+  .book__alt { list-style: none; display: grid; gap: 0.7em; margin-top: var(--sp-5); padding-top: var(--sp-5); border-top: 1px solid var(--rule); font-size: var(--step--1); }
+  .book__alt a { display: flex; align-items: center; gap: 0.65em; color: var(--ink-soft); text-decoration: none; }
+  .book__alt a:hover { color: var(--rosso); }
+
+  .dintro { display: grid; gap: var(--sp-7) var(--gutter); align-items: center; }
+  @media (min-width: 900px) { .dintro { grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: clamp(2rem, 5vw, 4.5rem); } }
+
+  .hl { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--sp-4) var(--gutter); margin-top: var(--sp-8); padding-top: var(--sp-6); border-top: 1px solid var(--rule); }
+  .hl li { display: flex; align-items: flex-start; gap: 0.65em; font-size: var(--step--1); line-height: 1.55; color: var(--ink-soft); }
+  .hl :global(svg) { flex: none; margin-top: 0.2em; color: var(--rosso); }
+
+  .itin__title { margin-top: var(--sp-2); max-width: 20ch; }
+  .itin__list { list-style: none; margin-top: var(--sp-7); }
+  .itin__list li { display: grid; gap: var(--sp-3) var(--gutter); padding-block: var(--sp-6); border-top: 1px solid var(--rule-invert); }
+  .itin__list li:last-child { border-bottom: 1px solid var(--rule-invert); }
+  @media (min-width: 780px) { .itin__list li { grid-template-columns: 190px minmax(0, 1fr); gap: var(--sp-7); } }
+  .itin__meta { display: grid; gap: 0.35em; align-content: start; }
+  .itin__day { font-size: var(--step--2); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #e4787c; }
+  .itin__place { font-size: var(--step--1); color: var(--ink-invert-mute); }
+  .itin__body h3 { font-size: var(--step-1); margin-bottom: 0.5em; }
+  .itin__body p { margin: 0; font-size: var(--step--1); line-height: 1.68; color: var(--ink-invert-soft); max-width: 68ch; }
+
+  .gal { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--sp-4); }
+  @media (min-width: 900px) { .gal { grid-template-columns: repeat(3, minmax(0, 1fr)); } .gal li:first-child { grid-column: span 2; } }
+
+  .incl { display: grid; gap: var(--sp-7) var(--gutter); }
+  @media (min-width: 820px) { .incl { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(2rem, 5vw, 4rem); } }
+  .incl__title { font-size: var(--step-2); margin-bottom: var(--sp-5); }
+  .incl__list { list-style: none; display: grid; gap: 0.65em; font-size: var(--step--1); line-height: 1.55; color: var(--ink-soft); }
+  .incl__list li { display: flex; align-items: flex-start; gap: 0.65em; }
+  .incl__list :global(svg) { flex: none; margin-top: 0.22em; }
+  .incl__list--yes :global(svg) { color: var(--rosso); }
+  .incl__list--no :global(svg) { color: var(--ink-mute); }
+
+  .tbl__h { font-size: var(--step-2); }
+  .tbl__cap { margin: var(--sp-3) 0 var(--sp-5); max-width: 62ch; }
+  .tbl__wrap { overflow-x: auto; }
+  .tbl { width: 100%; border-collapse: collapse; font-size: var(--step--1); }
+  .tbl th, .tbl td { text-align: left; padding: 0.95em 0.8em; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  .tbl thead th { font-size: var(--step--2); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); border-bottom-color: var(--rule-strong); }
+  .tbl tbody th { font-weight: 500; color: var(--ink); padding-left: 0; }
+  .tbl__note { display: block; margin-top: 0.25em; font-size: var(--step--2); font-weight: 400; color: var(--ink-mute); }
+  .tbl__num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .tbl tbody td { font-weight: 600; padding-right: 0; }
+
+  .extras { margin-top: var(--sp-8); }
+  .extras__h { font-size: var(--step-1); margin-bottom: var(--sp-4); }
+  .extras__list { list-style: none; display: grid; }
+  .extras__list li { display: flex; justify-content: space-between; gap: var(--sp-5); padding-block: 0.85em; border-top: 1px solid var(--rule); font-size: var(--step--1); }
+  .extras__list li:last-child { border-bottom: 1px solid var(--rule); }
+  .extras__label { color: var(--ink); }
+  .extras__note { display: block; margin-top: 0.2em; font-size: var(--step--2); color: var(--ink-mute); }
+  .extras__price { font-weight: 600; white-space: nowrap; }
+
+  .pi { display: grid; gap: 0; margin-top: var(--sp-5); }
+  .pi > div { display: grid; gap: 0.3em var(--gutter); padding-block: var(--sp-4); border-top: 1px solid var(--rule); }
+  @media (min-width: 780px) { .pi > div { grid-template-columns: 230px minmax(0, 1fr); } }
+  .pi > div:last-child { border-bottom: 1px solid var(--rule); }
+  .pi dt { font-size: var(--step--2); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); padding-top: 0.15em; }
+  .pi dd { margin: 0; font-size: var(--step--1); line-height: 1.6; color: var(--ink-soft); max-width: 70ch; }
+
+  .req { background: var(--avorio); }
+  .req__inner { display: grid; gap: var(--sp-7) var(--gutter); }
+  @media (min-width: 960px) { .req__inner { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; } }
+  .req__title { font-size: var(--step-3); max-width: 16ch; }
+  .req__meta { margin: var(--sp-4) 0 0; font-size: var(--step--1); color: var(--ink-soft); }
+  .req__ins { margin-top: var(--sp-6); }
+</style>

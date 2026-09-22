@@ -1,0 +1,135 @@
+{
+  "seo": {
+    "title": "Francorosso",
+    "description": "A travel agency in Lugano. Tailor-made journeys, escorted group departures, flight ticketing, insurance and corporate events. Via Canova 19."
+  },
+  "hero": {
+    "eyebrow": "Lugano · Travel agency",
+    "title": "A journey takes shape when you talk to someone who has already been.",
+    "lede": "We are an agency on Via Canova. We build tailor-made itineraries, escort our own group departures and look after the travel of companies across Ticino. You can start here, or come and see us.",
+    "image": {
+      "src": "",
+      "alt": "",
+      "brief": "Horizontal photograph of the team at work on an itinerary, natural light. Not a posed group shot."
+    },
+    "primaryCta": { "label": "Request a quote", "route": "quote", "style": "primary" },
+    "secondaryCta": { "label": "Our departures", "route": "departures", "style": "secondary" },
+    "signals": [
+      { "value": "30+", "label": "years in Lugano" },
+      { "value": "6", "label": "consultants in the office" },
+      { "value": "1", "label": "working day to reply" }
+    ]
+  },
+  "sections": {
+    "nextDeparture": {
+      "eyebrow": "Next departure",
+      "note": "Limited places, escorted group"
+    },
+    "services": {
+      "eyebrow": "What we do",
+      "title": "Four ways to travel with us",
+      "intro": "Every request lands on one named person's desk, not in a queue.",
+      "items": [
+        {
+          "icon": "compass",
+          "title": "Tailor-made journeys",
+          "body": "It starts with a conversation: who is travelling, how much time you have, what you do not want to miss. We write the itinerary, you correct it until it looks like you.",
+          "route": "services"
+        },
+        {
+          "icon": "users",
+          "title": "Group departures",
+          "body": "Journeys we organise ourselves, with fixed dates, clear prices and an Italian-speaking tour leader. It is the part of the work we are proudest of.",
+          "route": "departures"
+        },
+        {
+          "icon": "ticket",
+          "title": "Flight ticketing",
+          "body": "Issuing, reissues, changes and negotiated fares. If something goes wrong at the airport, you have a number that answers.",
+          "route": "services"
+        },
+        {
+          "icon": "briefcase",
+          "title": "Business & MICE",
+          "body": "Meetings, conventions, incentives, corporate events and recurring business travel. One contact for logistics, suppliers and budget.",
+          "route": "business"
+        }
+      ]
+    },
+    "departures": {
+      "eyebrow": "Our departures",
+      "title": "The journeys we organise ourselves",
+      "intro": "Fixed dates, itineraries we have checked, a tour leader who knows the route. We are not reselling a catalogue: we build these journeys and we travel with them.",
+      "ctaLabel": "See all departures"
+    },
+    "why": {
+      "eyebrow": "Why us",
+      "title": "The difference is who picks up the phone",
+      "pullquote": "Tell us how you want the journey to feel, and we will shape the details with you.",
+      "points": [
+        {
+          "title": "A person, not a ticket number",
+          "body": "From the first quote to the flight home you speak to the same consultant. They know your file and how you like to travel."
+        },
+        {
+          "title": "Transparent pricing",
+          "body": "We tell you what is included, what is not, and what our work costs. No surprises when the balance falls due."
+        },
+        {
+          "title": "Reachable when it matters",
+          "body": "You travel with a direct number. A missed connection is solved faster from the agency than at the desk."
+        },
+        {
+          "title": "An office in Lugano",
+          "body": "Via Canova 19. You can walk in, sit down and look at the options together, without an appointment."
+        }
+      ],
+      "image": {
+        "src": "",
+        "alt": "",
+        "brief": "Detail of the Via Canova 19 shopfront or entrance, portrait format, late afternoon light."
+      }
+    },
+    "insurance": {
+      "eyebrow": "Before you go",
+      "title": "Travel insurance, settled in two minutes",
+      "body": "Cancellation, medical expenses, baggage. It is the part of a trip nobody thinks about until it matters. Send us the dates and the value of the journey and we will send back the right policy and a link to pay for it.",
+      "bullets": [
+        "Cover also available for trips booked elsewhere",
+        "Single-trip or annual multi-trip policies",
+        "Confirmed by email, without coming to the office"
+      ],
+      "ctaLabel": "Request a policy",
+      "secondaryLabel": "How it works"
+    },
+    "mice": {
+      "eyebrow": "Business & MICE",
+      "title": "When the whole company travels",
+      "body": "We organise meetings, conventions, incentives and corporate events, and we run recurring business travel. One contact for flights, hotels, rooms, transfers and reporting.",
+      "bullets": [
+        "Meetings and conventions",
+        "Incentive travel and team building",
+        "Corporate events and hospitality",
+        "Ongoing business travel"
+      ],
+      "ctaLabel": "Tell us about the project",
+      "image": {
+        "src": "",
+        "alt": "",
+        "brief": "Horizontal format: a meeting room or gala dinner set up, seen from inside the group."
+      }
+    },
+    "team": {
+      "eyebrow": "About us",
+      "title": "Six people, one office, no call centre",
+      "intro": "We know who you are because we are the ones who answer. Here is who you are writing to.",
+      "ctaLabel": "Meet the agency"
+    },
+    "contact": {
+      "eyebrow": "Let's start",
+      "title": "Tell us about the journey. We will handle the rest.",
+      "body": "A few lines are enough. We reply within one working day with a first concrete proposal, with no obligation.",
+      "ctaLabel": "Request a quote"
+    }
+  }
+}

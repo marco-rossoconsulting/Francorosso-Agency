@@ -1,0 +1,34 @@
+{
+  "groups": [
+    {
+      "title": "Documenti e avvisi di viaggio",
+      "items": [
+        { "label": "DFAE – Consigli di viaggio della Confederazione", "href": "https://www.eda.admin.ch/eda/it/dfae/rappresentanze-e-consigli-di-viaggio.html", "description": "Avvisi ufficiali per i viaggiatori svizzeri, paese per paese." },
+        { "label": "ESTA – Autorizzazione per gli Stati Uniti", "href": "https://esta.cbp.dhs.gov/esta/", "description": "Autorizzazione obbligatoria per chi entra negli USA senza visto." },
+        { "label": "ENAC – Ente Nazionale per l'Aviazione Civile", "href": "https://www.enac.gov.it/", "description": "Diritti dei passeggeri e regole sui bagagli per i voli dall'Italia." }
+      ]
+    },
+    {
+      "title": "Salute",
+      "items": [
+        { "label": "Swiss TPH – Istituto tropicale svizzero", "href": "https://www.swisstph.ch/", "description": "Vaccinazioni e profilassi consigliate per destinazione." },
+        { "label": "OMS – Organizzazione Mondiale della Sanità", "href": "https://www.who.int/", "description": "Avvisi sanitari internazionali aggiornati." }
+      ]
+    },
+    {
+      "title": "Aeroporti e trasporti",
+      "items": [
+        { "label": "Aeroporto di Zurigo", "href": "https://www.zurich-airport.com/", "description": "Partenze, arrivi e collegamenti." },
+        { "label": "Aeroporti di Milano – SEA", "href": "https://www.milanairports.com/", "description": "Malpensa e Linate: voli e servizi." }
+      ]
+    },
+    {
+      "title": "Prima di partire",
+      "items": [
+        { "label": "Meteo mondiale", "href": "https://www.meteosvizzera.admin.ch/", "description": "Previsioni per la Svizzera e nel mondo." },
+        { "label": "Fusi orari", "href": "https://www.worldtimeserver.com/", "description": "Ora locale e differenze di fuso." },
+        { "label": "National Geographic", "href": "https://www.nationalgeographic.it/", "description": "Per farsi venire delle idee." }
+      ]
+    }
+  ]
+}

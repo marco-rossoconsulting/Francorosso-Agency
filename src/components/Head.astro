@@ -1,0 +1,86 @@
+---
+import { allHreflang, HTML_LANG, OG_LOCALE, DEFAULT_LOCALE, type Locale, type RouteKey, type Subs } from '../lib/i18n';
+import { settingsFor } from '../lib/content';
+
+interface Props {
+  locale: Locale;
+  routeKey: RouteKey;
+  subs?: Subs;
+  title: string;
+  description: string;
+  ogImage?: string;
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown>[];
+}
+const { locale, routeKey, subs, title, description, ogImage, noindex = false, jsonLd = [] } = Astro.props;
+const s = await settingsFor(locale);
+const site = Astro.site ?? new URL('https://www.francorosso.ch');
+const canonical = new URL(Astro.url.pathname, site).href;
+const alternates = allHreflang(routeKey, subs);
+const ogUrl = new URL(ogImage ?? '/media/brand/og-default.png', site).href;
+const fullTitle = title === s.companyName ? `${s.companyName} — ${s.tagline}` : `${title} | ${s.companyName}`;
+
+const organisation = {
+  '@context': 'https://schema.org',
+  '@type': 'TravelAgency',
+  '@id': `${site.origin}/#organisation`,
+  name: s.legalName,
+  alternateName: s.companyName,
+  url: site.origin,
+  description: s.descriptor,
+  logo: new URL('/media/brand/francorosso-rosso.png', site).href,
+  image: ogUrl,
+  telephone: s.phone,
+  faxNumber: s.fax,
+  email: s.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: s.address.street,
+    postalCode: s.address.postalCode,
+    addressLocality: s.address.city,
+    addressCountry: s.address.countryCode,
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: s.address.latitude, longitude: s.address.longitude },
+  openingHours: s.openingHoursSchema,
+  sameAs: s.social.map((x) => x.href),
+  areaServed: { '@type': 'Country', name: 'Switzerland' },
+};
+const graphs = [organisation, ...jsonLd];
+---
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex,nofollow" />}
+
+{alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={new URL(a.href, site).href} />)}
+<link
+  rel="alternate"
+  hreflang="x-default"
+  href={new URL(alternates.find((a) => a.locale === DEFAULT_LOCALE)!.href, site).href}
+/>
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={s.companyName} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogUrl} />
+<meta property="og:locale" content={OG_LOCALE[locale]} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogUrl} />
+
+<meta name="theme-color" content="#f6efe9" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0e1b2b" media="(prefers-color-scheme: dark)" />
+<meta name="format-detection" content="telephone=yes" />
+<meta http-equiv="content-language" content={HTML_LANG[locale]} />
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/media/brand/mark-32.png" sizes="32x32" />
+<link rel="apple-touch-icon" href="/media/brand/mark-180.png" />
+<link rel="manifest" href="/site.webmanifest" />
+
+{graphs.map((g) => <script type="application/ld+json" set:html={JSON.stringify(g)} />)}

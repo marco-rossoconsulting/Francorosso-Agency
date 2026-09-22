@@ -1,0 +1,221 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import { type Locale } from '../lib/i18n';
+import { pageFor, uiFor, settingsFor } from '../lib/content';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const page = await pageFor(locale, 'insurance');
+const ui = await uiFor(locale);
+const s = await settingsFor(locale);
+const S = page.sections as any;
+const partner = S.partner ?? { mode: 'form' };
+const directBuy = partner.mode === 'link' && partner.linkUrl;
+---
+<Base
+  locale={locale}
+  routeKey="insurance"
+  title={page.seo?.title ?? ''}
+  description={page.seo?.description ?? s.descriptor}
+  jsonLd={[
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: (S.faq?.items ?? []).map((f: any) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
+  ]}
+>
+  <PageHero
+    locale={locale}
+    eyebrow={page.hero!.eyebrow}
+    title={page.hero!.title}
+    lede={page.hero!.lede}
+    signals={page.hero!.signals}
+  >
+  </PageHero>
+
+  <section class="section--tight">
+    <div class="shell">
+      <div class="quick">
+        <p class="quick__text">{S.how.title}</p>
+        {directBuy ? (
+          <a class="btn" href={partner.linkUrl} target="_blank" rel="noopener noreferrer">
+            {partner.linkLabel}
+            <Icon name="external" size={16} />
+          </a>
+        ) : (
+          <a class="btn" href="#richiesta">
+            {page.hero!.primaryCta?.label}
+            <Icon name="arrow-down" size={16} />
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="shell">
+      <ol class="steps">
+        {S.how.steps.map((st: any, i: number) => (
+          <li data-reveal style={`--reveal-delay:${i * 80}ms`}>
+            <span class="steps__num">{String(i + 1).padStart(2, '0')}</span>
+            <h2 class="steps__title">{st.title}</h2>
+            <p class="steps__body">{st.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section covers on-dark">
+    <div class="shell">
+      <span class="eyebrow">{S.covers.eyebrow}</span>
+      <h2 class="covers__title">{S.covers.title}</h2>
+      <p class="lede covers__intro">{S.covers.intro}</p>
+      <ul class="covers__grid">
+        {S.covers.items.map((c: any, i: number) => (
+          <li data-reveal style={`--reveal-delay:${i * 70}ms`}>
+            <span class="covers__icon"><Icon name={c.icon} size={24} /></span>
+            <h3 class="covers__ctitle">{c.title}</h3>
+            <p class="covers__cbody">{c.body}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="shell">
+      <span class="eyebrow">{S.who.eyebrow}</span>
+      <h2 class="who__title">{S.who.title}</h2>
+      <ul class="who__list">
+        {S.who.items.map((w: any) => (
+          <li data-reveal>
+            <h3>{w.title}</h3>
+            <p>{w.body}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="shell faq__wrap">
+      <div class="faq__head">
+        <span class="eyebrow">{S.faq.eyebrow}</span>
+        <h2>{S.faq.title}</h2>
+      </div>
+      <div class="faq">
+        {S.faq.items.map((f: any) => (
+          <details class="faq__item">
+            <summary>
+              {f.q}
+              <span class="faq__sign" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a"><p>{f.a}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section req" id="richiesta">
+    <div class="shell req__inner">
+      <div class="req__side">
+        <span class="eyebrow">{S.form.eyebrow}</span>
+        <h2 class="req__title">{S.form.title}</h2>
+        <p class="req__body">{S.form.body}</p>
+        <ul class="req__direct">
+          <li><Icon name="phone" size={16} /><a href={s.phoneHref}>{s.phone}</a></li>
+          <li><Icon name="whatsapp" size={16} /><a href={`${s.whatsapp.href}?text=${encodeURIComponent(ui.form.insuranceSubject)}`} target="_blank" rel="noopener noreferrer">{s.whatsapp.number}</a></li>
+        </ul>
+      </div>
+      <div class="req__form">
+        <EnquiryForm locale={locale} variant="insurance" id="ins-enquiry" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="shell">
+      <p class="disclaimer">{S.disclaimer}</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .quick {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-5);
+    padding: var(--sp-6);
+    background: var(--rosso-tint);
+    border-radius: var(--radius-lg);
+  }
+  .quick__text { margin: 0; font-size: var(--step-2); font-weight: 600; letter-spacing: -0.02em; max-width: 24ch; }
+
+  .steps { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--sp-6) var(--gutter); }
+  .steps li { display: grid; gap: var(--sp-3); align-content: start; padding-top: var(--sp-5); border-top: 2px solid var(--rosso); }
+  .steps__num { font-size: var(--step--2); font-weight: 600; letter-spacing: 0.16em; color: var(--rosso); }
+  .steps__title { font-size: var(--step-1); }
+  .steps__body { margin: 0; font-size: var(--step--1); line-height: 1.6; color: var(--ink-soft); }
+
+  .covers__title { margin-top: var(--sp-2); max-width: 18ch; }
+  .covers__intro { margin-top: var(--sp-5); }
+  .covers__grid { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--sp-6) var(--gutter); margin-top: var(--sp-8); }
+  .covers__grid li { display: grid; gap: var(--sp-3); align-content: start; padding-top: var(--sp-5); border-top: 1px solid var(--rule-invert); }
+  .covers__icon { color: #e4787c; }
+  .covers__ctitle { font-size: var(--step-1); }
+  .covers__cbody { margin: 0; font-size: var(--step--1); line-height: 1.62; color: var(--ink-invert-soft); }
+
+  .who__title { margin-top: var(--sp-2); max-width: 18ch; }
+  .who__list { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--sp-5) var(--gutter); margin-top: var(--sp-7); }
+  .who__list li { padding-top: var(--sp-4); border-top: 1px solid var(--rule); }
+  .who__list h3 { font-size: var(--step-0); font-weight: 600; }
+  .who__list p { margin: 0.55em 0 0; font-size: var(--step--1); line-height: 1.6; color: var(--ink-soft); }
+
+  .faq__wrap { display: grid; gap: var(--sp-6) var(--gutter); }
+  @media (min-width: 900px) { .faq__wrap { grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; } }
+  .faq__head h2 { max-width: 14ch; }
+
+  .faq__item { border-top: 1px solid var(--rule); }
+  .faq__item:last-child { border-bottom: 1px solid var(--rule); }
+  .faq__item summary {
+    display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-5);
+    padding-block: var(--sp-5);
+    font-size: var(--step-0); font-weight: 500;
+    cursor: pointer; list-style: none;
+  }
+  .faq__item summary::-webkit-details-marker { display: none; }
+  .faq__sign { position: relative; flex: none; width: 14px; height: 14px; margin-top: 0.35em; }
+  .faq__sign::before, .faq__sign::after {
+    content: ''; position: absolute; background: var(--rosso);
+    transition: transform var(--dur-fast) var(--ease), opacity var(--dur-fast) ease;
+  }
+  .faq__sign::before { inset: 6px 0 auto; height: 1.5px; }
+  .faq__sign::after { inset: 0 6px auto; width: 1.5px; height: 14px; }
+  .faq__item[open] .faq__sign::after { transform: scaleY(0); opacity: 0; }
+  .faq__a { padding-bottom: var(--sp-5); }
+  .faq__a p { margin: 0; max-width: 66ch; font-size: var(--step--1); line-height: 1.68; color: var(--ink-soft); }
+
+  .req { background: var(--avorio); }
+  .req__inner { display: grid; gap: var(--sp-7) var(--gutter); }
+  @media (min-width: 960px) { .req__inner { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; } }
+  .req__title { font-size: var(--step-3); max-width: 18ch; }
+  .req__body { margin: var(--sp-4) 0 0; max-width: 46ch; color: var(--ink-soft); }
+  .req__direct { list-style: none; display: grid; gap: 0.7em; margin-top: var(--sp-6); padding-top: var(--sp-5); border-top: 1px solid var(--rule); font-size: var(--step--1); }
+  .req__direct li { display: flex; align-items: center; gap: 0.7em; color: var(--ink-mute); }
+  .req__direct a { color: var(--ink-soft); text-decoration: none; }
+  .req__direct a:hover { color: var(--rosso); }
+
+  .disclaimer { max-width: 78ch; font-size: var(--step--2); line-height: 1.65; color: var(--ink-mute); }
+</style>

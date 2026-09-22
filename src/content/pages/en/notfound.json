@@ -1,0 +1,18 @@
+{
+  "seo": { "title": "Page not found", "description": "The address you followed does not exist, or has moved with the new site." },
+  "hero": {
+    "eyebrow": "404",
+    "title": "This page has gone. The journey has not.",
+    "lede": "The address you followed does not exist, or has moved with the new site. You can start again from here."
+  },
+  "sections": {
+    "links": {
+      "items": [
+        { "label": "Home", "route": "home" },
+        { "label": "Our departures", "route": "departures" },
+        { "label": "Services", "route": "services" },
+        { "label": "Contact", "route": "contact" }
+      ]
+    }
+  }
+}

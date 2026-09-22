@@ -1,0 +1,81 @@
+/* ---------------------------------------------------------------------------
+   Francorosso — design tokens
+   Derived from "Brand guidelines, updated logo edition".
+   Colour proportions: Blu Notte 45 / Sabbia Chiara 30 / Avorio 15 / Rosso 10.
+   Rosso Orizzonte is a signature, never a surface treatment.
+--------------------------------------------------------------------------- */
+:root {
+  /* Core palette ------------------------------------------------------- */
+  --rosso: #b21e23;
+  --rosso-deep: #8f181c;
+  --rosso-tint: #f7e9e9;
+  --blu: #0e1b2b;
+  --blu-raised: #16263a;
+  --blu-line: #24374e;
+  --sabbia: #f6efe9;
+  --sabbia-deep: #efe5dc;
+  --avorio: #f2f2f2;
+  --bianco: #fffdfb;
+
+  /* Semantic ----------------------------------------------------------- */
+  --canvas: var(--sabbia);
+  --surface: var(--bianco);
+  --surface-quiet: var(--avorio);
+  --ink: var(--blu);
+  --ink-soft: #46556a;
+  --ink-mute: #6c7a8c;
+  --rule: rgba(14, 27, 43, 0.13);
+  --rule-strong: rgba(14, 27, 43, 0.26);
+  --accent: var(--rosso);
+
+  /* On dark ------------------------------------------------------------ */
+  --ink-invert: #f7f3ef;
+  --ink-invert-soft: rgba(247, 243, 239, 0.74);
+  --ink-invert-mute: rgba(247, 243, 239, 0.52);
+  --rule-invert: rgba(247, 243, 239, 0.16);
+
+  /* Type --------------------------------------------------------------- */
+  --font-sans: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-serif: 'Source Serif 4 Variable', 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+  --step--2: clamp(0.688rem, 0.67rem + 0.09vw, 0.75rem);
+  --step--1: clamp(0.813rem, 0.79rem + 0.11vw, 0.875rem);
+  --step-0: clamp(0.938rem, 0.91rem + 0.14vw, 1.031rem);
+  --step-1: clamp(1.063rem, 1.01rem + 0.26vw, 1.25rem);
+  --step-2: clamp(1.25rem, 1.15rem + 0.5vw, 1.625rem);
+  --step-3: clamp(1.5rem, 1.31rem + 0.95vw, 2.125rem);
+  --step-4: clamp(1.875rem, 1.51rem + 1.83vw, 3rem);
+  --step-5: clamp(2.25rem, 1.61rem + 3.2vw, 4.25rem);
+  --step-6: clamp(2.625rem, 1.5rem + 5.63vw, 6rem);
+
+  /* Space -------------------------------------------------------------- */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+  --sp-9: 6rem;
+  --sp-10: 8rem;
+
+  --section-y: clamp(3.5rem, 2rem + 6vw, 7.5rem);
+  --gutter: clamp(1.25rem, 0.6rem + 2.6vw, 3rem);
+  --measure: 62ch;
+  --shell: 1320px;
+
+  --radius: 2px;
+  --radius-lg: 3px;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 640ms;
+  --dur-fast: 220ms;
+
+  --header-h: 76px;
+}
+
+@media (max-width: 640px) {
+  :root { --header-h: 64px; }
+}

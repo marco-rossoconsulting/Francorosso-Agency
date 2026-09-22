@@ -1,0 +1,41 @@
+{
+  "companyName": "Francorosso",
+  "legalName": "Francorosso SA",
+  "tagline": "Agenzia Svizzera per i Viaggi e il Turismo",
+  "descriptor": "Agenzia di viaggi a Lugano da oltre trent'anni. Viaggi su misura, partenze di gruppo accompagnate, biglietteria aerea e organizzazione di eventi aziendali e MICE.",
+  "address": {
+    "street": "Via Canova 19",
+    "postalCode": "6900",
+    "city": "Lugano",
+    "country": "Svizzera",
+    "countryCode": "CH",
+    "mapEmbedUrl": "https://www.google.com/maps?q=Via%20Canova%2019%2C%206900%20Lugano%2C%20Switzerland&output=embed",
+    "mapLinkUrl": "https://www.google.com/maps/search/?api=1&query=Via+Canova+19,+6900+Lugano,+Switzerland",
+    "latitude": 46.0053,
+    "longitude": 8.9525
+  },
+  "phone": "+41 91 923 60 92",
+  "phoneHref": "tel:+41919236092",
+  "fax": "+41 91 923 27 71",
+  "email": "francorosso@francorosso.ch",
+  "whatsapp": {
+    "enabled": true,
+    "number": "+41 76 577 60 92",
+    "href": "https://wa.me/41765776092",
+    "prefillMessage": "Buongiorno Francorosso, vorrei informazioni su un viaggio."
+  },
+  "openingHours": [
+    { "days": "Lunedì – Venerdì", "hours": "09.00 – 12.00 / 14.00 – 18.00" },
+    { "days": "Sabato", "hours": "Su appuntamento" },
+    { "days": "Domenica", "hours": "Chiuso" }
+  ],
+  "openingHoursNote": "Fuori orario rispondiamo su WhatsApp e per e-mail, di norma entro un giorno lavorativo.",
+  "openingHoursSchema": ["Mo-Fr 09:00-12:00", "Mo-Fr 14:00-18:00"],
+  "social": [
+    { "network": "facebook", "label": "Francorosso su Facebook", "href": "https://www.facebook.com/AgenziaFrancorossoLugano" },
+    { "network": "instagram", "label": "Francorosso su Instagram", "href": "https://www.instagram.com/francorosso.lugano/" }
+  ],
+  "memberships": [],
+  "footerNote": "Un'agenzia di Lugano che lavora con persone, non con codici di prenotazione. Chiamateci, scriveteci o passate in Via Canova.",
+  "copyrightName": "Francorosso SA, Lugano"
+}

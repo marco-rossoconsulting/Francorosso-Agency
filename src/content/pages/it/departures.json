@@ -1,0 +1,19 @@
+{
+  "seo": {
+    "title": "Le nostre partenze",
+    "description": "I viaggi di gruppo organizzati direttamente da Francorosso: date fisse, quote chiare, accompagnatore in italiano. Partenze da Milano, Zurigo e Lugano."
+  },
+  "hero": {
+    "eyebrow": "Le nostre partenze",
+    "title": "Viaggi che organizziamo noi, dalla prima riga dell'itinerario.",
+    "lede": "Date definite, gruppi contenuti, un accompagnatore che ha già fatto il percorso. Se una partenza vi interessa ma le date non funzionano, ditecelo: spesso riusciamo a costruirla su misura per voi."
+  },
+  "sections": {
+    "custom": {
+      "eyebrow": "Nessuna data vi torna?",
+      "title": "Lo stesso itinerario, quando volete voi",
+      "body": "Molte di queste partenze le organizziamo anche in privato, per una famiglia o un gruppo di amici. Scriveteci quale vi interessa e in che periodo.",
+      "ctaLabel": "Richiedi una partenza su misura"
+    }
+  }
+}

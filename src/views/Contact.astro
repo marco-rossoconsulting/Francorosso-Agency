@@ -1,0 +1,158 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import { path, type Locale } from '../lib/i18n';
+import { pageFor, settingsFor } from '../lib/content';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const page = await pageFor(locale, 'contact');
+const s = await settingsFor(locale);
+const S = page.sections as any;
+const hrefFor = (action: string) =>
+  action === 'phone'
+    ? s.phoneHref
+    : action === 'whatsapp'
+      ? `${s.whatsapp.href}?text=${encodeURIComponent(s.whatsapp.prefillMessage)}`
+      : `mailto:${s.email}`;
+const labelFor = (action: string) =>
+  action === 'phone' ? s.phone : action === 'whatsapp' ? s.whatsapp.number : s.email;
+---
+<Base
+  locale={locale}
+  routeKey="contact"
+  title={page.seo?.title ?? ''}
+  description={page.seo?.description ?? s.descriptor}
+>
+  <PageHero locale={locale} eyebrow={page.hero!.eyebrow} title={page.hero!.title} lede={page.hero!.lede} />
+
+  <section class="section--tight">
+    <div class="shell">
+      <ul class="chan">
+        {S.channels.items.map((c: any, i: number) => (
+          <li data-reveal style={`--reveal-delay:${i * 70}ms`}>
+            <a href={hrefFor(c.action)} target={c.action === 'whatsapp' ? '_blank' : undefined} rel={c.action === 'whatsapp' ? 'noopener noreferrer' : undefined}>
+              <span class="chan__icon"><Icon name={c.icon} size={22} /></span>
+              <h2 class="chan__title">{c.title}</h2>
+              <p class="chan__body">{c.body}</p>
+              <span class="chan__value">
+                {labelFor(c.action)}
+                <Icon name="arrow" size={15} />
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="shell">
+      <div class="info">
+        <div class="info__block">
+          <h2 class="info__h">{S.hours.title}</h2>
+          <dl class="hours">
+            {s.openingHours.map((h: any) => (
+              <div><dt>{h.days}</dt><dd>{h.hours}</dd></div>
+            ))}
+          </dl>
+          {s.openingHoursNote && <p class="info__note">{s.openingHoursNote}</p>}
+        </div>
+
+        <div class="info__block">
+          <h2 class="info__h">{S.map.title}</h2>
+          <address class="addr">
+            <span>{s.legalName}</span>
+            <span>{s.address.street}</span>
+            <span>{s.address.postalCode} {s.address.city}, {s.address.country}</span>
+          </address>
+          {S.map.note && <p class="info__note">{S.map.note}</p>}
+          <a class="link-arrow" href={s.address.mapLinkUrl} target="_blank" rel="noopener noreferrer">
+            Google Maps
+            <Icon name="external" size={14} />
+          </a>
+        </div>
+      </div>
+
+      <div class="map" data-reveal>
+        <iframe
+          title={S.map.title}
+          src={s.address.mapEmbedUrl}
+          width="100%"
+          height="420"
+          style="border:0"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="section req">
+    <div class="shell req__inner">
+      <div class="req__side">
+        <span class="eyebrow">{S.form.eyebrow}</span>
+        <h2 class="req__title">{S.form.title}</h2>
+        <p class="req__body">{S.form.body}</p>
+        <a class="link-arrow" href={path(locale, 'quote')}>
+          {S.form.quoteLinkLabel}
+          <Icon name="arrow" size={15} />
+        </a>
+      </div>
+      <div class="req__form">
+        <EnquiryForm locale={locale} variant="contact" id="contact-enquiry" />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .chan { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--gutter); }
+  .chan a {
+    display: grid; gap: var(--sp-3); align-content: start;
+    height: 100%;
+    padding: var(--sp-6);
+    background: var(--bianco);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition: border-color var(--dur-fast) ease, transform var(--dur) var(--ease);
+  }
+  .chan a:hover { border-color: var(--rosso); transform: translateY(-2px); }
+  .chan__icon { color: var(--rosso); }
+  .chan__title { font-size: var(--step-1); }
+  .chan__body { margin: 0; font-size: var(--step--1); line-height: 1.6; color: var(--ink-soft); }
+  .chan__value {
+    display: inline-flex; align-items: center; gap: 0.5em;
+    margin-top: var(--sp-3); padding-top: var(--sp-4);
+    border-top: 1px solid var(--rule);
+    font-size: var(--step--1); font-weight: 600; color: var(--ink);
+    word-break: break-word;
+  }
+  .chan a:hover .chan__value { color: var(--rosso); }
+
+  .info { display: grid; gap: var(--sp-7) var(--gutter); margin-bottom: var(--sp-7); }
+  @media (min-width: 780px) { .info { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(2rem, 5vw, 4rem); } }
+  .info__h { font-size: var(--step-1); margin-bottom: var(--sp-5); }
+  .info__note { margin: var(--sp-4) 0 0; max-width: 48ch; font-size: var(--step--1); line-height: 1.6; color: var(--ink-mute); }
+  .info__block .link-arrow { margin-top: var(--sp-5); }
+
+  .hours { display: grid; }
+  .hours > div { display: flex; justify-content: space-between; gap: var(--sp-5); padding-block: 0.75em; border-top: 1px solid var(--rule); font-size: var(--step--1); }
+  .hours > div:last-child { border-bottom: 1px solid var(--rule); }
+  .hours dd { margin: 0; color: var(--ink-mute); text-align: right; }
+
+  .addr { display: grid; gap: 0.3em; font-style: normal; font-size: var(--step-0); color: var(--ink-soft); }
+  .addr span:first-child { color: var(--ink); font-weight: 600; }
+
+  .map { overflow: hidden; border: 1px solid var(--rule); border-radius: var(--radius-lg); background: var(--avorio); }
+  .map iframe { display: block; filter: saturate(0.82) contrast(1.02); }
+
+  .req { background: var(--avorio); }
+  .req__inner { display: grid; gap: var(--sp-7) var(--gutter); }
+  @media (min-width: 960px) { .req__inner { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; } }
+  .req__title { font-size: var(--step-3); max-width: 16ch; }
+  .req__body { margin: var(--sp-4) 0 var(--sp-5); max-width: 46ch; color: var(--ink-soft); }
+</style>

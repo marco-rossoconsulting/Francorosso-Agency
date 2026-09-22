@@ -1,0 +1,85 @@
+{
+  "seo": {
+    "title": "Business & MICE",
+    "description": "Meetings, incentives, conventions and corporate events, business travel and assignments. Francorosso MICE department, Lugano: one contact from proposal to final invoice."
+  },
+  "hero": {
+    "eyebrow": "Business & MICE",
+    "title": "When it is not one person travelling, but a whole company.",
+    "lede": "Meetings, incentives, conventions, events. Projects where the margin for error is small and the number of people to hold together is large. We follow them from the first brief to the final invoice, with one contact.",
+    "primaryCta": { "label": "Tell us about the project", "route": "business", "style": "primary" },
+    "secondaryCta": { "label": "Call the MICE desk", "route": "contact", "style": "secondary" },
+    "image": {
+      "src": "",
+      "alt": "",
+      "brief": "Horizontal format: a convention or corporate dinner being set up, seen from inside the room."
+    }
+  },
+  "sections": {
+    "offer": {
+      "eyebrow": "MICE department",
+      "title": "Four letters, four different crafts",
+      "intro": "MICE stands for Meetings, Incentives, Conventions and Events. They are projects with very different demands, which is exactly why they are worth handing to people who do them daily.",
+      "items": [
+        {
+          "icon": "users",
+          "title": "Meetings",
+          "body": "Company meetings, working sessions, sales kick-offs. Rooms, technical set-up, catering, accommodation and transfers coordinated in one proposal with one budget."
+        },
+        {
+          "icon": "compass",
+          "title": "Incentives",
+          "body": "Reward trips for sales networks and teams. Their job is to make people talk who normally only meet on a call: we build the itinerary around that, not around the destination."
+        },
+        {
+          "icon": "briefcase",
+          "title": "Conventions",
+          "body": "Events with serious numbers: staggered arrivals, rooming lists that change to the last minute, multiple suppliers. The hard part is logistics, and logistics is our trade."
+        },
+        {
+          "icon": "calendar",
+          "title": "Events and team building",
+          "body": "Company anniversaries, gala dinners, offsite days, team activities. Venues in Ticino, elsewhere in Switzerland or abroad, with site inspections where they are needed."
+        }
+      ]
+    },
+    "why": {
+      "eyebrow": "Why bring it to us",
+      "title": "What a company is really buying is calm",
+      "points": [
+        {
+          "title": "A contact, not an inbox",
+          "body": "One person follows the project from start to finish and knows how your company works. Including when the programme changes mid-flight."
+        },
+        {
+          "title": "A budget that holds",
+          "body": "We present costs line by line, with alternatives at different prices. You approve variations before they become an invoice."
+        },
+        {
+          "title": "Suppliers we have checked",
+          "body": "Hotels, venues, catering, coaches, guides. We work with people we know, and with people who answer on a Sunday afternoon."
+        },
+        {
+          "title": "Tidy administration",
+          "body": "One summary invoice, supporting documents in order, and trip reporting for whoever has to close the books."
+        }
+      ]
+    },
+    "travel": {
+      "eyebrow": "Business travel",
+      "title": "And for everyday assignments",
+      "body": "Beyond events we handle ticketing and accommodation for companies that travel continuously: negotiated fares, changes handled by the agency, monthly invoicing and a cost report by department.",
+      "bullets": [
+        "Negotiated fares and corporate travel policies",
+        "Changes, reissues and support while travelling",
+        "Monthly invoicing with a breakdown by department",
+        "A number that answers outside office hours too"
+      ]
+    },
+    "form": {
+      "eyebrow": "Business enquiry",
+      "title": "Tell us about the project",
+      "body": "Even a three-line brief is enough for us to see whether we can be useful and to suggest a first direction. No obligation."
+    }
+  }
+}

@@ -1,0 +1,11 @@
+---
+import DepartureDetail from '../../../views/DepartureDetail.astro';
+import { departuresFor } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  const entries = await departuresFor('en');
+  return entries.map((entry) => ({ params: { slug: entry.data.slug }, props: { entry } }));
+}
+const { entry } = Astro.props;
+---
+<DepartureDetail locale="en" entry={entry} />

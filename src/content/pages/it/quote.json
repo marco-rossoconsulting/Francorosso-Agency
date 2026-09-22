@@ -1,0 +1,25 @@
+{
+  "seo": {
+    "title": "Richiedi un preventivo",
+    "description": "Raccontateci il viaggio che avete in mente. Vi rispondiamo entro un giorno lavorativo con una proposta concreta, senza impegno."
+  },
+  "hero": {
+    "eyebrow": "Richiesta di preventivo",
+    "title": "Raccontateci il viaggio. Vi rispondiamo con qualcosa di concreto.",
+    "lede": "Non serve avere le idee chiare. Servono tre o quattro informazioni: dove, quando, in quanti e con che budget indicativo. Al resto arriviamo insieme."
+  },
+  "sections": {
+    "reassurance": {
+      "items": [
+        { "icon": "clock", "title": "Risposta entro un giorno lavorativo", "body": "Non una conferma automatica: una prima proposta, scritta da chi seguirà il vostro viaggio." },
+        { "icon": "check", "title": "Nessun impegno", "body": "Il preventivo è gratuito. Se non fa per voi, ce lo dite e finisce lì." },
+        { "icon": "users", "title": "Una persona sola", "body": "La stessa dal primo messaggio al rientro. Senza rispiegare tutto da capo ogni volta." }
+      ]
+    },
+    "form": {
+      "eyebrow": "Il vostro viaggio",
+      "title": "Qualche informazione per partire",
+      "body": "I campi contrassegnati servono davvero. Gli altri li potete saltare: li sistemiamo insieme dopo."
+    }
+  }
+}

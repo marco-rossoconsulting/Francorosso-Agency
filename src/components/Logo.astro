@@ -1,0 +1,22 @@
+---
+/** The supplied master wordmark. Never retyped, redrawn or cropped. */
+interface Props {
+  variant?: 'rosso' | 'avorio' | 'blu';
+  width?: number;
+  class?: string;
+  alt?: string;
+  eager?: boolean;
+}
+const { variant = 'rosso', width = 190, class: cls, alt = 'Francorosso', eager = false } = Astro.props;
+const RATIO = 573 / 5922; // trimmed master artwork
+---
+<img
+  src={`/media/brand/francorosso-${variant}.png`}
+  alt={alt}
+  width={width}
+  height={Math.round(width * RATIO)}
+  class={cls}
+  loading={eager ? 'eager' : 'lazy'}
+  decoding="async"
+  style="height:auto"
+/>

@@ -1,0 +1,95 @@
+{
+  "seo": {
+    "title": "Services",
+    "description": "Tailor-made journeys, Hotel + Flight + Tour packages, flight ticketing, group travel and travel insurance. Francorosso travel agency, Lugano."
+  },
+  "hero": {
+    "eyebrow": "Services",
+    "title": "Everything an agency is actually worth having for.",
+    "lede": "Some things are better booked alone. Others are not: when a journey has more moving parts, more people or more risk, having someone who answers changes the day."
+  },
+  "sections": {
+    "list": {
+      "items": [
+        {
+          "icon": "compass",
+          "anchor": "tailor-made",
+          "title": "Tailor-made journeys",
+          "body": "The centre of our work. We start with a conversation and end with a written itinerary: flights, hotels, transfers, visits, and the quiet hours in between. You review every version until it is your trip.",
+          "bullets": [
+            "Personalised itineraries anywhere",
+            "Hotels chosen by what they are like, not by star count",
+            "Local guides and drivers we know by name",
+            "A complete travel document before you leave"
+          ]
+        },
+        {
+          "icon": "plane",
+          "anchor": "hotel-flight-tour",
+          "title": "Hotel + Flight + Tour",
+          "body": "The format we recommend most often: the structure of a package, with the choices you would have made inside it. We combine flight, stay and excursions, keeping the price under control and the freedom intact.",
+          "bullets": [
+            "All-inclusive packages and made-to-measure formats",
+            "Beach + tour, city + nature combinations",
+            "Option to extend or bring forward the stay",
+            "One clear price, with no hidden supplements"
+          ]
+        },
+        {
+          "icon": "ticket",
+          "anchor": "ticketing",
+          "title": "Flight ticketing",
+          "body": "We issue tickets on every airline, including negotiated fares you will not find online. But the real reason to come to us is the day the flight collapses: changes, reissues and refunds are ours to handle.",
+          "bullets": [
+            "Negotiated fares and multi-sector routings",
+            "Changes and reissues handled by the agency",
+            "Support during cancellations and strikes",
+            "Corporate ticketing with monthly invoicing"
+          ]
+        },
+        {
+          "icon": "users",
+          "anchor": "groups",
+          "title": "Group travel",
+          "body": "Our own escorted departures, and private groups built for associations, clubs, parishes and extended families. We take on the dull part too: registrations, deposits, rooming lists.",
+          "bullets": [
+            "Fixed-date departures with a tour leader",
+            "Private groups from 10 people upwards",
+            "Registrations, deposits and documents managed",
+            "Quotations for associations and institutions"
+          ]
+        },
+        {
+          "icon": "shield",
+          "anchor": "insurance",
+          "title": "Travel insurance",
+          "body": "Cancellation, medical expenses, baggage, medical repatriation. We arrange it remotely in a few minutes, even if you booked the trip somewhere else.",
+          "bullets": [
+            "Single-trip or annual multi-trip policies",
+            "Cancellation cover for documented reasons",
+            "Also available on bookings made online",
+            "Confirmed by email, without visiting the office"
+          ]
+        },
+        {
+          "icon": "briefcase",
+          "anchor": "business",
+          "title": "Business & MICE",
+          "body": "Meetings, conventions, incentives, events and recurring business travel, with a single contact and reporting your finance office can read at a glance.",
+          "bullets": [
+            "Meetings, conventions and corporate events",
+            "Incentive travel and team building",
+            "Business travel with monthly reporting",
+            "One contact for the whole trip"
+          ]
+        }
+      ]
+    },
+    "cta": {
+      "eyebrow": "The first step",
+      "title": "You do not need a firm plan to write to us",
+      "body": "A vague request is enough: we ask two questions and send back something concrete.",
+      "ctaLabel": "Request a quote"
+    }
+  }
+}

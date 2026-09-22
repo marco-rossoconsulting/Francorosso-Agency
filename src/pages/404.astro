@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { path, type RouteKey } from '../lib/i18n';
+import { settingsFor, pageFor } from '../lib/content';
+
+const s = await settingsFor('it');
+const it = await pageFor('it', 'notfound');
+const en = await pageFor('en', 'notfound');
+const S = it.sections as any;
+---
+<Base locale="it" routeKey="home" title={it.seo?.title ?? '404'} description={it.seo?.description ?? s.descriptor} noindex>
+  <section class="nf">
+    <div class="shell shell--narrow">
+      <span class="eyebrow">{it.hero!.eyebrow}</span>
+      <h1 class="nf__title">{it.hero!.title}</h1>
+      <p class="lede nf__body">{it.hero!.lede}</p>
+      <p class="lede nf__body nf__en" lang="en">{en.hero!.lede}</p>
+      <ul class="nf__links">
+        {S.links.items.map((l: any) => (
+          <li>
+            <a class="link-arrow" href={path('it', l.route as RouteKey)}>
+              {l.label}
+              <Icon name="arrow" size={15} />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf { padding-block: clamp(4rem, 3rem + 6vw, 9rem); }
+  .nf__title { max-width: 18ch; }
+  .nf__body { margin-top: var(--sp-5); }
+  .nf__en { font-size: var(--step-0); color: var(--ink-mute); }
+  .nf__links { list-style: none; display: flex; flex-wrap: wrap; gap: var(--sp-5); margin-top: var(--sp-7); padding-top: var(--sp-5); border-top: 1px solid var(--rule); }
+</style>
