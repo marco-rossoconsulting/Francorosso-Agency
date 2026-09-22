@@ -7,12 +7,19 @@
     "eyebrow": "Aziende e MICE",
     "title": "Quando a viaggiare non è una persona, ma un'azienda intera.",
     "lede": "Meeting, incentive, convention, eventi. Progetti dove il margine di errore è basso e le persone da tenere insieme sono molte. Li seguiamo dal primo brief alla fattura finale, con un solo referente.",
-    "primaryCta": { "label": "Parlaci del progetto", "route": "business", "style": "primary" },
-    "secondaryCta": { "label": "Chiama il reparto MICE", "route": "contact", "style": "secondary" },
+    "primaryCta": {
+      "label": "Parlaci del progetto",
+      "route": "business",
+      "style": "primary"
+    },
+    "secondaryCta": {
+      "label": "Chiama il reparto MICE",
+      "route": "contact",
+      "style": "secondary"
+    },
     "image": {
-      "src": "",
-      "alt": "",
-      "brief": "Formato orizzontale: allestimento di una convention o cena aziendale, vista dall'interno della sala."
+      "src": "/media/editorial/corporate-event-1280.webp",
+      "alt": "Partecipante alza la mano davanti al palco durante un evento"
     }
   },
   "sections": {

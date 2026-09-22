@@ -8,16 +8,32 @@
     "title": "A journey takes shape when you talk to someone who has already been.",
     "lede": "We are an agency on Via Canova. We build tailor-made itineraries, escort our own group departures and look after the travel of companies across Ticino. You can start here, or come and see us.",
     "image": {
-      "src": "",
-      "alt": "",
-      "brief": "Horizontal photograph of the team at work on an itinerary, natural light. Not a posed group shot."
+      "src": "/media/editorial/journey-planning-1280.webp",
+      "alt": "Camera and tablet showing New York laid out on a map"
     },
-    "primaryCta": { "label": "Request a quote", "route": "quote", "style": "primary" },
-    "secondaryCta": { "label": "Our departures", "route": "departures", "style": "secondary" },
+    "primaryCta": {
+      "label": "Request a quote",
+      "route": "quote",
+      "style": "primary"
+    },
+    "secondaryCta": {
+      "label": "Our departures",
+      "route": "departures",
+      "style": "secondary"
+    },
     "signals": [
-      { "value": "30+", "label": "years in Lugano" },
-      { "value": "6", "label": "consultants in the office" },
-      { "value": "1", "label": "working day to reply" }
+      {
+        "value": "30+",
+        "label": "years in Lugano"
+      },
+      {
+        "value": "6",
+        "label": "consultants in the office"
+      },
+      {
+        "value": "1",
+        "label": "working day to reply"
+      }
     ]
   },
   "sections": {
@@ -114,9 +130,8 @@
       ],
       "ctaLabel": "Tell us about the project",
       "image": {
-        "src": "",
-        "alt": "",
-        "brief": "Horizontal format: a meeting room or gala dinner set up, seen from inside the group."
+        "src": "/media/editorial/conference-audience-1280.webp",
+        "alt": "Attendees seated in a conference room during an event"
       }
     },
     "team": {

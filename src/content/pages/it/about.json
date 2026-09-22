@@ -21,7 +21,11 @@
         "Francorosso nasce per far conoscere il Kenya ai viaggiatori ticinesi, e per anni è stata quella la nostra specialità: destinazioni che non si prenotavano da soli, dove serviva qualcuno che ci fosse già stato.",
         "Con il tempo il mestiere si è allargato. Oggi ci occupiamo di viaggi individuali su misura, partenze di gruppo che organizziamo direttamente, biglietteria aerea, e di tutta la parte di eventi e trasferte delle aziende del territorio.",
         "Quello che è rimasto uguale è la scala. Siamo un ufficio, non una rete: chi vi risponde al telefono è la stessa persona che ha scritto il vostro itinerario e che vi risponderà se qualcosa va storto mentre siete via."
-      ]
+      ],
+      "image": {
+        "src": "/media/editorial/kenyan-savanna-1280.webp",
+        "alt": "Giraffa nella savana del Kenya al tramonto"
+      }
     },
     "values": {
       "eyebrow": "Come lavoriamo",

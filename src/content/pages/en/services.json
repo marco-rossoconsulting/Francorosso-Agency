@@ -6,7 +6,11 @@
   "hero": {
     "eyebrow": "Services",
     "title": "Everything an agency is actually worth having for.",
-    "lede": "Some things are better booked alone. Others are not: when a journey has more moving parts, more people or more risk, having someone who answers changes the day."
+    "lede": "Some things are better booked alone. Others are not: when a journey has more moving parts, more people or more risk, having someone who answers changes the day.",
+    "image": {
+      "src": "/media/editorial/traveler-at-doorway-1280.webp",
+      "alt": "Traveler with a suitcase looking out from a doorway toward the landscape"
+    }
   },
   "sections": {
     "list": {

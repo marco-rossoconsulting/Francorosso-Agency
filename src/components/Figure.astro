@@ -27,11 +27,14 @@ const {
   eager = false,
   placeholderLabel = 'Immagine da fornire',
 } = Astro.props;
+const srcSet = src?.startsWith('/media/editorial/') && src.endsWith('-1280.webp')
+  ? `${src.replace('-1280.webp', '-640.webp')} 640w, ${src} 1280w`
+  : undefined;
 ---
 {
   src ? (
     <figure class:list={['fig', cls]} style={`--ratio:${ratio}`}>
-      <img src={src} alt={alt} sizes={sizes} loading={eager ? 'eager' : 'lazy'} decoding="async" />
+      <img src={src} srcset={srcSet} alt={alt} sizes={srcSet ? sizes : undefined} loading={eager ? 'eager' : 'lazy'} decoding="async" fetchpriority={eager ? 'high' : undefined} />
     </figure>
   ) : (
     <figure class:list={['fig', 'fig--holding', `fig--${tone}`, cls]} style={`--ratio:${ratio}`}>

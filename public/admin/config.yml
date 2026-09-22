@@ -536,6 +536,13 @@ collections:
               - { label: 'Occhiello', name: 'eyebrow', widget: 'string', required: false }
               - { label: 'Titolo', name: 'title', widget: 'text' }
               - { label: 'Testo introduttivo', name: 'lede', widget: 'text', required: false }
+              - label: 'Immagine'
+                name: image
+                widget: object
+                required: false
+                fields:
+                  - { label: 'File', name: 'src', widget: 'image', required: false, i18n: duplicate }
+                  - { label: 'Testo alternativo', name: 'alt', widget: 'string', required: false }
           - label: 'Sezioni'
             name: sections
             widget: object
@@ -590,6 +597,13 @@ collections:
               - { label: 'Occhiello', name: 'eyebrow', widget: 'string', required: false }
               - { label: 'Titolo', name: 'title', widget: 'text' }
               - { label: 'Testo introduttivo', name: 'lede', widget: 'text', required: false }
+              - label: 'Immagine'
+                name: image
+                widget: object
+                required: false
+                fields:
+                  - { label: 'File', name: 'src', widget: 'image', required: false, i18n: duplicate }
+                  - { label: 'Testo alternativo', name: 'alt', widget: 'string', required: false }
               - label: 'Pulsante principale'
                 name: primaryCta
                 widget: object
@@ -825,6 +839,13 @@ collections:
                   - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
                   - { label: 'Titolo', name: 'title', widget: 'string' }
                   - { label: 'Paragrafi', name: 'paragraphs', widget: 'list', field: { label: 'Paragrafo', name: 'p', widget: 'text' } }
+                  - label: 'Immagine'
+                    name: image
+                    widget: object
+                    required: false
+                    fields:
+                      - { label: 'File', name: 'src', widget: 'image', required: false, i18n: duplicate }
+                      - { label: 'Testo alternativo', name: 'alt', widget: 'string', required: false }
               - label: 'Come lavoriamo'
                 name: values
                 widget: object

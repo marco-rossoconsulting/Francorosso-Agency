@@ -8,16 +8,32 @@
     "title": "Il viaggio prende forma parlando con qualcuno che lo ha già fatto.",
     "lede": "Siamo un'agenzia di Via Canova. Costruiamo itinerari su misura, accompagniamo le nostre partenze di gruppo e gestiamo i viaggi delle aziende del Ticino. Potete iniziare da qui, o passare a trovarci.",
     "image": {
-      "src": "",
-      "alt": "",
-      "brief": "Foto orizzontale del team in agenzia, luce naturale, mentre lavora a un itinerario. Non una posa di gruppo."
+      "src": "/media/editorial/journey-planning-1280.webp",
+      "alt": "Macchina fotografica e tablet con una foto di New York appoggiati su una mappa"
     },
-    "primaryCta": { "label": "Richiedi un preventivo", "route": "quote", "style": "primary" },
-    "secondaryCta": { "label": "Le nostre partenze", "route": "departures", "style": "secondary" },
+    "primaryCta": {
+      "label": "Richiedi un preventivo",
+      "route": "quote",
+      "style": "primary"
+    },
+    "secondaryCta": {
+      "label": "Le nostre partenze",
+      "route": "departures",
+      "style": "secondary"
+    },
     "signals": [
-      { "value": "30+", "label": "anni a Lugano" },
-      { "value": "6", "label": "consulenti in agenzia" },
-      { "value": "1", "label": "giorno lavorativo per la risposta" }
+      {
+        "value": "30+",
+        "label": "anni a Lugano"
+      },
+      {
+        "value": "6",
+        "label": "consulenti in agenzia"
+      },
+      {
+        "value": "1",
+        "label": "giorno lavorativo per la risposta"
+      }
     ]
   },
   "sections": {
@@ -114,9 +130,8 @@
       ],
       "ctaLabel": "Parlaci del progetto",
       "image": {
-        "src": "",
-        "alt": "",
-        "brief": "Formato orizzontale: sala riunioni o cena di gala allestita, punto di vista dall'interno del gruppo."
+        "src": "/media/editorial/conference-audience-1280.webp",
+        "alt": "Partecipanti seduti in una sala conferenze durante un evento"
       }
     },
     "team": {
