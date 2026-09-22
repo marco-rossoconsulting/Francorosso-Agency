@@ -1,0 +1,112 @@
+{
+  "seo": {
+    "title": "Assicurazione viaggio",
+    "description": "Polizze di annullamento, spese mediche e bagaglio per i vostri viaggi. Attivabili a distanza in pochi minuti, anche su prenotazioni fatte altrove. Francorosso, Lugano."
+  },
+  "hero": {
+    "eyebrow": "Assicurazione viaggio",
+    "title": "La parte del viaggio a cui nessuno pensa, finché non serve.",
+    "lede": "Un'influenza la settimana prima, una valigia che non arriva, un pronto soccorso all'estero. Sono le tre cose che ci sentiamo chiedere più spesso, e sono le tre che una buona polizza risolve. Ve la sistemiamo senza che dobbiate passare in agenzia.",
+    "primaryCta": { "label": "Richiedi la polizza", "route": "insurance", "style": "primary" },
+    "signals": [
+      { "value": "2 min", "label": "per la richiesta" },
+      { "value": "1 giorno", "label": "lavorativo per la conferma" },
+      { "value": "Anche", "label": "su viaggi prenotati altrove" }
+    ]
+  },
+  "sections": {
+    "partner": {
+      "mode": "form",
+      "linkUrl": "",
+      "linkLabel": "Acquista online",
+      "note": "Quando l'agenzia attiverà il portale di acquisto online del partner assicurativo, questo blocco diventerà un pulsante diretto: la pagina è già predisposta e non va ricostruita."
+    },
+    "how": {
+      "eyebrow": "Come funziona",
+      "title": "Tre passaggi, nessuna coda allo sportello",
+      "steps": [
+        {
+          "title": "Ci dite date e valore",
+          "body": "Servono le date del viaggio, la destinazione, quante persone partono e quanto è costato il viaggio. Nient'altro."
+        },
+        {
+          "title": "Vi mandiamo la proposta",
+          "body": "Scegliamo la copertura adatta al tipo di viaggio e vi inviamo condizioni, premio e link di pagamento. Se qualcosa non torna, lo cambiamo."
+        },
+        {
+          "title": "Ricevete la polizza",
+          "body": "Pagate, e la polizza vi arriva per e-mail con il numero di assistenza da tenere nel telefono. È attiva dal momento indicato sul certificato."
+        }
+      ]
+    },
+    "covers": {
+      "eyebrow": "Cosa si può coprire",
+      "title": "Quattro coperture, che si combinano",
+      "intro": "Non esiste una polizza giusta per tutti. Esiste quella giusta per questo viaggio: un weekend a Vienna e tre settimane in Asia non hanno gli stessi rischi.",
+      "items": [
+        {
+          "icon": "calendar",
+          "title": "Annullamento",
+          "body": "Rimborsa la penale se dovete rinunciare prima di partire per un motivo previsto e documentabile: malattia, infortunio, eventi familiari gravi. È la copertura che si usa più spesso."
+        },
+        {
+          "icon": "shield",
+          "title": "Spese mediche e assistenza",
+          "body": "Copre visite, ricoveri e, se necessario, il rientro sanitario. Fuori dall'area di validità della vostra cassa malati è la voce che può pesare di più."
+        },
+        {
+          "icon": "briefcase",
+          "title": "Bagaglio",
+          "body": "Smarrimento, furto o ritardo nella consegna, con un indennizzo per gli acquisti di prima necessità quando la valigia arriva in ritardo."
+        },
+        {
+          "icon": "plane",
+          "title": "Interruzione e ritardi",
+          "body": "Copre il rientro anticipato e le spese dovute a ritardi o coincidenze perse, secondo i massimali previsti dalla polizza scelta."
+        }
+      ]
+    },
+    "who": {
+      "eyebrow": "Per chi ha senso",
+      "title": "Quando vale davvero la pena",
+      "items": [
+        { "title": "Viaggi con acconti alti", "body": "Crociere, tour di gruppo, safari: più l'acconto è alto, più la penale in caso di rinuncia pesa." },
+        { "title": "Destinazioni lontane", "body": "Fuori Europa le spese mediche possono superare il costo del viaggio. Vale per tutti, a qualsiasi età." },
+        { "title": "Chi viaggia spesso", "body": "Con quattro o cinque viaggi all'anno la polizza annuale multiviaggio costa meno delle singole." },
+        { "title": "Viaggi prenotati altrove", "body": "Se avete prenotato online o con un altro operatore, possiamo comunque assicurare il viaggio." }
+      ]
+    },
+    "faq": {
+      "eyebrow": "Domande ricorrenti",
+      "title": "Quello che ci chiedono sempre",
+      "items": [
+        {
+          "q": "Entro quando devo attivare l'annullamento?",
+          "a": "Il prima possibile, e comunque nei giorni immediatamente successivi alla prenotazione: quasi tutte le polizze di annullamento richiedono che la copertura sia attivata contestualmente alla conferma del viaggio. Se avete prenotato da poco, scriveteci subito e verifichiamo."
+        },
+        {
+          "q": "Posso assicurare un viaggio che non ho prenotato con voi?",
+          "a": "Sì. Ci servono la conferma di prenotazione, le date e l'importo pagato. Il resto lo gestiamo noi."
+        },
+        {
+          "q": "La mia cassa malati non basta?",
+          "a": "Copre le cure, entro certi limiti e certe aree geografiche, ma di norma non copre l'annullamento del viaggio né il bagaglio, e il rientro sanitario organizzato è un'altra cosa. Sono coperture complementari, non alternative."
+        },
+        {
+          "q": "Che differenza c'è tra polizza singola e annuale?",
+          "a": "La singola copre un viaggio specifico, con premio calcolato sul suo valore. L'annuale copre tutti i viaggi di dodici mesi entro certi massimali e durate: conviene sopra i tre o quattro viaggi l'anno."
+        },
+        {
+          "q": "Devo venire in agenzia per firmare?",
+          "a": "No. Richiesta, conferma e pagamento si fanno a distanza. In agenzia si viene volentieri, ma per questo non serve."
+        }
+      ]
+    },
+    "form": {
+      "eyebrow": "Richiesta polizza",
+      "title": "Diteci del viaggio, vi mandiamo la proposta",
+      "body": "Bastano le informazioni qui sotto. Vi rispondiamo entro un giorno lavorativo con la copertura consigliata, il premio e il link per pagare."
+    },
+    "disclaimer": "Le coperture, i massimali, le esclusioni e i termini di attivazione sono definiti dalle condizioni di polizza del prodotto scelto, che vi consegniamo prima della sottoscrizione. Questa pagina è una descrizione generale e non costituisce un'offerta contrattuale."
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "seo": {
+    "title": "Travel insurance",
+    "description": "Cancellation, medical and baggage cover for your journeys. Arranged remotely in minutes, including for trips booked elsewhere. Francorosso, Lugano."
+  },
+  "hero": {
+    "eyebrow": "Travel insurance",
+    "title": "The part of a journey nobody thinks about, until it matters.",
+    "lede": "Flu the week before, a suitcase that never arrives, an emergency room abroad. Those are the three things we are asked about most, and the three a good policy solves. We arrange it without you having to come in.",
+    "primaryCta": { "label": "Request a policy", "route": "insurance", "style": "primary" },
+    "signals": [
+      { "value": "2 min", "label": "to send the request" },
+      { "value": "1 day", "label": "working day to confirm" },
+      { "value": "Also", "label": "for trips booked elsewhere" }
+    ]
+  },
+  "sections": {
+    "partner": {
+      "mode": "form",
+      "linkUrl": "",
+      "linkLabel": "Buy online",
+      "note": "When the agency activates the insurer's online purchase portal, this block becomes a direct button: the page is already built for it and does not need rebuilding."
+    },
+    "how": {
+      "eyebrow": "How it works",
+      "title": "Three steps, no queue at a counter",
+      "steps": [
+        {
+          "title": "You send dates and value",
+          "body": "We need the travel dates, the destination, how many people are going and what the trip cost. Nothing else."
+        },
+        {
+          "title": "We send the proposal",
+          "body": "We choose the cover that fits the trip and send you the terms, the premium and a payment link. If something does not fit, we change it."
+        },
+        {
+          "title": "You receive the policy",
+          "body": "You pay, and the policy arrives by email with the assistance number to keep on your phone. It is active from the moment stated on the certificate."
+        }
+      ]
+    },
+    "covers": {
+      "eyebrow": "What can be covered",
+      "title": "Four covers, which combine",
+      "intro": "There is no single right policy. There is the right one for this journey: a weekend in Vienna and three weeks in Asia do not carry the same risks.",
+      "items": [
+        {
+          "icon": "calendar",
+          "title": "Cancellation",
+          "body": "Refunds the penalty if you have to cancel before departure for a listed, documented reason: illness, injury, serious family events. It is the cover used most often."
+        },
+        {
+          "icon": "shield",
+          "title": "Medical expenses and assistance",
+          "body": "Covers consultations, hospital stays and, if needed, medical repatriation. Outside the area covered by your health insurance this is the line that can hurt most."
+        },
+        {
+          "icon": "briefcase",
+          "title": "Baggage",
+          "body": "Loss, theft or delayed delivery, with an allowance for essential purchases while the suitcase catches up with you."
+        },
+        {
+          "icon": "plane",
+          "title": "Interruption and delays",
+          "body": "Covers early return and costs caused by delays or missed connections, within the limits of the policy chosen."
+        }
+      ]
+    },
+    "who": {
+      "eyebrow": "Who it makes sense for",
+      "title": "When it is genuinely worth it",
+      "items": [
+        { "title": "Trips with large deposits", "body": "Cruises, group tours, safaris: the larger the deposit, the more a cancellation penalty hurts." },
+        { "title": "Long-haul destinations", "body": "Outside Europe medical costs can exceed the cost of the trip. That holds at any age." },
+        { "title": "Frequent travellers", "body": "At four or five trips a year, an annual multi-trip policy costs less than separate ones." },
+        { "title": "Trips booked elsewhere", "body": "If you booked online or with another operator, we can still insure the journey." }
+      ]
+    },
+    "faq": {
+      "eyebrow": "Recurring questions",
+      "title": "What people always ask",
+      "items": [
+        {
+          "q": "By when do I have to take out cancellation cover?",
+          "a": "As soon as possible, and in practice within the days immediately following the booking: almost all cancellation policies require the cover to be taken out at the same time as the trip is confirmed. If you booked recently, write to us straight away and we will check."
+        },
+        {
+          "q": "Can I insure a trip I did not book with you?",
+          "a": "Yes. We need the booking confirmation, the dates and the amount paid. We handle the rest."
+        },
+        {
+          "q": "Isn't my health insurance enough?",
+          "a": "It covers treatment, within limits and in certain regions, but it generally does not cover trip cancellation or baggage, and organised medical repatriation is a different matter. These are complementary covers, not alternatives."
+        },
+        {
+          "q": "What is the difference between single-trip and annual?",
+          "a": "A single-trip policy covers one specific journey, priced on its value. An annual policy covers every trip over twelve months within set limits and durations: it pays off above three or four trips a year."
+        },
+        {
+          "q": "Do I have to come in to sign?",
+          "a": "No. Request, confirmation and payment all happen remotely. You are welcome in the office, but not for this."
+        }
+      ]
+    },
+    "form": {
+      "eyebrow": "Policy request",
+      "title": "Tell us about the trip and we will send the proposal",
+      "body": "The fields below are enough. We reply within one working day with the recommended cover, the premium and a payment link."
+    },
+    "disclaimer": "Covers, limits, exclusions and activation deadlines are defined by the policy conditions of the product chosen, which we provide before you sign. This page is a general description and does not constitute a contractual offer."
+  }
+}

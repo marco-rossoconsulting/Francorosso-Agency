@@ -1,0 +1,129 @@
+---
+import Icon from './Icon.astro';
+import Figure from './Figure.astro';
+import RouteLine from './RouteLine.astro';
+import { path, type Locale, type RouteKey } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  eyebrow?: string;
+  title: string;
+  lede?: string;
+  image?: { src?: string; alt?: string; brief?: string };
+  primaryCta?: { label: string; route: string };
+  secondaryCta?: { label: string; route: string };
+  signals?: { label: string; value: string }[];
+  placeholderLabel?: string;
+}
+const { locale, eyebrow, title, lede, image, primaryCta, secondaryCta, signals = [], placeholderLabel } =
+  Astro.props;
+const hasImage = Boolean(image);
+---
+<section class:list={['phero', hasImage && 'phero--split']}>
+  <span class="phero__route" aria-hidden="true"><RouteLine variant="rise" stroke="var(--rosso)" /></span>
+  <div class="shell phero__inner">
+    <div class="phero__text">
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      <h1>{title}</h1>
+      {lede && <p class="lede phero__lede">{lede}</p>}
+
+      {(primaryCta || secondaryCta) && (
+        <div class="phero__ctas">
+          {primaryCta && (
+            <a class="btn" href={path(locale, primaryCta.route as RouteKey)}>
+              {primaryCta.label}
+              <Icon name="arrow" size={17} />
+            </a>
+          )}
+          {secondaryCta && (
+            <a class="btn btn--secondary" href={path(locale, secondaryCta.route as RouteKey)}>
+              {secondaryCta.label}
+            </a>
+          )}
+        </div>
+      )}
+
+      {signals.length > 0 && (
+        <dl class="phero__signals">
+          {signals.map((sig) => (
+            <div>
+              <dt>{sig.value}</dt>
+              <dd>{sig.label}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+    </div>
+
+    {hasImage && (
+      <div class="phero__media">
+        <Figure
+          src={image?.src || undefined}
+          alt={image?.alt ?? ''}
+          brief={image?.brief}
+          ratio="4 / 5"
+          eager
+          placeholderLabel={placeholderLabel}
+          sizes="(max-width: 900px) 100vw, 42vw"
+        />
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .phero {
+    position: relative;
+    padding-block: clamp(3rem, 2rem + 4.4vw, 6rem) clamp(2.5rem, 1.6rem + 3.8vw, 5rem);
+    overflow: hidden;
+  }
+  .phero__route {
+    position: absolute;
+    inset: auto 0 6% 0;
+    height: 46%;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+  .phero__inner { position: relative; }
+  .phero__text { max-width: 24ch; }
+  .phero h1 { max-width: 17ch; }
+  .phero__lede { margin-top: var(--sp-5); }
+  .phero__text { max-width: none; }
+
+  .phero__ctas { display: flex; flex-wrap: wrap; gap: var(--sp-4); margin-top: var(--sp-6); }
+
+  .phero__signals {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-6) var(--sp-7);
+    margin: var(--sp-7) 0 0;
+    padding-top: var(--sp-5);
+    border-top: 1px solid var(--rule);
+  }
+  .phero__signals dt {
+    font-size: var(--step-2);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .phero__signals dd {
+    margin: 0.4em 0 0;
+    font-size: var(--step--2);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  @media (min-width: 900px) {
+    .phero--split .phero__inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr);
+      gap: var(--gutter);
+      align-items: center;
+    }
+    .phero--split .phero__signals { max-width: 46ch; }
+  }
+  @media (max-width: 899px) {
+    .phero__media { margin-top: var(--sp-7); }
+  }
+</style>

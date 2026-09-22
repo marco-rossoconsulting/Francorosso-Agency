@@ -1,0 +1,14 @@
+{
+  "seo": { "title": "Thank you", "description": "Your request has reached the agency." },
+  "hero": {
+    "eyebrow": "Request received",
+    "title": "Thank you. Your request has reached the agency.",
+    "lede": "We will reply within one working day. If something else comes to mind in the meantime, message us on WhatsApp or call: the request is already on the right desk."
+  },
+  "sections": {
+    "actions": {
+      "primaryLabel": "In the meantime, look at our departures",
+      "backLabel": "Back to the home page"
+    }
+  }
+}

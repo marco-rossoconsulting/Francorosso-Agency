@@ -1,0 +1,24 @@
+---
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  align?: 'start' | 'wide';
+  class?: string;
+}
+const { eyebrow, title, intro, align = 'start', class: cls } = Astro.props;
+---
+<header class:list={['shead', `shead--${align}`, cls]} data-reveal>
+  {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+  {title && <h2>{title}</h2>}
+  {intro && <p class="lede shead__intro">{intro}</p>}
+  <slot />
+</header>
+
+<style>
+  .shead { max-width: 60ch; margin-bottom: var(--sp-7); }
+  .shead h2 { max-width: 18ch; }
+  .shead--wide { max-width: none; }
+  .shead--wide h2 { max-width: 22ch; }
+  .shead__intro { margin-top: var(--sp-4); }
+</style>

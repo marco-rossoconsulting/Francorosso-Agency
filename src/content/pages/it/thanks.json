@@ -1,0 +1,14 @@
+{
+  "seo": { "title": "Grazie", "description": "La vostra richiesta è arrivata in agenzia." },
+  "hero": {
+    "eyebrow": "Richiesta ricevuta",
+    "title": "Grazie. La vostra richiesta è arrivata in agenzia.",
+    "lede": "Vi rispondiamo entro un giorno lavorativo. Se nel frattempo vi viene in mente qualcosa da aggiungere, scriveteci su WhatsApp o telefonateci: la richiesta è già sulla scrivania giusta."
+  },
+  "sections": {
+    "actions": {
+      "primaryLabel": "Intanto, guarda le nostre partenze",
+      "backLabel": "Torna alla home"
+    }
+  }
+}

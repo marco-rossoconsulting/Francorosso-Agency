@@ -1,0 +1,135 @@
+{
+  "seo": {
+    "title": "Francorosso",
+    "description": "Agenzia di viaggi a Lugano. Viaggi su misura, partenze di gruppo accompagnate, biglietteria aerea, assicurazioni e organizzazione di eventi aziendali. Via Canova 19."
+  },
+  "hero": {
+    "eyebrow": "Lugano · Agenzia di viaggi",
+    "title": "Il viaggio prende forma parlando con qualcuno che lo ha già fatto.",
+    "lede": "Siamo un'agenzia di Via Canova. Costruiamo itinerari su misura, accompagniamo le nostre partenze di gruppo e gestiamo i viaggi delle aziende del Ticino. Potete iniziare da qui, o passare a trovarci.",
+    "image": {
+      "src": "",
+      "alt": "",
+      "brief": "Foto orizzontale del team in agenzia, luce naturale, mentre lavora a un itinerario. Non una posa di gruppo."
+    },
+    "primaryCta": { "label": "Richiedi un preventivo", "route": "quote", "style": "primary" },
+    "secondaryCta": { "label": "Le nostre partenze", "route": "departures", "style": "secondary" },
+    "signals": [
+      { "value": "30+", "label": "anni a Lugano" },
+      { "value": "6", "label": "consulenti in agenzia" },
+      { "value": "1", "label": "giorno lavorativo per la risposta" }
+    ]
+  },
+  "sections": {
+    "nextDeparture": {
+      "eyebrow": "Prossima partenza",
+      "note": "Posti limitati, gruppo accompagnato"
+    },
+    "services": {
+      "eyebrow": "Cosa facciamo",
+      "title": "Quattro modi di partire con noi",
+      "intro": "Ogni richiesta finisce sulla scrivania di una persona precisa, non in una coda.",
+      "items": [
+        {
+          "icon": "compass",
+          "title": "Viaggi su misura",
+          "body": "Si parte da una conversazione: chi viaggia, quanto tempo avete, cosa non volete perdere. L'itinerario lo scriviamo noi, voi lo correggete finché non vi somiglia.",
+          "route": "services"
+        },
+        {
+          "icon": "users",
+          "title": "Partenze di gruppo",
+          "body": "Viaggi che organizziamo direttamente, con date fisse, quote chiare e un accompagnatore che parla italiano. Sono la parte di lavoro di cui andiamo più fieri.",
+          "route": "departures"
+        },
+        {
+          "icon": "ticket",
+          "title": "Biglietteria aerea",
+          "body": "Emissione biglietti, riprotezioni, cambi e tariffe negoziate. Se qualcosa va storto in aeroporto, avete un numero che risponde.",
+          "route": "services"
+        },
+        {
+          "icon": "briefcase",
+          "title": "Aziende e MICE",
+          "body": "Meeting, convention, incentive, eventi e viaggi d'affari ricorrenti. Un unico referente per la logistica, i fornitori e il budget.",
+          "route": "business"
+        }
+      ]
+    },
+    "departures": {
+      "eyebrow": "Le nostre partenze",
+      "title": "I viaggi che organizziamo noi",
+      "intro": "Date definite, itinerari verificati, un accompagnatore che conosce il percorso. Non rivendiamo un catalogo: questi viaggi li costruiamo e li seguiamo noi.",
+      "ctaLabel": "Vedi tutte le partenze"
+    },
+    "why": {
+      "eyebrow": "Perché sceglierci",
+      "title": "La differenza la fa chi risponde al telefono",
+      "pullquote": "Diteci come volete che il viaggio vi faccia sentire, e i dettagli li mettiamo a posto insieme.",
+      "points": [
+        {
+          "title": "Una persona, non un ticket",
+          "body": "Dal preventivo al rientro parlate sempre con lo stesso consulente. Conosce il vostro file e le vostre abitudini."
+        },
+        {
+          "title": "Prezzi trasparenti",
+          "body": "Vi diciamo cosa è compreso, cosa non lo è e quanto costa il nostro lavoro. Senza sorprese al momento del saldo."
+        },
+        {
+          "title": "Reperibili quando serve",
+          "body": "Durante il viaggio avete un recapito diretto. Uno scalo saltato si risolve prima in agenzia che allo sportello."
+        },
+        {
+          "title": "Ufficio a Lugano",
+          "body": "Via Canova 19. Si può passare, sedersi e guardare le opzioni insieme, senza appuntamento."
+        }
+      ],
+      "image": {
+        "src": "",
+        "alt": "",
+        "brief": "Dettaglio della vetrina o dell'ingresso di Via Canova 19, formato verticale, luce di fine giornata."
+      }
+    },
+    "insurance": {
+      "eyebrow": "Prima di partire",
+      "title": "L'assicurazione viaggio, sistemata in due minuti",
+      "body": "Annullamento, spese mediche, bagaglio. È la parte del viaggio a cui nessuno pensa finché non serve. Diteci le date e il valore del viaggio: vi mandiamo la polizza giusta e il link per pagarla.",
+      "bullets": [
+        "Copertura anche per viaggi prenotati altrove",
+        "Polizze singole o annuali multiviaggio",
+        "Confermata via e-mail, senza passare in agenzia"
+      ],
+      "ctaLabel": "Richiedi la polizza",
+      "secondaryLabel": "Come funziona"
+    },
+    "mice": {
+      "eyebrow": "Aziende e MICE",
+      "title": "Quando a viaggiare è tutta l'azienda",
+      "body": "Organizziamo meeting, convention, incentive ed eventi aziendali, e gestiamo i viaggi d'affari ricorrenti. Un solo referente per voli, hotel, sale, trasferimenti e rendicontazione.",
+      "bullets": [
+        "Meeting e convention",
+        "Viaggi incentive e team building",
+        "Eventi aziendali e ospitalità",
+        "Business travel continuativo"
+      ],
+      "ctaLabel": "Parlaci del progetto",
+      "image": {
+        "src": "",
+        "alt": "",
+        "brief": "Formato orizzontale: sala riunioni o cena di gala allestita, punto di vista dall'interno del gruppo."
+      }
+    },
+    "team": {
+      "eyebrow": "Chi siamo",
+      "title": "Sei persone, un ufficio, nessun call center",
+      "intro": "Sappiamo chi siete perché vi rispondiamo sempre noi. Ecco a chi state scrivendo.",
+      "ctaLabel": "Conosci l'agenzia"
+    },
+    "contact": {
+      "eyebrow": "Iniziamo",
+      "title": "Raccontateci il viaggio. Al resto pensiamo noi.",
+      "body": "Poche righe bastano. Vi rispondiamo entro un giorno lavorativo con una prima proposta concreta, senza impegno.",
+      "ctaLabel": "Richiedi un preventivo"
+    }
+  }
+}

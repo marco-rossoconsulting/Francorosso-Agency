@@ -1,0 +1,95 @@
+{
+  "seo": {
+    "title": "Servizi",
+    "description": "Viaggi su misura, pacchetti Hotel + Volo + Tour, biglietteria aerea, viaggi di gruppo e assicurazioni viaggio. Agenzia Francorosso, Lugano."
+  },
+  "hero": {
+    "eyebrow": "Servizi",
+    "title": "Tutto quello per cui vale la pena avere un'agenzia.",
+    "lede": "Alcune cose si prenotano meglio da soli. Altre no: quando il viaggio ha più pezzi, più persone o più rischi, avere qualcuno che risponde cambia la giornata."
+  },
+  "sections": {
+    "list": {
+      "items": [
+        {
+          "icon": "compass",
+          "anchor": "su-misura",
+          "title": "Viaggi su misura",
+          "body": "La parte centrale del nostro lavoro. Partiamo da una conversazione e arriviamo a un itinerario scritto: voli, hotel, trasferimenti, visite, tempi morti compresi. Ogni versione la rivedete voi, finché non è il vostro viaggio.",
+          "bullets": [
+            "Itinerari personalizzati su qualsiasi destinazione",
+            "Selezione hotel verificata, non solo per stelle",
+            "Guide e autisti locali che conosciamo per nome",
+            "Documento di viaggio completo prima della partenza"
+          ]
+        },
+        {
+          "icon": "plane",
+          "anchor": "hotel-volo-tour",
+          "title": "Hotel + Volo + Tour",
+          "body": "Il formato che consigliamo più spesso: la struttura di un pacchetto, con dentro le scelte che avreste fatto voi. Combiniamo volo, soggiorno ed escursioni tenendo il prezzo sotto controllo e la libertà intatta.",
+          "bullets": [
+            "Pacchetti tutto incluso e formule su misura",
+            "Combinazioni mare + tour, città + natura",
+            "Possibilità di prolungare o anticipare il soggiorno",
+            "Una quota sola, chiara, senza supplementi nascosti"
+          ]
+        },
+        {
+          "icon": "ticket",
+          "anchor": "biglietteria",
+          "title": "Biglietteria aerea",
+          "body": "Emettiamo biglietti su tutte le compagnie, comprese le tariffe negoziate che online non trovate. Ma la ragione vera per passare da noi è il giorno in cui il volo salta: cambi, riprotezioni e rimborsi li gestiamo noi.",
+          "bullets": [
+            "Tariffe negoziate e voli multi-tratta",
+            "Cambi e riprotezioni gestiti dall'agenzia",
+            "Assistenza in caso di cancellazioni e scioperi",
+            "Biglietteria per aziende con fatturazione mensile"
+          ]
+        },
+        {
+          "icon": "users",
+          "anchor": "gruppi",
+          "title": "Viaggi di gruppo",
+          "body": "Le nostre partenze accompagnate, e i gruppi privati che costruiamo per associazioni, parrocchie, club e famiglie allargate. Ci occupiamo anche della parte noiosa: iscrizioni, acconti, liste camere.",
+          "bullets": [
+            "Partenze a date fisse con accompagnatore",
+            "Gruppi privati da 10 persone in su",
+            "Gestione iscrizioni, acconti e documenti",
+            "Preventivi per associazioni e enti"
+          ]
+        },
+        {
+          "icon": "shield",
+          "anchor": "assicurazione",
+          "title": "Assicurazione viaggio",
+          "body": "Annullamento, spese mediche, bagaglio, rientro sanitario. La sistemiamo a distanza in pochi minuti, anche se il viaggio l'avete prenotato altrove.",
+          "bullets": [
+            "Polizze singole o annuali multiviaggio",
+            "Copertura annullamento per motivi documentati",
+            "Attiva anche su prenotazioni fatte online",
+            "Conferma via e-mail, senza venire in agenzia"
+          ]
+        },
+        {
+          "icon": "briefcase",
+          "anchor": "aziende",
+          "title": "Aziende e MICE",
+          "body": "Meeting, convention, incentive, eventi e viaggi d'affari ricorrenti, con un referente unico e una rendicontazione che il vostro ufficio amministrativo capisce al primo sguardo.",
+          "bullets": [
+            "Meeting, convention ed eventi aziendali",
+            "Viaggi incentive e team building",
+            "Business travel con reportistica mensile",
+            "Un solo interlocutore per tutta la trasferta"
+          ]
+        }
+      ]
+    },
+    "cta": {
+      "eyebrow": "Il primo passo",
+      "title": "Non serve avere le idee chiare per scriverci",
+      "body": "Anche una richiesta vaga ci basta: da lì facciamo due domande e vi rimandiamo qualcosa di concreto.",
+      "ctaLabel": "Richiedi un preventivo"
+    }
+  }
+}

@@ -1,0 +1,393 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Figure from '../components/Figure.astro';
+import RouteLine from '../components/RouteLine.astro';
+import SectionHead from '../components/SectionHead.astro';
+import DepartureCard from '../components/DepartureCard.astro';
+import { path, formatDateRange, formatPrice, type Locale, type RouteKey } from '../lib/i18n';
+import { pageFor, uiFor, departuresFor, teamFor, settingsFor } from '../lib/content';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const page = await pageFor(locale, 'home');
+const ui = await uiFor(locale);
+const s = await settingsFor(locale);
+const departures = await departuresFor(locale);
+const team = await teamFor(locale);
+const S = page.sections as any;
+const hero = page.hero!;
+const next = departures[0];
+const featured = departures.slice(0, 3);
+const iconOf = (n: string) => n as any;
+---
+<Base
+  locale={locale}
+  routeKey="home"
+  title={page.seo?.title ?? 'Francorosso'}
+  description={page.seo?.description ?? s.descriptor}
+>
+  <!-- Hero ------------------------------------------------------------- -->
+  <section class="hero">
+    <span class="hero__route" aria-hidden="true"><RouteLine variant="arc" stroke="var(--rosso)" /></span>
+    <div class="shell hero__inner">
+      <div class="hero__text">
+        <span class="eyebrow">{hero.eyebrow}</span>
+        <h1 class="hero__title">{hero.title}</h1>
+        <p class="lede hero__lede">{hero.lede}</p>
+        <div class="hero__ctas">
+          {hero.primaryCta && (
+            <a class="btn" href={path(locale, hero.primaryCta.route as RouteKey)}>
+              {hero.primaryCta.label}
+              <Icon name="arrow" size={17} />
+            </a>
+          )}
+          {hero.secondaryCta && (
+            <a class="btn btn--secondary" href={path(locale, hero.secondaryCta.route as RouteKey)}>
+              {hero.secondaryCta.label}
+            </a>
+          )}
+        </div>
+        <dl class="hero__signals">
+          {hero.signals?.map((sig: any) => (
+            <div><dt>{sig.value}</dt><dd>{sig.label}</dd></div>
+          ))}
+        </dl>
+      </div>
+
+      <div class="hero__media">
+        <Figure
+          src={hero.image?.src || undefined}
+          alt={hero.image?.alt ?? ''}
+          brief={hero.image?.brief}
+          ratio="5 / 6"
+          eager
+          placeholderLabel={ui.imagePlaceholderLabel}
+          sizes="(max-width: 900px) 100vw, 44vw"
+        />
+        {next && (
+          <a class="nextcard" href={path(locale, 'departures', next.data.slug)}>
+            <span class="nextcard__eyebrow">{S.nextDeparture.eyebrow}</span>
+            <span class="nextcard__title">{next.data.title}</span>
+            <span class="nextcard__meta">
+              {formatDateRange(next.data.departureDate, next.data.returnDate, locale)}
+              {next.data.priceFrom && ` · ${ui.from} ${formatPrice(next.data.priceFrom, locale, next.data.currency)}`}
+            </span>
+            <span class="nextcard__go"><Icon name="arrow" size={16} /></span>
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Services --------------------------------------------------------- -->
+  <section class="section services">
+    <div class="shell">
+      <SectionHead eyebrow={S.services.eyebrow} title={S.services.title} intro={S.services.intro} align="wide" />
+      <ul class="svc">
+        {S.services.items.map((item: any, i: number) => (
+          <li class="svc__item" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+            <span class="svc__icon"><Icon name={iconOf(item.icon)} size={22} /></span>
+            <h3 class="svc__title">{item.title}</h3>
+            <p class="svc__body">{item.body}</p>
+            <a class="link-arrow" href={path(locale, item.route as RouteKey)}>
+              {ui.readMore}
+              <Icon name="arrow" size={15} />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Departures ------------------------------------------------------- -->
+  <section class="section deps">
+    <div class="shell">
+      <div class="deps__head">
+        <SectionHead
+          eyebrow={S.departures.eyebrow}
+          title={S.departures.title}
+          intro={S.departures.intro}
+          align="wide"
+          class="deps__shead"
+        />
+        <a class="link-arrow deps__all" href={path(locale, 'departures')}>
+          {S.departures.ctaLabel}
+          <Icon name="arrow" size={15} />
+        </a>
+      </div>
+
+      {featured.length > 0 ? (
+        <div class:list={['deps__grid', featured.length === 1 && 'deps__grid--single']}>
+          {featured.map((entry, i) => (
+            <div data-reveal style={`--reveal-delay:${i * 80}ms`}>
+              <DepartureCard locale={locale} entry={entry} ui={ui} feature={featured.length === 1} />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p class="lede">{ui.noResults}</p>
+      )}
+    </div>
+  </section>
+
+  <!-- Why us ----------------------------------------------------------- -->
+  <section class="section why on-dark">
+    <div class="shell why__inner">
+      <div class="why__left">
+        <span class="eyebrow">{S.why.eyebrow}</span>
+        <h2 class="why__title">{S.why.title}</h2>
+        <blockquote class="pullquote why__quote">{S.why.pullquote}</blockquote>
+        <div class="why__figure">
+          <Figure
+            src={S.why.image?.src || undefined}
+            alt={S.why.image?.alt ?? ''}
+            brief={S.why.image?.brief}
+            ratio="3 / 4"
+            tone="sabbia"
+            placeholderLabel={ui.imagePlaceholderLabel}
+            sizes="(max-width: 900px) 100vw, 30vw"
+          />
+        </div>
+      </div>
+      <ol class="why__list">
+        {S.why.points.map((p: any, i: number) => (
+          <li data-reveal style={`--reveal-delay:${i * 70}ms`}>
+            <span class="why__num">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3 class="why__ptitle">{p.title}</h3>
+              <p class="why__pbody">{p.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Insurance -------------------------------------------------------- -->
+  <section class="section--tight ins">
+    <div class="shell ins__inner">
+      <div class="ins__text" data-reveal>
+        <span class="eyebrow">{S.insurance.eyebrow}</span>
+        <h2 class="ins__title">{S.insurance.title}</h2>
+        <p class="ins__body">{S.insurance.body}</p>
+        <ul class="ins__list">
+          {S.insurance.bullets.map((b: string) => (
+            <li><Icon name="check" size={15} />{b}</li>
+          ))}
+        </ul>
+        <div class="ins__ctas">
+          <a class="btn" href={`${path(locale, 'insurance')}#richiesta`}>
+            {S.insurance.ctaLabel}
+            <Icon name="arrow" size={17} />
+          </a>
+          <a class="link-arrow" href={path(locale, 'insurance')}>
+            {S.insurance.secondaryLabel}
+            <Icon name="arrow" size={15} />
+          </a>
+        </div>
+      </div>
+      <div class="ins__mark" aria-hidden="true"><Icon name="shield" size={140} /></div>
+    </div>
+  </section>
+
+  <!-- MICE ------------------------------------------------------------- -->
+  <section class="section mice">
+    <div class="shell mice__inner">
+      <div class="mice__media" data-reveal>
+        <Figure
+          src={S.mice.image?.src || undefined}
+          alt={S.mice.image?.alt ?? ''}
+          brief={S.mice.image?.brief}
+          ratio="4 / 3"
+          placeholderLabel={ui.imagePlaceholderLabel}
+          sizes="(max-width: 900px) 100vw, 46vw"
+        />
+      </div>
+      <div class="mice__text" data-reveal>
+        <span class="eyebrow">{S.mice.eyebrow}</span>
+        <h2>{S.mice.title}</h2>
+        <p class="lede mice__lede">{S.mice.body}</p>
+        <ul class="mice__list">
+          {S.mice.bullets.map((b: string) => <li>{b}</li>)}
+        </ul>
+        <a class="btn btn--secondary" href={path(locale, 'business')}>{S.mice.ctaLabel}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team ------------------------------------------------------------- -->
+  <section class="section--tight team">
+    <div class="shell">
+      <div class="team__head">
+        <SectionHead eyebrow={S.team.eyebrow} title={S.team.title} intro={S.team.intro} align="wide" class="team__shead" />
+        <a class="link-arrow" href={path(locale, 'about')}>
+          {S.team.ctaLabel}
+          <Icon name="arrow" size={15} />
+        </a>
+      </div>
+      <ul class="team__row">
+        {team.map((m, i) => (
+          <li data-reveal style={`--reveal-delay:${i * 50}ms`}>
+            <Figure
+              src={m.data.photo?.src || undefined}
+              alt={m.data.photo?.alt || m.data.name}
+              brief={m.data.photo?.brief}
+              ratio="3 / 4"
+              tone="sabbia"
+              placeholderLabel={ui.imagePlaceholderLabel}
+              sizes="(max-width: 720px) 45vw, 16vw"
+            />
+            <p class="team__name">{m.data.name}</p>
+            <p class="team__role">{m.data.role}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Closing CTA ------------------------------------------------------ -->
+  <section class="section cta on-dark">
+    <div class="shell cta__inner">
+      <div>
+        <span class="eyebrow">{S.contact.eyebrow}</span>
+        <h2 class="cta__title">{S.contact.title}</h2>
+        <p class="cta__body">{S.contact.body}</p>
+      </div>
+      <div class="cta__actions">
+        <a class="btn" href={path(locale, 'quote')}>
+          {S.contact.ctaLabel}
+          <Icon name="arrow" size={17} />
+        </a>
+        <ul class="cta__direct">
+          <li><Icon name="phone" size={16} /><a href={s.phoneHref}>{s.phone}</a></li>
+          <li><Icon name="mail" size={16} /><a href={`mailto:${s.email}`}>{s.email}</a></li>
+          <li><Icon name="pin" size={16} /><a href={s.address.mapLinkUrl} target="_blank" rel="noopener noreferrer">{s.address.street}, {s.address.postalCode} {s.address.city}</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Hero --------------------------------------------------------------- */
+  .hero { position: relative; padding-block: clamp(2.5rem, 1.4rem + 4.6vw, 5.5rem) clamp(3rem, 2rem + 4vw, 5.5rem); overflow: hidden; }
+  .hero__route { position: absolute; inset: 38% 0 auto 0; height: 50%; opacity: 0.3; pointer-events: none; }
+  .hero__inner { position: relative; display: grid; gap: var(--sp-8) var(--gutter); }
+  @media (min-width: 900px) {
+    .hero__inner { grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr); align-items: center; gap: clamp(2rem, 5vw, 5rem); }
+  }
+  .hero__title { max-width: 15ch; font-size: var(--step-6); letter-spacing: -0.038em; }
+  .hero__lede { margin-top: var(--sp-5); max-width: 48ch; }
+  .hero__ctas { display: flex; flex-wrap: wrap; gap: var(--sp-4); margin-top: var(--sp-6); }
+  .hero__signals {
+    display: flex; flex-wrap: wrap; gap: var(--sp-5) var(--sp-7);
+    margin: var(--sp-7) 0 0; padding-top: var(--sp-5);
+    border-top: 1px solid var(--rule);
+  }
+  .hero__signals dt { font-size: var(--step-2); font-weight: 600; letter-spacing: -0.02em; line-height: 1; }
+  .hero__signals dd { margin: 0.45em 0 0; font-size: var(--step--2); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); max-width: 16ch; }
+
+  .hero__media { position: relative; }
+  .nextcard {
+    position: absolute;
+    left: clamp(-1rem, -2vw, 0rem);
+    bottom: clamp(-1.25rem, -2vw, -1.75rem);
+    width: min(330px, 86%);
+    display: grid;
+    gap: 0.3em;
+    padding: var(--sp-5);
+    background: var(--blu);
+    color: var(--ink-invert);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    box-shadow: 0 24px 50px -32px rgba(14, 27, 43, 0.85);
+    transition: transform var(--dur) var(--ease), background var(--dur-fast) ease;
+  }
+  .nextcard:hover { transform: translateY(-3px); background: var(--blu-raised); }
+  .nextcard__eyebrow { font-size: var(--step--2); font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #e4787c; }
+  .nextcard__title { margin-top: 0.4em; font-size: var(--step-1); font-weight: 600; letter-spacing: -0.015em; line-height: 1.25; }
+  .nextcard__meta { font-size: var(--step--1); color: var(--ink-invert-soft); }
+  .nextcard__go { position: absolute; right: var(--sp-5); bottom: var(--sp-5); color: var(--ink-invert-mute); transition: transform var(--dur-fast) var(--ease); }
+  .nextcard:hover .nextcard__go { transform: translateX(4px); color: var(--ink-invert); }
+  @media (max-width: 899px) { .nextcard { position: static; width: 100%; margin-top: var(--sp-4); } .nextcard__go { display: none; } }
+
+  /* Services ----------------------------------------------------------- */
+  .services { background: var(--avorio); }
+  .svc { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--sp-7) var(--gutter); list-style: none; }
+  .svc__item { display: grid; gap: var(--sp-3); align-content: start; padding-top: var(--sp-5); border-top: 1px solid var(--rule-strong); }
+  .svc__icon { color: var(--rosso); }
+  .svc__title { font-size: var(--step-1); }
+  .svc__body { margin: 0; font-size: var(--step--1); line-height: 1.6; color: var(--ink-soft); }
+  .svc__item .link-arrow { justify-self: start; margin-top: var(--sp-2); }
+
+  /* Departures --------------------------------------------------------- */
+  .deps__head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: var(--sp-5); margin-bottom: var(--sp-7); }
+  .deps :global(.deps__shead) { margin-bottom: 0; }
+  .deps__all { flex: none; }
+  .deps__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--gutter); }
+  .deps__grid--single { grid-template-columns: 1fr; }
+
+  /* Why ---------------------------------------------------------------- */
+  .why__inner { display: grid; gap: var(--sp-8) var(--gutter); }
+  @media (min-width: 960px) {
+    .why__inner { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(2rem, 6vw, 6rem); align-items: start; }
+  }
+  .why__title { max-width: 14ch; }
+  .why__quote { margin: var(--sp-6) 0 0; color: var(--ink-invert); max-width: 22ch; }
+  .why__figure { margin-top: var(--sp-7); max-width: 320px; }
+  .why__list { list-style: none; display: grid; gap: 0; counter-reset: why; }
+  .why__list li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--sp-5); padding-block: var(--sp-5); border-top: 1px solid var(--rule-invert); }
+  .why__list li:last-child { border-bottom: 1px solid var(--rule-invert); }
+  .why__num { font-size: var(--step--2); font-weight: 600; letter-spacing: 0.1em; color: #e4787c; padding-top: 0.45em; }
+  .why__ptitle { font-size: var(--step-1); }
+  .why__pbody { margin: 0.5em 0 0; font-size: var(--step--1); line-height: 1.6; color: var(--ink-invert-soft); max-width: 46ch; }
+
+  /* Insurance ---------------------------------------------------------- */
+  .ins { padding-block: 0; }
+  .ins__inner {
+    position: relative;
+    display: grid;
+    gap: var(--sp-6);
+    padding: clamp(2rem, 1.2rem + 3.6vw, 4rem);
+    background: var(--rosso-tint);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  @media (min-width: 900px) { .ins__inner { grid-template-columns: minmax(0, 1fr) auto; align-items: center; } }
+  .ins__title { max-width: 18ch; }
+  .ins__body { margin: var(--sp-4) 0 0; max-width: 58ch; color: var(--ink-soft); }
+  .ins__list { list-style: none; display: grid; gap: 0.55em; margin-top: var(--sp-5); font-size: var(--step--1); color: var(--ink-soft); }
+  .ins__list li { display: flex; align-items: flex-start; gap: 0.6em; }
+  .ins__list :global(svg) { flex: none; margin-top: 0.25em; color: var(--rosso); }
+  .ins__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-5); margin-top: var(--sp-6); }
+  .ins__mark { color: var(--rosso); opacity: 0.1; margin-inline: auto; }
+  @media (max-width: 899px) { .ins__mark { display: none; } }
+
+  /* MICE --------------------------------------------------------------- */
+  .mice__inner { display: grid; gap: var(--sp-7) var(--gutter); align-items: center; }
+  @media (min-width: 900px) { .mice__inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 5rem); } }
+  .mice__lede { margin-top: var(--sp-4); }
+  .mice__list { list-style: none; display: grid; gap: 0; margin: var(--sp-6) 0; }
+  .mice__list li { padding-block: 0.75em; border-top: 1px solid var(--rule); font-size: var(--step--1); color: var(--ink-soft); }
+  .mice__list li:last-child { border-bottom: 1px solid var(--rule); }
+
+  /* Team --------------------------------------------------------------- */
+  .team__head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: var(--sp-5); margin-bottom: var(--sp-7); }
+  .team :global(.team__shead) { margin-bottom: 0; }
+  .team__row { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--sp-5); }
+  @media (min-width: 900px) { .team__row { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+  .team__name { margin: var(--sp-4) 0 0; font-size: var(--step--1); font-weight: 600; }
+  .team__role { margin: 0.2em 0 0; font-size: var(--step--2); color: var(--ink-mute); }
+
+  /* Closing CTA -------------------------------------------------------- */
+  .cta__inner { display: grid; gap: var(--sp-7) var(--gutter); }
+  @media (min-width: 900px) { .cta__inner { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(2rem, 6vw, 6rem); align-items: center; } }
+  .cta__title { max-width: 18ch; }
+  .cta__body { margin: var(--sp-4) 0 0; max-width: 48ch; color: var(--ink-invert-soft); }
+  .cta__actions { display: grid; gap: var(--sp-6); justify-items: start; }
+  .cta__direct { list-style: none; display: grid; gap: 0.7em; font-size: var(--step--1); }
+  .cta__direct li { display: flex; align-items: center; gap: 0.7em; color: var(--ink-invert-mute); }
+  .cta__direct a { color: var(--ink-invert-soft); text-decoration: none; }
+  .cta__direct a:hover { color: var(--ink-invert); }
+</style>

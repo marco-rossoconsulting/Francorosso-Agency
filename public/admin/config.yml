@@ -1,0 +1,1287 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+#
+# Francorosso — Sveltia CMS
+# ---------------------------------------------------------------------------
+# Every field below maps 1:1 onto a file that the Astro site reads at build
+# time (see src/content.config.ts). There is no copy hard-coded in a template:
+# what this CMS shows is what the site displays.
+#
+# Authentication: see README.md, section "CMS access".
+# ---------------------------------------------------------------------------
+
+backend:
+  name: github
+  repo: marco-rossoconsulting/Francorosso-Agency
+  branch: main
+  commit_messages:
+    create: 'CMS: crea {{collection}} “{{slug}}”'
+    update: 'CMS: aggiorna {{collection}} “{{slug}}”'
+    delete: 'CMS: elimina {{collection}} “{{slug}}”'
+    uploadMedia: 'CMS: carica {{path}}'
+    deleteMedia: 'CMS: elimina {{path}}'
+
+site_url: https://www.francorosso.ch
+display_url: https://www.francorosso.ch
+logo_url: /media/brand/francorosso-rosso.png
+
+media_folder: public/media
+public_folder: /media
+
+i18n:
+  structure: multiple_folders
+  locales: [it, en]
+  default_locale: it
+
+collections:
+  # =========================================================================
+  # 1. Impostazioni del sito
+  # =========================================================================
+  - name: settings
+    label: 'Impostazioni'
+    label_singular: 'Impostazione'
+    icon: settings
+    description: 'Contatti, orari, navigazione e tutte le etichette ricorrenti del sito.'
+    files:
+      - name: site
+        label: 'Agenzia, contatti e orari'
+        file: 'src/content/settings/{{locale}}/site.json'
+        format: json
+        i18n: true
+        fields:
+          - { label: 'Nome breve', name: 'companyName', widget: 'string', i18n: duplicate }
+          - { label: 'Ragione sociale', name: 'legalName', widget: 'string', i18n: duplicate }
+          - { label: 'Sottotitolo del marchio', name: 'tagline', widget: 'string', i18n: true }
+          - {
+              label: 'Descrizione dell’agenzia',
+              name: 'descriptor',
+              widget: 'text',
+              i18n: true,
+              hint: 'Usata da Google e dai social quando non c’è una descrizione specifica.',
+            }
+          - label: 'Indirizzo'
+            name: address
+            widget: object
+            i18n: true
+            fields:
+              - { label: 'Via e numero', name: 'street', widget: 'string', i18n: duplicate }
+              - { label: 'CAP', name: 'postalCode', widget: 'string', i18n: duplicate }
+              - { label: 'Città', name: 'city', widget: 'string', i18n: duplicate }
+              - { label: 'Paese', name: 'country', widget: 'string', i18n: true }
+              - { label: 'Codice paese (CH)', name: 'countryCode', widget: 'string', i18n: duplicate }
+              - { label: 'URL mappa incorporata', name: 'mapEmbedUrl', widget: 'string', i18n: duplicate }
+              - { label: 'Link a Google Maps', name: 'mapLinkUrl', widget: 'string', i18n: duplicate }
+              - { label: 'Latitudine', name: 'latitude', widget: 'number', value_type: float, i18n: duplicate }
+              - { label: 'Longitudine', name: 'longitude', widget: 'number', value_type: float, i18n: duplicate }
+          - { label: 'Telefono (come si legge)', name: 'phone', widget: 'string', i18n: duplicate }
+          - {
+              label: 'Telefono (link)',
+              name: 'phoneHref',
+              widget: 'string',
+              i18n: duplicate,
+              hint: 'Formato tel:+41919236092 — senza spazi.',
+            }
+          - { label: 'Fax', name: 'fax', widget: 'string', required: false, i18n: duplicate }
+          - { label: 'E-mail principale', name: 'email', widget: 'string', i18n: duplicate }
+          - label: 'WhatsApp'
+            name: whatsapp
+            widget: object
+            i18n: true
+            fields:
+              - { label: 'Attivo sul sito', name: 'enabled', widget: 'boolean', default: true, i18n: duplicate }
+              - { label: 'Numero (come si legge)', name: 'number', widget: 'string', i18n: duplicate }
+              - {
+                  label: 'Link',
+                  name: 'href',
+                  widget: 'string',
+                  i18n: duplicate,
+                  hint: 'Formato https://wa.me/41765776092 — senza + e senza spazi.',
+                }
+              - { label: 'Messaggio precompilato', name: 'prefillMessage', widget: 'string', i18n: true }
+          - label: 'Orari di apertura'
+            name: openingHours
+            widget: list
+            i18n: true
+            label_singular: 'Riga di orario'
+            summary: '{{fields.days}} — {{fields.hours}}'
+            fields:
+              - { label: 'Giorni', name: 'days', widget: 'string', i18n: true }
+              - { label: 'Orario', name: 'hours', widget: 'string', i18n: true }
+          - { label: 'Nota sugli orari', name: 'openingHoursNote', widget: 'text', required: false, i18n: true }
+          - label: 'Orari in formato per Google'
+            name: openingHoursSchema
+            widget: list
+            field: { label: 'Riga', name: 'row', widget: 'string' }
+            i18n: duplicate
+            hint: 'Formato tecnico, es. “Mo-Fr 09:00-12:00”. Serve a Google, non appare sul sito.'
+          - label: 'Social'
+            name: social
+            widget: list
+            i18n: duplicate
+            summary: '{{fields.network}}'
+            fields:
+              - {
+                  label: 'Rete',
+                  name: 'network',
+                  widget: 'select',
+                  options: [facebook, instagram, linkedin],
+                }
+              - { label: 'Etichetta accessibile', name: 'label', widget: 'string', i18n: true }
+              - { label: 'Link', name: 'href', widget: 'string' }
+          - label: 'Riconoscimenti e affiliazioni'
+            name: memberships
+            widget: list
+            required: false
+            i18n: true
+            summary: '{{fields.label}}'
+            fields:
+              - { label: 'Sigla', name: 'label', widget: 'string' }
+              - { label: 'Nota', name: 'note', widget: 'string', required: false }
+          - { label: 'Testo sotto al logo nel footer', name: 'footerNote', widget: 'text', i18n: true }
+          - { label: 'Nome nel copyright', name: 'copyrightName', widget: 'string', i18n: duplicate }
+
+      - name: navigation
+        label: 'Menu e footer'
+        file: 'src/content/settings/{{locale}}/navigation.json'
+        format: json
+        i18n: true
+        fields:
+          - label: 'Menu principale'
+            name: primary
+            widget: list
+            i18n: true
+            summary: '{{fields.label}}'
+            fields:
+              - { label: 'Etichetta', name: 'label', widget: 'string', i18n: true }
+              - {
+                  label: 'Pagina',
+                  name: 'route',
+                  widget: 'select',
+                  i18n: duplicate,
+                  options:
+                    [
+                      { label: 'Home', value: home },
+                      { label: 'Le nostre partenze', value: departures },
+                      { label: 'Servizi', value: services },
+                      { label: 'Assicurazione viaggio', value: insurance },
+                      { label: 'Aziende e MICE', value: business },
+                      { label: 'Chi siamo', value: about },
+                      { label: 'Contatti', value: contact },
+                      { label: 'Richiedi un preventivo', value: quote },
+                      { label: 'Link utili', value: links },
+                      { label: 'Privacy', value: privacy },
+                      { label: 'Note legali', value: legal },
+                    ],
+                }
+          - label: 'Pulsante rosso in alto a destra'
+            name: headerCta
+            widget: object
+            i18n: true
+            fields:
+              - { label: 'Etichetta', name: 'label', widget: 'string', i18n: true }
+              - {
+                  label: 'Pagina',
+                  name: 'route',
+                  widget: 'select',
+                  i18n: duplicate,
+                  options: [home, departures, services, insurance, business, about, contact, quote, links],
+                }
+          - label: 'Colonne del footer'
+            name: footerColumns
+            widget: list
+            i18n: true
+            summary: '{{fields.title}}'
+            fields:
+              - { label: 'Titolo colonna', name: 'title', widget: 'string', i18n: true }
+              - label: 'Voci'
+                name: items
+                widget: list
+                i18n: true
+                summary: '{{fields.label}}'
+                fields:
+                  - { label: 'Etichetta', name: 'label', widget: 'string', i18n: true }
+                  - {
+                      label: 'Pagina',
+                      name: 'route',
+                      widget: 'select',
+                      i18n: duplicate,
+                      options: [home, departures, services, insurance, business, about, contact, quote, links, privacy, legal],
+                    }
+          - label: 'Link legali in fondo'
+            name: legal
+            widget: list
+            i18n: true
+            summary: '{{fields.label}}'
+            fields:
+              - { label: 'Etichetta', name: 'label', widget: 'string', i18n: true }
+              - {
+                  label: 'Pagina',
+                  name: 'route',
+                  widget: 'select',
+                  i18n: duplicate,
+                  options: [privacy, legal],
+                }
+
+      - name: ui
+        label: 'Etichette ricorrenti'
+        file: 'src/content/settings/{{locale}}/ui.json'
+        format: json
+        i18n: true
+        description: 'Le parole che ricorrono ovunque: pulsanti, etichette dei moduli, diciture delle schede viaggio.'
+        fields:
+          - { label: 'Salta al contenuto', name: 'skipToContent', widget: 'string' }
+          - { label: 'Menu', name: 'menu', widget: 'string' }
+          - { label: 'Chiudi', name: 'close', widget: 'string' }
+          - { label: 'Lingua', name: 'languageLabel', widget: 'string' }
+          - { label: 'Home (briciole di pane)', name: 'breadcrumbHome', widget: 'string' }
+          - { label: 'Scopri di più', name: 'readMore', widget: 'string' }
+          - { label: 'Vedi tutte le partenze', name: 'viewAll', widget: 'string' }
+          - { label: 'Torna a', name: 'backTo', widget: 'string' }
+          - { label: 'da (prezzo)', name: 'from', widget: 'string' }
+          - { label: 'a persona', name: 'perPerson', widget: 'string' }
+          - { label: 'notti', name: 'nights', widget: 'string' }
+          - { label: 'giorni', name: 'days', widget: 'string' }
+          - { label: 'Partenze da', name: 'departsFrom', widget: 'string' }
+          - { label: 'Ultimi posti', name: 'seatsNote', widget: 'string' }
+          - { label: 'Completo', name: 'soldOut', widget: 'string' }
+          - { label: 'Richiedi disponibilità', name: 'requestPlaces', widget: 'string' }
+          - { label: 'Scarica il programma', name: 'downloadProgramme', widget: 'string' }
+          - { label: 'Scrivici su WhatsApp', name: 'whatsappCta', widget: 'string' }
+          - { label: 'Chiama', name: 'callCta', widget: 'string' }
+          - { label: 'Scrivi una e-mail', name: 'emailCta', widget: 'string' }
+          - { label: 'Etichetta “immagine da fornire”', name: 'imagePlaceholderLabel', widget: 'string' }
+          - { label: 'Filtro: tutte', name: 'filterAll', widget: 'string' }
+          - { label: 'Filtro: etichetta', name: 'filterLabel', widget: 'string' }
+          - { label: 'Nessun risultato', name: 'noResults', widget: 'text' }
+          - { label: 'La quota comprende', name: 'included', widget: 'string' }
+          - { label: 'La quota non comprende', name: 'notIncluded', widget: 'string' }
+          - { label: 'Itinerario', name: 'itinerary', widget: 'string' }
+          - { label: 'Giorno', name: 'day', widget: 'string' }
+          - { label: 'Date', name: 'datesLabel', widget: 'string' }
+          - { label: 'Durata', name: 'durationLabel', widget: 'string' }
+          - { label: 'Quote di partecipazione', name: 'prices', widget: 'string' }
+          - { label: 'Sistemazione', name: 'cabinOrRoom', widget: 'string' }
+          - { label: 'Colonna prezzo', name: 'priceColumn', widget: 'string' }
+          - { label: 'Escursioni facoltative', name: 'optionalExtras', widget: 'string' }
+          - { label: 'Informazioni pratiche', name: 'practicalInfo', widget: 'string' }
+          - label: 'Moduli di contatto'
+            name: form
+            widget: object
+            collapsed: true
+            fields:
+              - { label: 'Nome e cognome', name: 'name', widget: 'string' }
+              - { label: 'E-mail', name: 'email', widget: 'string' }
+              - { label: 'Telefono', name: 'phone', widget: 'string' }
+              - { label: 'Destinazione', name: 'destination', widget: 'string' }
+              - { label: 'Numero di viaggiatori', name: 'travellers', widget: 'string' }
+              - { label: 'Data di partenza', name: 'departureDate', widget: 'string' }
+              - { label: 'Data di rientro', name: 'returnDate', widget: 'string' }
+              - { label: 'Budget', name: 'budget', widget: 'string' }
+              - { label: 'Tipo di viaggio', name: 'tripType', widget: 'string' }
+              - {
+                  label: 'Opzioni tipo di viaggio',
+                  name: 'tripTypeOptions',
+                  widget: 'list',
+                  field: { label: 'Opzione', name: 'option', widget: 'string' },
+                }
+              - { label: 'Azienda', name: 'company', widget: 'string' }
+              - { label: 'Numero di partecipanti', name: 'participants', widget: 'string' }
+              - { label: 'Tipo di progetto', name: 'eventType', widget: 'string' }
+              - {
+                  label: 'Opzioni tipo di progetto',
+                  name: 'eventTypeOptions',
+                  widget: 'list',
+                  field: { label: 'Opzione', name: 'option', widget: 'string' },
+                }
+              - { label: 'Messaggio', name: 'message', widget: 'string' }
+              - { label: 'Testo guida del messaggio', name: 'messagePlaceholder', widget: 'text' }
+              - { label: 'Contatto preferito', name: 'preferredContact', widget: 'string' }
+              - {
+                  label: 'Opzioni contatto preferito',
+                  name: 'preferredContactOptions',
+                  widget: 'list',
+                  field: { label: 'Opzione', name: 'option', widget: 'string' },
+                }
+              - { label: 'Testo del consenso privacy', name: 'consent', widget: 'text' }
+              - { label: 'Pulsante invia', name: 'submit', widget: 'string' }
+              - { label: 'Invio in corso', name: 'submitting', widget: 'string' }
+              - { label: '(obbligatorio)', name: 'required', widget: 'string' }
+              - { label: '(facoltativo)', name: 'optional', widget: 'string' }
+              - { label: 'Nota sui tempi di risposta', name: 'responseNote', widget: 'text' }
+              - { label: 'Copertura desiderata', name: 'coverLevel', widget: 'string' }
+              - {
+                  label: 'Opzioni di copertura',
+                  name: 'coverLevelOptions',
+                  widget: 'list',
+                  field: { label: 'Opzione', name: 'option', widget: 'string' },
+                }
+              - { label: 'Valore del viaggio', name: 'tripValue', widget: 'string' }
+              - { label: 'Oggetto richiesta assicurazione', name: 'insuranceSubject', widget: 'string' }
+
+  # =========================================================================
+  # 2. Pagine
+  # =========================================================================
+  - name: pages
+    label: 'Pagine'
+    label_singular: 'Pagina'
+    icon: description
+    description: 'I testi di ogni pagina del sito, sezione per sezione.'
+    files:
+      # ---- Home ----------------------------------------------------------
+      - name: home
+        label: 'Home'
+        file: 'src/content/pages/{{locale}}/home.json'
+        format: json
+        i18n: true
+        preview_path: ''
+        fields:
+          - label: 'SEO'
+            name: seo
+            widget: object
+            collapsed: true
+            fields:
+              - { label: 'Titolo per Google', name: 'title', widget: 'string', required: false }
+              - { label: 'Descrizione per Google', name: 'description', widget: 'text', required: false }
+              - { label: 'Immagine social', name: 'ogImage', widget: 'image', required: false, i18n: duplicate }
+          - label: 'Apertura (hero)'
+            name: hero
+            widget: object
+            fields:
+              - { label: 'Occhiello', name: 'eyebrow', widget: 'string', required: false }
+              - { label: 'Titolo principale', name: 'title', widget: 'text' }
+              - { label: 'Testo introduttivo', name: 'lede', widget: 'text', required: false }
+              - label: 'Immagine'
+                name: image
+                widget: object
+                required: false
+                fields:
+                  - { label: 'File', name: 'src', widget: 'image', required: false, i18n: duplicate }
+                  - { label: 'Testo alternativo', name: 'alt', widget: 'string', required: false }
+                  - { label: 'Brief fotografico', name: 'brief', widget: 'text', required: false }
+              - label: 'Pulsante principale'
+                name: primaryCta
+                widget: object
+                required: false
+                fields:
+                  - { label: 'Etichetta', name: 'label', widget: 'string' }
+                  - { label: 'Pagina', name: 'route', widget: 'select', i18n: duplicate, options: [home, departures, services, insurance, business, about, contact, quote, links] }
+                  - { label: 'Stile', name: 'style', widget: 'select', required: false, i18n: duplicate, options: [primary, secondary, tertiary], default: primary }
+              - label: 'Pulsante secondario'
+                name: secondaryCta
+                widget: object
+                required: false
+                fields:
+                  - { label: 'Etichetta', name: 'label', widget: 'string' }
+                  - { label: 'Pagina', name: 'route', widget: 'select', i18n: duplicate, options: [home, departures, services, insurance, business, about, contact, quote, links] }
+                  - { label: 'Stile', name: 'style', widget: 'select', required: false, i18n: duplicate, options: [primary, secondary, tertiary], default: secondary }
+              - label: 'Numeri in evidenza'
+                name: signals
+                widget: list
+                required: false
+                summary: '{{fields.value}} — {{fields.label}}'
+                fields:
+                  - { label: 'Numero', name: 'value', widget: 'string' }
+                  - { label: 'Didascalia', name: 'label', widget: 'string' }
+          - label: 'Sezioni'
+            name: sections
+            widget: object
+            fields:
+              - label: 'Etichetta “prossima partenza”'
+                name: nextDeparture
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Nota', name: 'note', widget: 'string', required: false }
+              - label: 'Cosa facciamo'
+                name: services
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - { label: 'Introduzione', name: 'intro', widget: 'text', required: false }
+                  - label: 'Servizi'
+                    name: items
+                    widget: list
+                    summary: '{{fields.title}}'
+                    fields:
+                      - { label: 'Icona', name: 'icon', widget: 'select', i18n: duplicate, options: [compass, users, ticket, briefcase, plane, shield, calendar, clock] }
+                      - { label: 'Titolo', name: 'title', widget: 'string' }
+                      - { label: 'Testo', name: 'body', widget: 'text' }
+                      - { label: 'Pagina collegata', name: 'route', widget: 'select', i18n: duplicate, options: [departures, services, insurance, business, about, contact, quote] }
+              - label: 'Partenze in evidenza'
+                name: departures
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - { label: 'Introduzione', name: 'intro', widget: 'text', required: false }
+                  - { label: 'Etichetta “vedi tutte”', name: 'ctaLabel', widget: 'string' }
+              - label: 'Perché sceglierci'
+                name: why
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - { label: 'Citazione', name: 'pullquote', widget: 'text' }
+                  - label: 'Punti'
+                    name: points
+                    widget: list
+                    summary: '{{fields.title}}'
+                    fields:
+                      - { label: 'Titolo', name: 'title', widget: 'string' }
+                      - { label: 'Testo', name: 'body', widget: 'text' }
+                  - label: 'Immagine'
+                    name: image
+                    widget: object
+                    required: false
+                    fields:
+                      - { label: 'File', name: 'src', widget: 'image', required: false, i18n: duplicate }
+                      - { label: 'Testo alternativo', name: 'alt', widget: 'string', required: false }
+                      - { label: 'Brief fotografico', name: 'brief', widget: 'text', required: false }
+              - label: 'Fascia assicurazione'
+                name: insurance
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - { label: 'Testo', name: 'body', widget: 'text' }
+                  - { label: 'Punti', name: 'bullets', widget: 'list', field: { label: 'Punto', name: 'item', widget: 'string' } }
+                  - { label: 'Pulsante principale', name: 'ctaLabel', widget: 'string' }
+                  - { label: 'Link secondario', name: 'secondaryLabel', widget: 'string' }
+              - label: 'Fascia aziende e MICE'
+                name: mice
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - { label: 'Testo', name: 'body', widget: 'text' }
+                  - { label: 'Elenco', name: 'bullets', widget: 'list', field: { label: 'Voce', name: 'item', widget: 'string' } }
+                  - { label: 'Pulsante', name: 'ctaLabel', widget: 'string' }
+                  - label: 'Immagine'
+                    name: image
+                    widget: object
+                    required: false
+                    fields:
+                      - { label: 'File', name: 'src', widget: 'image', required: false, i18n: duplicate }
+                      - { label: 'Testo alternativo', name: 'alt', widget: 'string', required: false }
+                      - { label: 'Brief fotografico', name: 'brief', widget: 'text', required: false }
+              - label: 'Fascia team'
+                name: team
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - { label: 'Introduzione', name: 'intro', widget: 'text', required: false }
+                  - { label: 'Etichetta link', name: 'ctaLabel', widget: 'string' }
+              - label: 'Chiusura'
+                name: contact
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - { label: 'Testo', name: 'body', widget: 'text' }
+                  - { label: 'Pulsante', name: 'ctaLabel', widget: 'string' }
+
+      # ---- Le nostre partenze (intestazione) -----------------------------
+      - name: departures-page
+        label: 'Le nostre partenze — intestazione'
+        file: 'src/content/pages/{{locale}}/departures.json'
+        format: json
+        i18n: true
+        fields:
+          - label: 'SEO'
+            name: seo
+            widget: object
+            collapsed: true
+            fields:
+              - { label: 'Titolo per Google', name: 'title', widget: 'string', required: false }
+              - { label: 'Descrizione per Google', name: 'description', widget: 'text', required: false }
+          - label: 'Apertura'
+            name: hero
+            widget: object
+            fields:
+              - { label: 'Occhiello', name: 'eyebrow', widget: 'string', required: false }
+              - { label: 'Titolo', name: 'title', widget: 'text' }
+              - { label: 'Testo introduttivo', name: 'lede', widget: 'text', required: false }
+          - label: 'Sezioni'
+            name: sections
+            widget: object
+            fields:
+              - label: 'Fascia “partenza su misura”'
+                name: custom
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - { label: 'Testo', name: 'body', widget: 'text' }
+                  - { label: 'Pulsante', name: 'ctaLabel', widget: 'string' }
+
+      # ---- Servizi --------------------------------------------------------
+      - name: services
+        label: 'Servizi'
+        file: 'src/content/pages/{{locale}}/services.json'
+        format: json
+        i18n: true
+        fields:
+          - label: 'SEO'
+            name: seo
+            widget: object
+            collapsed: true
+            fields:
+              - { label: 'Titolo per Google', name: 'title', widget: 'string', required: false }
+              - { label: 'Descrizione per Google', name: 'description', widget: 'text', required: false }
+          - label: 'Apertura'
+            name: hero
+            widget: object
+            fields:
+              - { label: 'Occhiello', name: 'eyebrow', widget: 'string', required: false }
+              - { label: 'Titolo', name: 'title', widget: 'text' }
+              - { label: 'Testo introduttivo', name: 'lede', widget: 'text', required: false }
+          - label: 'Sezioni'
+            name: sections
+            widget: object
+            fields:
+              - label: 'Elenco dei servizi'
+                name: list
+                widget: object
+                fields:
+                  - label: 'Servizi'
+                    name: items
+                    widget: list
+                    summary: '{{fields.title}}'
+                    fields:
+                      - { label: 'Icona', name: 'icon', widget: 'select', i18n: duplicate, options: [compass, plane, ticket, users, shield, briefcase, calendar, clock] }
+                      - {
+                          label: 'Ancora (parte finale del link)',
+                          name: 'anchor',
+                          widget: 'string',
+                          i18n: true,
+                          hint: 'Solo lettere minuscole e trattini. Serve ai link interni della pagina.',
+                        }
+                      - { label: 'Titolo', name: 'title', widget: 'string' }
+                      - { label: 'Testo', name: 'body', widget: 'text' }
+                      - { label: 'Punti', name: 'bullets', widget: 'list', field: { label: 'Punto', name: 'item', widget: 'string' } }
+              - label: 'Fascia finale'
+                name: cta
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - { label: 'Testo', name: 'body', widget: 'text' }
+                  - { label: 'Pulsante', name: 'ctaLabel', widget: 'string' }
+
+      # ---- Assicurazione viaggio ------------------------------------------
+      - name: insurance
+        label: 'Assicurazione viaggio'
+        file: 'src/content/pages/{{locale}}/insurance.json'
+        format: json
+        i18n: true
+        fields:
+          - label: 'SEO'
+            name: seo
+            widget: object
+            collapsed: true
+            fields:
+              - { label: 'Titolo per Google', name: 'title', widget: 'string', required: false }
+              - { label: 'Descrizione per Google', name: 'description', widget: 'text', required: false }
+          - label: 'Apertura'
+            name: hero
+            widget: object
+            fields:
+              - { label: 'Occhiello', name: 'eyebrow', widget: 'string', required: false }
+              - { label: 'Titolo', name: 'title', widget: 'text' }
+              - { label: 'Testo introduttivo', name: 'lede', widget: 'text', required: false }
+              - label: 'Pulsante principale'
+                name: primaryCta
+                widget: object
+                required: false
+                fields:
+                  - { label: 'Etichetta', name: 'label', widget: 'string' }
+                  - { label: 'Pagina', name: 'route', widget: 'select', i18n: duplicate, options: [insurance, quote, contact] }
+                  - { label: 'Stile', name: 'style', widget: 'select', required: false, i18n: duplicate, options: [primary, secondary, tertiary] }
+              - label: 'Numeri in evidenza'
+                name: signals
+                widget: list
+                required: false
+                summary: '{{fields.value}} — {{fields.label}}'
+                fields:
+                  - { label: 'Numero', name: 'value', widget: 'string' }
+                  - { label: 'Didascalia', name: 'label', widget: 'string' }
+          - label: 'Sezioni'
+            name: sections
+            widget: object
+            fields:
+              - label: 'Vendita online (partner assicurativo)'
+                name: partner
+                widget: object
+                fields:
+                  - {
+                      label: 'Modalità',
+                      name: 'mode',
+                      widget: 'select',
+                      i18n: duplicate,
+                      options:
+                        [
+                          { label: 'Modulo di richiesta (attuale)', value: form },
+                          { label: 'Link al portale del partner', value: link },
+                        ],
+                      hint: 'Passando a “link”, il pulsante in cima alla pagina porta direttamente al sito dell’assicuratore.',
+                    }
+                  - { label: 'Indirizzo del portale', name: 'linkUrl', widget: 'string', required: false, i18n: duplicate }
+                  - { label: 'Etichetta del pulsante', name: 'linkLabel', widget: 'string', required: false }
+                  - { label: 'Nota interna', name: 'note', widget: 'text', required: false }
+              - label: 'Come funziona'
+                name: how
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - label: 'Passaggi'
+                    name: steps
+                    widget: list
+                    summary: '{{fields.title}}'
+                    fields:
+                      - { label: 'Titolo', name: 'title', widget: 'string' }
+                      - { label: 'Testo', name: 'body', widget: 'text' }
+              - label: 'Coperture'
+                name: covers
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - { label: 'Introduzione', name: 'intro', widget: 'text', required: false }
+                  - label: 'Voci'
+                    name: items
+                    widget: list
+                    summary: '{{fields.title}}'
+                    fields:
+                      - { label: 'Icona', name: 'icon', widget: 'select', i18n: duplicate, options: [calendar, shield, briefcase, plane, clock, check] }
+                      - { label: 'Titolo', name: 'title', widget: 'string' }
+                      - { label: 'Testo', name: 'body', widget: 'text' }
+              - label: 'Per chi ha senso'
+                name: who
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - label: 'Voci'
+                    name: items
+                    widget: list
+                    summary: '{{fields.title}}'
+                    fields:
+                      - { label: 'Titolo', name: 'title', widget: 'string' }
+                      - { label: 'Testo', name: 'body', widget: 'text' }
+              - label: 'Domande frequenti'
+                name: faq
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - label: 'Domande'
+                    name: items
+                    widget: list
+                    summary: '{{fields.q}}'
+                    fields:
+                      - { label: 'Domanda', name: 'q', widget: 'string' }
+                      - { label: 'Risposta', name: 'a', widget: 'text' }
+              - label: 'Modulo di richiesta'
+                name: form
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - { label: 'Testo', name: 'body', widget: 'text' }
+              - { label: 'Nota legale in fondo', name: 'disclaimer', widget: 'text' }
+
+      # ---- Aziende e MICE --------------------------------------------------
+      - name: business
+        label: 'Aziende e MICE'
+        file: 'src/content/pages/{{locale}}/business.json'
+        format: json
+        i18n: true
+        fields:
+          - label: 'SEO'
+            name: seo
+            widget: object
+            collapsed: true
+            fields:
+              - { label: 'Titolo per Google', name: 'title', widget: 'string', required: false }
+              - { label: 'Descrizione per Google', name: 'description', widget: 'text', required: false }
+          - label: 'Apertura'
+            name: hero
+            widget: object
+            fields:
+              - { label: 'Occhiello', name: 'eyebrow', widget: 'string', required: false }
+              - { label: 'Titolo', name: 'title', widget: 'text' }
+              - { label: 'Testo introduttivo', name: 'lede', widget: 'text', required: false }
+              - label: 'Pulsante principale'
+                name: primaryCta
+                widget: object
+                required: false
+                fields:
+                  - { label: 'Etichetta', name: 'label', widget: 'string' }
+                  - { label: 'Pagina', name: 'route', widget: 'select', i18n: duplicate, options: [business, quote, contact] }
+                  - { label: 'Stile', name: 'style', widget: 'select', required: false, i18n: duplicate, options: [primary, secondary, tertiary] }
+              - label: 'Pulsante secondario'
+                name: secondaryCta
+                widget: object
+                required: false
+                fields:
+                  - { label: 'Etichetta', name: 'label', widget: 'string' }
+                  - { label: 'Pagina', name: 'route', widget: 'select', i18n: duplicate, options: [business, quote, contact] }
+                  - { label: 'Stile', name: 'style', widget: 'select', required: false, i18n: duplicate, options: [primary, secondary, tertiary] }
+              - label: 'Immagine'
+                name: image
+                widget: object
+                required: false
+                fields:
+                  - { label: 'File', name: 'src', widget: 'image', required: false, i18n: duplicate }
+                  - { label: 'Testo alternativo', name: 'alt', widget: 'string', required: false }
+                  - { label: 'Brief fotografico', name: 'brief', widget: 'text', required: false }
+          - label: 'Sezioni'
+            name: sections
+            widget: object
+            fields:
+              - label: 'Reparto MICE'
+                name: offer
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - { label: 'Introduzione', name: 'intro', widget: 'text', required: false }
+                  - label: 'Voci'
+                    name: items
+                    widget: list
+                    summary: '{{fields.title}}'
+                    fields:
+                      - { label: 'Icona', name: 'icon', widget: 'select', i18n: duplicate, options: [users, compass, briefcase, calendar, plane, ticket] }
+                      - { label: 'Titolo', name: 'title', widget: 'string' }
+                      - { label: 'Testo', name: 'body', widget: 'text' }
+              - label: 'Perché affidarlo a noi'
+                name: why
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - label: 'Punti'
+                    name: points
+                    widget: list
+                    summary: '{{fields.title}}'
+                    fields:
+                      - { label: 'Titolo', name: 'title', widget: 'string' }
+                      - { label: 'Testo', name: 'body', widget: 'text' }
+              - label: 'Business travel'
+                name: travel
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - { label: 'Testo', name: 'body', widget: 'text' }
+                  - { label: 'Elenco', name: 'bullets', widget: 'list', field: { label: 'Voce', name: 'item', widget: 'string' } }
+              - label: 'Modulo di richiesta'
+                name: form
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - { label: 'Testo', name: 'body', widget: 'text' }
+
+      # ---- Chi siamo -------------------------------------------------------
+      - name: about
+        label: 'Chi siamo'
+        file: 'src/content/pages/{{locale}}/about.json'
+        format: json
+        i18n: true
+        fields:
+          - label: 'SEO'
+            name: seo
+            widget: object
+            collapsed: true
+            fields:
+              - { label: 'Titolo per Google', name: 'title', widget: 'string', required: false }
+              - { label: 'Descrizione per Google', name: 'description', widget: 'text', required: false }
+          - label: 'Apertura'
+            name: hero
+            widget: object
+            fields:
+              - { label: 'Occhiello', name: 'eyebrow', widget: 'string', required: false }
+              - { label: 'Titolo', name: 'title', widget: 'text' }
+              - { label: 'Testo introduttivo', name: 'lede', widget: 'text', required: false }
+              - label: 'Immagine'
+                name: image
+                widget: object
+                required: false
+                fields:
+                  - { label: 'File', name: 'src', widget: 'image', required: false, i18n: duplicate }
+                  - { label: 'Testo alternativo', name: 'alt', widget: 'string', required: false }
+                  - { label: 'Brief fotografico', name: 'brief', widget: 'text', required: false }
+          - label: 'Sezioni'
+            name: sections
+            widget: object
+            fields:
+              - label: 'La storia'
+                name: story
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - { label: 'Paragrafi', name: 'paragraphs', widget: 'list', field: { label: 'Paragrafo', name: 'p', widget: 'text' } }
+              - label: 'Come lavoriamo'
+                name: values
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - label: 'Voci'
+                    name: items
+                    widget: list
+                    summary: '{{fields.title}}'
+                    fields:
+                      - { label: 'Titolo', name: 'title', widget: 'string' }
+                      - { label: 'Testo', name: 'body', widget: 'text' }
+              - label: 'Intestazione del team'
+                name: team
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - { label: 'Introduzione', name: 'intro', widget: 'text', required: false }
+              - label: 'L’ufficio'
+                name: office
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - { label: 'Testo', name: 'body', widget: 'text' }
+                  - { label: 'Pulsante', name: 'ctaLabel', widget: 'string' }
+
+      # ---- Contatti --------------------------------------------------------
+      - name: contact
+        label: 'Contatti'
+        file: 'src/content/pages/{{locale}}/contact.json'
+        format: json
+        i18n: true
+        fields:
+          - label: 'SEO'
+            name: seo
+            widget: object
+            collapsed: true
+            fields:
+              - { label: 'Titolo per Google', name: 'title', widget: 'string', required: false }
+              - { label: 'Descrizione per Google', name: 'description', widget: 'text', required: false }
+          - label: 'Apertura'
+            name: hero
+            widget: object
+            fields:
+              - { label: 'Occhiello', name: 'eyebrow', widget: 'string', required: false }
+              - { label: 'Titolo', name: 'title', widget: 'text' }
+              - { label: 'Testo introduttivo', name: 'lede', widget: 'text', required: false }
+          - label: 'Sezioni'
+            name: sections
+            widget: object
+            fields:
+              - label: 'Canali di contatto'
+                name: channels
+                widget: object
+                fields:
+                  - label: 'Voci'
+                    name: items
+                    widget: list
+                    summary: '{{fields.title}}'
+                    fields:
+                      - { label: 'Icona', name: 'icon', widget: 'select', i18n: duplicate, options: [phone, whatsapp, mail, pin] }
+                      - { label: 'Titolo', name: 'title', widget: 'string' }
+                      - { label: 'Testo', name: 'body', widget: 'text' }
+                      - { label: 'Azione', name: 'action', widget: 'select', i18n: duplicate, options: [phone, whatsapp, email] }
+              - label: 'Orari'
+                name: hours
+                widget: object
+                fields: [{ label: 'Titolo', name: 'title', widget: 'string' }]
+              - label: 'Mappa'
+                name: map
+                widget: object
+                fields:
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - { label: 'Nota', name: 'note', widget: 'string', required: false }
+              - label: 'Modulo'
+                name: form
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - { label: 'Testo', name: 'body', widget: 'text' }
+                  - { label: 'Etichetta link al preventivo', name: 'quoteLinkLabel', widget: 'string' }
+
+      # ---- Richiesta di preventivo -----------------------------------------
+      - name: quote
+        label: 'Richiedi un preventivo'
+        file: 'src/content/pages/{{locale}}/quote.json'
+        format: json
+        i18n: true
+        fields:
+          - label: 'SEO'
+            name: seo
+            widget: object
+            collapsed: true
+            fields:
+              - { label: 'Titolo per Google', name: 'title', widget: 'string', required: false }
+              - { label: 'Descrizione per Google', name: 'description', widget: 'text', required: false }
+          - label: 'Apertura'
+            name: hero
+            widget: object
+            fields:
+              - { label: 'Occhiello', name: 'eyebrow', widget: 'string', required: false }
+              - { label: 'Titolo', name: 'title', widget: 'text' }
+              - { label: 'Testo introduttivo', name: 'lede', widget: 'text', required: false }
+          - label: 'Sezioni'
+            name: sections
+            widget: object
+            fields:
+              - label: 'Rassicurazioni'
+                name: reassurance
+                widget: object
+                fields:
+                  - label: 'Voci'
+                    name: items
+                    widget: list
+                    summary: '{{fields.title}}'
+                    fields:
+                      - { label: 'Icona', name: 'icon', widget: 'select', i18n: duplicate, options: [clock, check, users, shield] }
+                      - { label: 'Titolo', name: 'title', widget: 'string' }
+                      - { label: 'Testo', name: 'body', widget: 'text' }
+              - label: 'Modulo'
+                name: form
+                widget: object
+                fields:
+                  - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Titolo', name: 'title', widget: 'string' }
+                  - { label: 'Testo', name: 'body', widget: 'text' }
+
+      # ---- Grazie (dopo l'invio di un modulo) -------------------------------
+      - name: thanks
+        label: 'Grazie (dopo l’invio)'
+        file: 'src/content/pages/{{locale}}/thanks.json'
+        format: json
+        i18n: true
+        fields:
+          - label: 'SEO'
+            name: seo
+            widget: object
+            collapsed: true
+            fields:
+              - { label: 'Titolo per Google', name: 'title', widget: 'string', required: false }
+              - { label: 'Descrizione per Google', name: 'description', widget: 'text', required: false }
+          - label: 'Testo'
+            name: hero
+            widget: object
+            fields:
+              - { label: 'Occhiello', name: 'eyebrow', widget: 'string', required: false }
+              - { label: 'Titolo', name: 'title', widget: 'text' }
+              - { label: 'Testo', name: 'lede', widget: 'text', required: false }
+          - label: 'Sezioni'
+            name: sections
+            widget: object
+            fields:
+              - label: 'Pulsanti'
+                name: actions
+                widget: object
+                fields:
+                  - { label: 'Pulsante principale', name: 'primaryLabel', widget: 'string' }
+                  - { label: 'Link di ritorno', name: 'backLabel', widget: 'string' }
+
+      # ---- Pagina 404 -------------------------------------------------------
+      - name: notfound
+        label: 'Pagina non trovata (404)'
+        file: 'src/content/pages/{{locale}}/notfound.json'
+        format: json
+        i18n: true
+        fields:
+          - label: 'SEO'
+            name: seo
+            widget: object
+            collapsed: true
+            fields:
+              - { label: 'Titolo per Google', name: 'title', widget: 'string', required: false }
+              - { label: 'Descrizione per Google', name: 'description', widget: 'text', required: false }
+          - label: 'Testo'
+            name: hero
+            widget: object
+            fields:
+              - { label: 'Occhiello', name: 'eyebrow', widget: 'string', required: false }
+              - { label: 'Titolo', name: 'title', widget: 'text' }
+              - { label: 'Testo', name: 'lede', widget: 'text', required: false }
+          - label: 'Sezioni'
+            name: sections
+            widget: object
+            fields:
+              - label: 'Link di ripartenza'
+                name: links
+                widget: object
+                fields:
+                  - label: 'Voci'
+                    name: items
+                    widget: list
+                    summary: '{{fields.label}}'
+                    fields:
+                      - { label: 'Etichetta', name: 'label', widget: 'string' }
+                      - { label: 'Pagina', name: 'route', widget: 'select', i18n: duplicate, options: [home, departures, services, insurance, business, about, contact, quote, links] }
+
+      # ---- Link utili (intestazione) ---------------------------------------
+      - name: links-page
+        label: 'Link utili — intestazione'
+        file: 'src/content/pages/{{locale}}/links.json'
+        format: json
+        i18n: true
+        fields:
+          - label: 'SEO'
+            name: seo
+            widget: object
+            collapsed: true
+            fields:
+              - { label: 'Titolo per Google', name: 'title', widget: 'string', required: false }
+              - { label: 'Descrizione per Google', name: 'description', widget: 'text', required: false }
+          - label: 'Apertura'
+            name: hero
+            widget: object
+            fields:
+              - { label: 'Occhiello', name: 'eyebrow', widget: 'string', required: false }
+              - { label: 'Titolo', name: 'title', widget: 'text' }
+              - { label: 'Testo introduttivo', name: 'lede', widget: 'text', required: false }
+          - { label: 'Sezioni', name: 'sections', widget: 'object', required: false, fields: [] }
+
+      # ---- Elenco dei link utili -------------------------------------------
+      - name: links-data
+        label: 'Link utili — elenco'
+        file: 'src/content/links/{{locale}}/useful-links.json'
+        format: json
+        i18n: true
+        fields:
+          - label: 'Gruppi'
+            name: groups
+            widget: list
+            summary: '{{fields.title}}'
+            fields:
+              - { label: 'Titolo del gruppo', name: 'title', widget: 'string' }
+              - label: 'Link'
+                name: items
+                widget: list
+                summary: '{{fields.label}}'
+                fields:
+                  - { label: 'Nome del sito', name: 'label', widget: 'string' }
+                  - { label: 'Indirizzo', name: 'href', widget: 'string', i18n: duplicate }
+                  - { label: 'Descrizione', name: 'description', widget: 'string', required: false }
+
+  # =========================================================================
+  # 3. Le nostre partenze
+  # =========================================================================
+  - name: departures
+    label: 'Le nostre partenze'
+    label_singular: 'Partenza'
+    icon: tour
+    folder: src/content/departures
+    format: frontmatter
+    extension: md
+    create: true
+    i18n: true
+    slug: '{{fields.slug}}'
+    identifier_field: title
+    summary: '{{title}} — {{departureDate}}'
+    sortable_fields: [departureDate, title, order]
+    view_groups:
+      - { label: 'Stato', field: status }
+      - { label: 'Categoria', field: category }
+    fields:
+      - { label: 'Titolo del viaggio', name: 'title', widget: 'string', i18n: true }
+      - {
+          label: 'Indirizzo della pagina',
+          name: 'slug',
+          widget: 'string',
+          i18n: true,
+          hint: 'Solo minuscole e trattini. Cambiandolo cambia il link: i vecchi link smettono di funzionare.',
+        }
+      - {
+          label: 'Stato',
+          name: 'status',
+          widget: 'select',
+          i18n: duplicate,
+          default: open,
+          options:
+            [
+              { label: 'Aperta', value: open },
+              { label: 'Ultimi posti', value: few-places },
+              { label: 'Completa', value: sold-out },
+              { label: 'Bozza (non pubblicata)', value: draft },
+            ],
+        }
+      - { label: 'In evidenza', name: 'featured', widget: 'boolean', default: false, i18n: duplicate }
+      - {
+          label: 'Ordine',
+          name: 'order',
+          widget: 'number',
+          value_type: int,
+          default: 0,
+          i18n: duplicate,
+          hint: 'Numero più alto = più in alto nell’elenco. A parità di numero contano le date.',
+        }
+      - { label: 'Riassunto (compare nella scheda)', name: 'summary', widget: 'text', i18n: true }
+      - {
+          label: 'Categoria',
+          name: 'category',
+          widget: 'string',
+          i18n: true,
+          hint: 'Es. “Crociere fluviali”, “Tour culturali”. Le categorie diventano i filtri dell’elenco.',
+        }
+      - { label: 'Città e tappe', name: 'destinations', widget: 'list', i18n: true, field: { label: 'Tappa', name: 'item', widget: 'string' } }
+      - { label: 'Paesi', name: 'countries', widget: 'list', i18n: true, field: { label: 'Paese', name: 'item', widget: 'string' } }
+      - { label: 'Data di partenza', name: 'departureDate', widget: 'datetime', date_format: 'YYYY-MM-DD', time_format: false, picker_utc: true, i18n: duplicate }
+      - { label: 'Data di rientro', name: 'returnDate', widget: 'datetime', date_format: 'YYYY-MM-DD', time_format: false, picker_utc: true, i18n: duplicate }
+      - { label: 'Durata in giorni', name: 'durationDays', widget: 'number', value_type: int, i18n: duplicate }
+      - { label: 'Notti', name: 'durationNights', widget: 'number', value_type: int, required: false, i18n: duplicate }
+      - { label: 'Partenze da', name: 'departsFrom', widget: 'list', i18n: true, field: { label: 'Città', name: 'item', widget: 'string' } }
+      - { label: 'Prezzo da', name: 'priceFrom', widget: 'number', value_type: int, required: false, i18n: duplicate }
+      - { label: 'Valuta', name: 'currency', widget: 'select', options: [EUR, CHF], default: EUR, i18n: duplicate }
+      - { label: 'Nota sul prezzo', name: 'priceNote', widget: 'text', required: false, i18n: true }
+      - label: 'Immagine principale'
+        name: heroImage
+        widget: object
+        required: false
+        fields:
+          - { label: 'File', name: 'src', widget: 'image', required: false, i18n: duplicate }
+          - { label: 'Testo alternativo', name: 'alt', widget: 'string', required: false, i18n: true }
+          - { label: 'Brief fotografico', name: 'brief', widget: 'text', required: false, i18n: true }
+      - label: 'Galleria'
+        name: gallery
+        widget: list
+        required: false
+        i18n: true
+        fields:
+          - { label: 'File', name: 'src', widget: 'image', required: false, i18n: duplicate }
+          - { label: 'Testo alternativo', name: 'alt', widget: 'string', required: false, i18n: true }
+          - { label: 'Brief fotografico', name: 'brief', widget: 'text', required: false, i18n: true }
+      - { label: 'Punti forti', name: 'highlights', widget: 'list', required: false, i18n: true, field: { label: 'Punto', name: 'item', widget: 'string' } }
+      - label: 'Itinerario giorno per giorno'
+        name: itinerary
+        widget: list
+        required: false
+        i18n: true
+        summary: '{{fields.day}} — {{fields.place}}'
+        fields:
+          - { label: 'Giorno', name: 'day', widget: 'string', i18n: duplicate }
+          - { label: 'Luogo', name: 'place', widget: 'string', i18n: true }
+          - { label: 'Titolo della giornata', name: 'title', widget: 'string', required: false, i18n: true }
+          - { label: 'Descrizione', name: 'body', widget: 'text', i18n: true }
+      - { label: 'La quota comprende', name: 'included', widget: 'list', required: false, i18n: true, field: { label: 'Voce', name: 'item', widget: 'string' } }
+      - { label: 'La quota non comprende', name: 'notIncluded', widget: 'list', required: false, i18n: true, field: { label: 'Voce', name: 'item', widget: 'string' } }
+      - label: 'Tabella delle quote'
+        name: priceTable
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { label: 'Didascalia', name: 'caption', widget: 'text', required: false, i18n: true }
+          - label: 'Righe'
+            name: rows
+            widget: list
+            i18n: true
+            summary: '{{fields.label}} — {{fields.price}}'
+            fields:
+              - { label: 'Sistemazione', name: 'label', widget: 'string', i18n: true }
+              - { label: 'Ponte o nota', name: 'note', widget: 'string', required: false, i18n: true }
+              - { label: 'Quota', name: 'price', widget: 'string', i18n: true }
+      - label: 'Escursioni facoltative'
+        name: optionalExtras
+        widget: list
+        required: false
+        i18n: true
+        summary: '{{fields.label}} — {{fields.price}}'
+        fields:
+          - { label: 'Escursione', name: 'label', widget: 'string', i18n: true }
+          - { label: 'Prezzo', name: 'price', widget: 'string', i18n: true }
+          - { label: 'Nota', name: 'note', widget: 'string', required: false, i18n: true }
+      - label: 'Informazioni pratiche'
+        name: practicalInfo
+        widget: list
+        required: false
+        i18n: true
+        summary: '{{fields.label}}'
+        fields:
+          - { label: 'Voce', name: 'label', widget: 'string', i18n: true }
+          - { label: 'Contenuto', name: 'value', widget: 'text', i18n: true }
+      - { label: 'Programma in PDF', name: 'programmePdf', widget: 'file', required: false, i18n: duplicate }
+      - label: 'SEO'
+        name: seo
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { label: 'Titolo per Google', name: 'title', widget: 'string', required: false, i18n: true }
+          - { label: 'Descrizione per Google', name: 'description', widget: 'text', required: false, i18n: true }
+      - {
+          label: 'Testo di presentazione',
+          name: 'body',
+          widget: 'markdown',
+          i18n: true,
+          hint: 'Due o tre paragrafi che raccontano il viaggio. Compaiono accanto alla foto principale.',
+        }
+
+  # =========================================================================
+  # 4. Il team
+  # =========================================================================
+  - name: team
+    label: 'Il team'
+    label_singular: 'Persona'
+    icon: group
+    folder: src/content/team
+    format: frontmatter
+    extension: md
+    create: true
+    i18n: true
+    slug: '{{name}}'
+    identifier_field: name
+    summary: '{{name}} — {{role}}'
+    sortable_fields: [order, name]
+    fields:
+      - { label: 'Nome e cognome', name: 'name', widget: 'string', i18n: duplicate }
+      - { label: 'Ruolo', name: 'role', widget: 'string', i18n: true }
+      - { label: 'Ordine', name: 'order', widget: 'number', value_type: int, default: 99, i18n: duplicate }
+      - { label: 'Pubblicata sul sito', name: 'published', widget: 'boolean', default: true, i18n: duplicate }
+      - { label: 'E-mail', name: 'email', widget: 'string', required: false, i18n: duplicate }
+      - { label: 'Telefono diretto', name: 'phone', widget: 'string', required: false, i18n: duplicate }
+      - { label: 'Lingue parlate', name: 'languages', widget: 'list', required: false, i18n: true, field: { label: 'Lingua', name: 'item', widget: 'string' } }
+      - { label: 'Si occupa di', name: 'specialisms', widget: 'list', required: false, i18n: true, field: { label: 'Voce', name: 'item', widget: 'string' } }
+      - label: 'Fotografia'
+        name: photo
+        widget: object
+        required: false
+        fields:
+          - { label: 'File', name: 'src', widget: 'image', required: false, i18n: duplicate }
+          - { label: 'Testo alternativo', name: 'alt', widget: 'string', required: false, i18n: true }
+          - { label: 'Brief fotografico', name: 'brief', widget: 'text', required: false, i18n: true }
+      - { label: 'Presentazione', name: 'body', widget: 'markdown', i18n: true, hint: 'Due o tre righe, in prima o terza persona.' }
+
+  # =========================================================================
+  # 5. Pagine legali
+  # =========================================================================
+  - name: legal
+    label: 'Privacy e note legali'
+    label_singular: 'Documento'
+    icon: gavel
+    folder: src/content/legal
+    format: frontmatter
+    extension: md
+    create: false
+    delete: false
+    i18n: true
+    identifier_field: title
+    summary: '{{title}}'
+    fields:
+      - { label: 'Titolo', name: 'title', widget: 'string', i18n: true }
+      - { label: 'Ultimo aggiornamento', name: 'updated', widget: 'datetime', date_format: 'YYYY-MM-DD', time_format: false, picker_utc: true, required: false, i18n: duplicate }
+      - label: 'SEO'
+        name: seo
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { label: 'Titolo per Google', name: 'title', widget: 'string', required: false, i18n: true }
+          - { label: 'Descrizione per Google', name: 'description', widget: 'text', required: false, i18n: true }
+      - { label: 'Testo', name: 'body', widget: 'markdown', i18n: true }

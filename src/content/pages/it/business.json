@@ -1,0 +1,85 @@
+{
+  "seo": {
+    "title": "Aziende e MICE",
+    "description": "Meeting, incentive, convention ed eventi aziendali, business travel e trasferte. Reparto MICE Francorosso, Lugano: un referente unico dalla proposta alla rendicontazione."
+  },
+  "hero": {
+    "eyebrow": "Aziende e MICE",
+    "title": "Quando a viaggiare non è una persona, ma un'azienda intera.",
+    "lede": "Meeting, incentive, convention, eventi. Progetti dove il margine di errore è basso e le persone da tenere insieme sono molte. Li seguiamo dal primo brief alla fattura finale, con un solo referente.",
+    "primaryCta": { "label": "Parlaci del progetto", "route": "business", "style": "primary" },
+    "secondaryCta": { "label": "Chiama il reparto MICE", "route": "contact", "style": "secondary" },
+    "image": {
+      "src": "",
+      "alt": "",
+      "brief": "Formato orizzontale: allestimento di una convention o cena aziendale, vista dall'interno della sala."
+    }
+  },
+  "sections": {
+    "offer": {
+      "eyebrow": "Reparto MICE",
+      "title": "Quattro lettere, quattro mestieri diversi",
+      "intro": "MICE sta per Meeting, Incentive, Convention ed Eventi. Sono progetti con esigenze molto diverse fra loro, ed è per questo che vale la pena affidarli a chi li fa tutti i giorni.",
+      "items": [
+        {
+          "icon": "users",
+          "title": "Meeting",
+          "body": "Riunioni aziendali, sessioni di lavoro, kick-off commerciali. Sale, tecnica, catering, pernottamenti e trasferimenti coordinati in un'unica proposta con un unico budget."
+        },
+        {
+          "icon": "compass",
+          "title": "Incentive",
+          "body": "Viaggi premio per reti di vendita e team. Servono a far parlare persone che di solito si vedono solo in call: l'itinerario lo costruiamo intorno a quell'obiettivo, non intorno alla destinazione."
+        },
+        {
+          "icon": "briefcase",
+          "title": "Convention",
+          "body": "Eventi con numeri importanti: arrivi scaglionati, liste camere che cambiano fino all'ultimo, fornitori multipli. La parte difficile è la logistica, e quella è il nostro mestiere."
+        },
+        {
+          "icon": "calendar",
+          "title": "Eventi e team building",
+          "body": "Anniversari aziendali, cene di gala, giornate fuori sede, attività di squadra. Location in Ticino, in Svizzera o all'estero, con sopralluoghi quando servono."
+        }
+      ]
+    },
+    "why": {
+      "eyebrow": "Perché affidarlo a noi",
+      "title": "Quello che un'azienda compra davvero è tranquillità",
+      "points": [
+        {
+          "title": "Un referente, non una casella",
+          "body": "Una persona segue il progetto dall'inizio alla fine e conosce le abitudini della vostra azienda. Anche quando il programma cambia in corsa."
+        },
+        {
+          "title": "Un budget che tiene",
+          "body": "Vi presentiamo i costi per voce, con le alternative a prezzi diversi. Le variazioni le approvate voi, prima che diventino fattura."
+        },
+        {
+          "title": "Fornitori verificati",
+          "body": "Hotel, sale, catering, bus, guide. Lavoriamo con chi conosciamo e con chi risponde anche di domenica pomeriggio."
+        },
+        {
+          "title": "Amministrazione ordinata",
+          "body": "Una fattura riepilogativa, i giustificativi in ordine e la reportistica delle trasferte per chi deve chiudere i conti."
+        }
+      ]
+    },
+    "travel": {
+      "eyebrow": "Business travel",
+      "title": "E per le trasferte di tutti i giorni",
+      "body": "Oltre agli eventi gestiamo la biglietteria e i pernottamenti delle aziende che viaggiano con continuità: tariffe negoziate, cambi gestiti dall'agenzia, fatturazione mensile e un report dei costi per centro di spesa.",
+      "bullets": [
+        "Tariffe negoziate e policy di viaggio aziendali",
+        "Cambi, riprotezioni e assistenza in trasferta",
+        "Fatturazione mensile con riepilogo per reparto",
+        "Un numero che risponde anche fuori orario"
+      ]
+    },
+    "form": {
+      "eyebrow": "Richiesta aziende",
+      "title": "Raccontateci il progetto",
+      "body": "Anche un brief di tre righe ci basta per capire se possiamo esservi utili e per proporvi una prima direzione. Nessun impegno."
+    }
+  }
+}

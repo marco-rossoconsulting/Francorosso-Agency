@@ -1,0 +1,60 @@
+{
+  "seo": {
+    "title": "Chi siamo",
+    "description": "Francorosso SA, agenzia di viaggi in Via Canova 19 a Lugano. Il team, il modo di lavorare e le persone a cui parlate quando ci scrivete."
+  },
+  "hero": {
+    "eyebrow": "Chi siamo",
+    "title": "Un'agenzia di Lugano, fatta di persone che rispondono.",
+    "lede": "Siamo in Via Canova 19 da oltre trent'anni. Abbiamo iniziato accompagnando viaggiatori in Kenya e oggi costruiamo itinerari ovunque, ma il modo di lavorare non è cambiato: si parla, si ascolta, si propone qualcosa di preciso.",
+    "image": {
+      "src": "",
+      "alt": "",
+      "brief": "Ritratto ambientato dell'agenzia in Via Canova, formato verticale. Persone al lavoro, non in posa."
+    }
+  },
+  "sections": {
+    "story": {
+      "eyebrow": "La storia",
+      "title": "Trent'anni di viaggi, sempre dallo stesso indirizzo",
+      "paragraphs": [
+        "Francorosso nasce per far conoscere il Kenya ai viaggiatori ticinesi, e per anni è stata quella la nostra specialità: destinazioni che non si prenotavano da soli, dove serviva qualcuno che ci fosse già stato.",
+        "Con il tempo il mestiere si è allargato. Oggi ci occupiamo di viaggi individuali su misura, partenze di gruppo che organizziamo direttamente, biglietteria aerea, e di tutta la parte di eventi e trasferte delle aziende del territorio.",
+        "Quello che è rimasto uguale è la scala. Siamo un ufficio, non una rete: chi vi risponde al telefono è la stessa persona che ha scritto il vostro itinerario e che vi risponderà se qualcosa va storto mentre siete via."
+      ]
+    },
+    "values": {
+      "eyebrow": "Come lavoriamo",
+      "title": "Quattro cose su cui non transigiamo",
+      "items": [
+        {
+          "title": "Diciamo anche di no",
+          "body": "Se una destinazione non è adatta al periodo, al budget o a chi viaggia, lo diciamo prima. Un viaggio venduto male torna indietro."
+        },
+        {
+          "title": "Il prezzo è quello",
+          "body": "Cosa è compreso, cosa no, e quanto vale il nostro lavoro. La trasparenza sul costo del servizio è parte del servizio."
+        },
+        {
+          "title": "Conosciamo quello che vendiamo",
+          "body": "Gli hotel li abbiamo visti, le guide le abbiamo incontrate. Quando non conosciamo qualcosa, lo diciamo e ci informiamo."
+        },
+        {
+          "title": "Restiamo raggiungibili",
+          "body": "Prima, durante e dopo. Il valore di un'agenzia si misura il giorno in cui il volo viene cancellato."
+        }
+      ]
+    },
+    "team": {
+      "eyebrow": "Il team",
+      "title": "A chi state scrivendo",
+      "intro": "Ogni richiesta arriva a una persona precisa. Qui sotto trovate chi si occupa di cosa, con il contatto diretto."
+    },
+    "office": {
+      "eyebrow": "L'ufficio",
+      "title": "Via Canova 19, Lugano",
+      "body": "Si può passare senza appuntamento negli orari di apertura. Se preferite avere del tempo dedicato, scriveteci e fissiamo un incontro: per i viaggi complessi è il modo più rapido di arrivare a qualcosa di concreto.",
+      "ctaLabel": "Vieni a trovarci"
+    }
+  }
+}

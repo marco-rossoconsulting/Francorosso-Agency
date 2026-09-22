@@ -1,0 +1,34 @@
+{
+  "groups": [
+    {
+      "title": "Documents and travel advice",
+      "items": [
+        { "label": "FDFA – Swiss travel advice", "href": "https://www.eda.admin.ch/eda/en/fdfa/representations-and-travel-advice.html", "description": "Official advice for Swiss travellers, country by country." },
+        { "label": "ESTA – United States travel authorisation", "href": "https://esta.cbp.dhs.gov/esta/", "description": "Required authorisation for visa-free entry to the USA." },
+        { "label": "ENAC – Italian civil aviation authority", "href": "https://www.enac.gov.it/", "description": "Passenger rights and baggage rules for flights from Italy." }
+      ]
+    },
+    {
+      "title": "Health",
+      "items": [
+        { "label": "Swiss TPH – Swiss Tropical and Public Health Institute", "href": "https://www.swisstph.ch/", "description": "Recommended vaccinations and prophylaxis by destination." },
+        { "label": "WHO – World Health Organization", "href": "https://www.who.int/", "description": "Current international health notices." }
+      ]
+    },
+    {
+      "title": "Airports and transport",
+      "items": [
+        { "label": "Zurich Airport", "href": "https://www.zurich-airport.com/", "description": "Departures, arrivals and connections." },
+        { "label": "Milan Airports – SEA", "href": "https://www.milanairports.com/", "description": "Malpensa and Linate: flights and services." }
+      ]
+    },
+    {
+      "title": "Before you leave",
+      "items": [
+        { "label": "Weather worldwide", "href": "https://www.meteoswiss.admin.ch/", "description": "Forecasts for Switzerland and around the world." },
+        { "label": "Time zones", "href": "https://www.worldtimeserver.com/", "description": "Local time and time differences." },
+        { "label": "National Geographic", "href": "https://www.nationalgeographic.com/", "description": "For when you need ideas." }
+      ]
+    }
+  ]
+}

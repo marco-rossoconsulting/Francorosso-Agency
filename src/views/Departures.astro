@@ -1,0 +1,141 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import DepartureCard from '../components/DepartureCard.astro';
+import { path, type Locale } from '../lib/i18n';
+import { pageFor, uiFor, departuresFor, categoriesOf, settingsFor } from '../lib/content';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const page = await pageFor(locale, 'departures');
+const ui = await uiFor(locale);
+const s = await settingsFor(locale);
+const entries = await departuresFor(locale);
+const categories = categoriesOf(entries);
+const S = page.sections as any;
+const single = entries.length === 1;
+---
+<Base
+  locale={locale}
+  routeKey="departures"
+  title={page.seo?.title ?? ''}
+  description={page.seo?.description ?? s.descriptor}
+  jsonLd={[
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: page.seo?.title,
+      itemListElement: entries.map((e, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: e.data.title,
+        url: new URL(path(locale, 'departures', e.data.slug), Astro.site).href,
+      })),
+    },
+  ]}
+>
+  <PageHero
+    locale={locale}
+    eyebrow={page.hero!.eyebrow}
+    title={page.hero!.title}
+    lede={page.hero!.lede}
+  />
+
+  <section class="section--tight list">
+    <div class="shell">
+      {categories.length > 1 && (
+        <div class="filters" role="group" aria-label={ui.filterLabel}>
+          <button class="chip is-on" type="button" data-filter="*">{ui.filterAll}</button>
+          {categories.map((c) => (
+            <button class="chip" type="button" data-filter={c}>{c}</button>
+          ))}
+        </div>
+      )}
+
+      {entries.length > 0 ? (
+        <div class:list={['list__grid', single && 'list__grid--single']} data-list>
+          {entries.map((entry, i) => (
+            <div data-cat={entry.data.category} data-reveal style={`--reveal-delay:${i * 70}ms`}>
+              <DepartureCard locale={locale} entry={entry} ui={ui} feature={single} eager={i === 0} />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p class="lede">{ui.noResults}</p>
+      )}
+      <p class="list__empty" data-empty hidden>{ui.noResults}</p>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="shell">
+      <div class="custom">
+        <div>
+          <span class="eyebrow">{S.custom.eyebrow}</span>
+          <h2 class="custom__title">{S.custom.title}</h2>
+          <p class="custom__body">{S.custom.body}</p>
+        </div>
+        <a class="btn" href={path(locale, 'quote')}>
+          {S.custom.ctaLabel}
+          <Icon name="arrow" size={17} />
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .filters { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-bottom: var(--sp-6); }
+  .chip {
+    padding: 0.55em 1em;
+    font: inherit;
+    font-size: var(--step--2);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    background: transparent;
+    border: 1px solid var(--rule-strong);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all var(--dur-fast) ease;
+  }
+  .chip:hover { border-color: var(--ink); color: var(--ink); }
+  .chip.is-on { background: var(--blu); border-color: var(--blu); color: var(--ink-invert); }
+
+  .list__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--gutter); }
+  .list__grid--single { grid-template-columns: 1fr; }
+  .list__empty { margin-top: var(--sp-6); font-size: var(--step-1); color: var(--ink-soft); max-width: 52ch; }
+
+  .custom {
+    display: grid;
+    gap: var(--sp-6);
+    align-items: center;
+    padding: clamp(1.75rem, 1rem + 3vw, 3.25rem);
+    background: var(--avorio);
+    border-radius: var(--radius-lg);
+  }
+  @media (min-width: 820px) { .custom { grid-template-columns: minmax(0, 1fr) auto; gap: var(--sp-8); } }
+  .custom__title { max-width: 20ch; }
+  .custom__body { margin: var(--sp-4) 0 0; max-width: 58ch; color: var(--ink-soft); }
+</style>
+
+<script>
+  const chips = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const list = document.querySelector<HTMLElement>('[data-list]');
+  const empty = document.querySelector<HTMLElement>('[data-empty]');
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      chips.forEach((c) => c.classList.toggle('is-on', c === chip));
+      const want = chip.dataset.filter;
+      let shown = 0;
+      list?.querySelectorAll<HTMLElement>('[data-cat]').forEach((card) => {
+        const show = want === '*' || card.dataset.cat === want;
+        card.hidden = !show;
+        if (show) shown += 1;
+      });
+      if (empty) empty.hidden = shown !== 0;
+    });
+  });
+</script>

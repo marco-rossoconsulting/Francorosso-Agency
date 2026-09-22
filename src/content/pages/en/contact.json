@@ -1,0 +1,43 @@
+{
+  "seo": {
+    "title": "Contact",
+    "description": "Francorosso SA, Via Canova 19, 6900 Lugano. Telephone +41 91 923 60 92, WhatsApp, email and the agency's opening hours."
+  },
+  "hero": {
+    "eyebrow": "Contact",
+    "title": "Three ways to reach us. All of them reach a person.",
+    "lede": "Telephone, WhatsApp or email — your choice. If you are in Lugano, Via Canova 19 is a short walk from the centre and you do not need an appointment."
+  },
+  "sections": {
+    "channels": {
+      "items": [
+        {
+          "icon": "phone",
+          "title": "Telephone",
+          "body": "The fastest way to ask a quick question or have availability checked on the spot.",
+          "action": "phone"
+        },
+        {
+          "icon": "whatsapp",
+          "title": "WhatsApp",
+          "body": "Useful for sending a booking confirmation, a photo of a document, or two lines outside office hours.",
+          "action": "whatsapp"
+        },
+        {
+          "icon": "mail",
+          "title": "Email",
+          "body": "For detailed requests, quotations and anything worth having in writing.",
+          "action": "email"
+        }
+      ]
+    },
+    "hours": { "title": "Opening hours" },
+    "map": { "title": "Where we are", "note": "Via Canova 19, a few minutes on foot from Piazza Riforma." },
+    "form": {
+      "eyebrow": "Write to us",
+      "title": "A message to the agency",
+      "body": "For a full travel quotation the dedicated form is better: it collects the information we need to answer properly.",
+      "quoteLinkLabel": "Go to the quote request"
+    }
+  }
+}

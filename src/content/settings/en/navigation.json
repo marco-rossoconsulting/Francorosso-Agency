@@ -1,0 +1,34 @@
+{
+  "primary": [
+    { "label": "Our departures", "route": "departures" },
+    { "label": "Services", "route": "services" },
+    { "label": "Business & MICE", "route": "business" },
+    { "label": "About us", "route": "about" },
+    { "label": "Contact", "route": "contact" }
+  ],
+  "headerCta": { "label": "Request a quote", "route": "quote" },
+  "footerColumns": [
+    {
+      "title": "Travel with us",
+      "items": [
+        { "label": "Our departures", "route": "departures" },
+        { "label": "Services", "route": "services" },
+        { "label": "Travel insurance", "route": "insurance" },
+        { "label": "Request a quote", "route": "quote" }
+      ]
+    },
+    {
+      "title": "Agency",
+      "items": [
+        { "label": "About us", "route": "about" },
+        { "label": "Business & MICE", "route": "business" },
+        { "label": "Useful links", "route": "links" },
+        { "label": "Contact", "route": "contact" }
+      ]
+    }
+  ],
+  "legal": [
+    { "label": "Privacy", "route": "privacy" },
+    { "label": "Legal notice", "route": "legal" }
+  ]
+}

@@ -1,0 +1,110 @@
+---
+import RouteLine from './RouteLine.astro';
+/**
+ * Renders a supplied photograph, or a branded holding field when the agency
+ * has not delivered one yet. The holding field states the photo brief, so the
+ * gap is visible to whoever opens the CMS rather than silently empty.
+ */
+interface Props {
+  src?: string;
+  alt?: string;
+  brief?: string;
+  ratio?: string;
+  tone?: 'blu' | 'sabbia';
+  class?: string;
+  sizes?: string;
+  eager?: boolean;
+  placeholderLabel?: string;
+}
+const {
+  src,
+  alt = '',
+  brief,
+  ratio = '4 / 5',
+  tone = 'blu',
+  class: cls,
+  sizes = '(max-width: 860px) 100vw, 50vw',
+  eager = false,
+  placeholderLabel = 'Immagine da fornire',
+} = Astro.props;
+---
+{
+  src ? (
+    <figure class:list={['fig', cls]} style={`--ratio:${ratio}`}>
+      <img src={src} alt={alt} sizes={sizes} loading={eager ? 'eager' : 'lazy'} decoding="async" />
+    </figure>
+  ) : (
+    <figure class:list={['fig', 'fig--holding', `fig--${tone}`, cls]} style={`--ratio:${ratio}`}>
+      <span class="fig__route"><RouteLine variant="sweep" animate={false} /></span>
+      <span class="fig__pin" aria-hidden="true" />
+      <figcaption class="fig__cap">
+        <span class="fig__label">{placeholderLabel}</span>
+        {brief && <span class="fig__brief">{brief}</span>}
+      </figcaption>
+    </figure>
+  )
+}
+
+<style>
+  .fig {
+    position: relative;
+    margin: 0;
+    aspect-ratio: var(--ratio);
+    overflow: hidden;
+    background: var(--surface-quiet);
+    border-radius: var(--radius-lg);
+  }
+  .fig img { width: 100%; height: 100%; object-fit: cover; }
+
+  .fig--holding { display: grid; align-items: end; }
+  .fig--blu { background: var(--blu); color: var(--ink-invert); }
+  .fig--sabbia { background: var(--sabbia-deep); color: var(--ink); }
+
+  .fig--holding::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(currentColor 1px, transparent 1px),
+      linear-gradient(90deg, currentColor 1px, transparent 1px);
+    background-size: 44px 44px;
+    opacity: 0.07;
+  }
+  .fig__route {
+    position: absolute;
+    inset: 22% 0 auto 0;
+    height: 42%;
+    color: var(--rosso);
+    opacity: 0.9;
+  }
+  .fig--blu .fig__route { color: #e4787c; }
+  .fig__pin {
+    position: absolute;
+    top: 30%;
+    left: 22%;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--rosso);
+  }
+  .fig--blu .fig__pin { background: #e4787c; }
+  .fig__cap {
+    position: relative;
+    padding: var(--sp-5);
+    display: grid;
+    gap: 0.35em;
+  }
+  .fig__label {
+    font-size: var(--step--2);
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.68;
+  }
+  .fig__brief {
+    font-size: var(--step--1);
+    line-height: 1.45;
+    max-width: 34ch;
+    opacity: 0.9;
+  }
+</style>

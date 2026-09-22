@@ -1,0 +1,152 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import { type Locale } from '../lib/i18n';
+import { pageFor, uiFor, settingsFor, teamFor } from '../lib/content';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const page = await pageFor(locale, 'business');
+const ui = await uiFor(locale);
+const s = await settingsFor(locale);
+const team = await teamFor(locale);
+const S = page.sections as any;
+const mice = team.find((m) => m.data.role.toLowerCase().includes('mice'));
+---
+<Base
+  locale={locale}
+  routeKey="business"
+  title={page.seo?.title ?? ''}
+  description={page.seo?.description ?? s.descriptor}
+>
+  <PageHero
+    locale={locale}
+    eyebrow={page.hero!.eyebrow}
+    title={page.hero!.title}
+    lede={page.hero!.lede}
+    image={page.hero!.image}
+    primaryCta={page.hero!.primaryCta}
+    secondaryCta={page.hero!.secondaryCta}
+    placeholderLabel={ui.imagePlaceholderLabel}
+  />
+
+  <section class="section offer">
+    <div class="shell">
+      <span class="eyebrow">{S.offer.eyebrow}</span>
+      <h2 class="offer__title">{S.offer.title}</h2>
+      <p class="lede offer__intro">{S.offer.intro}</p>
+      <ul class="offer__grid">
+        {S.offer.items.map((it: any, i: number) => (
+          <li data-reveal style={`--reveal-delay:${i * 70}ms`}>
+            <span class="offer__icon"><Icon name={it.icon} size={24} /></span>
+            <h3>{it.title}</h3>
+            <p>{it.body}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section why on-dark">
+    <div class="shell why__inner">
+      <div>
+        <span class="eyebrow">{S.why.eyebrow}</span>
+        <h2 class="why__title">{S.why.title}</h2>
+        {mice && (
+          <div class="contactcard">
+            <p class="contactcard__name">{mice.data.name}</p>
+            <p class="contactcard__role">{mice.data.role}</p>
+            <ul>
+              {mice.data.email && <li><Icon name="mail" size={15} /><a href={`mailto:${mice.data.email}`}>{mice.data.email}</a></li>}
+              {mice.data.phone && <li><Icon name="phone" size={15} /><a href={`tel:${mice.data.phone.replace(/\s/g, '')}`}>{mice.data.phone}</a></li>}
+            </ul>
+          </div>
+        )}
+      </div>
+      <ol class="why__list">
+        {S.why.points.map((p: any, i: number) => (
+          <li data-reveal style={`--reveal-delay:${i * 70}ms`}>
+            <span class="why__num">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{p.title}</h3>
+              <p>{p.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="shell">
+      <div class="travel">
+        <div>
+          <span class="eyebrow">{S.travel.eyebrow}</span>
+          <h2 class="travel__title">{S.travel.title}</h2>
+          <p class="travel__body">{S.travel.body}</p>
+        </div>
+        <ul class="travel__list">
+          {S.travel.bullets.map((b: string) => (
+            <li><Icon name="check" size={15} />{b}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section req" id="richiesta">
+    <div class="shell req__inner">
+      <div class="req__side">
+        <span class="eyebrow">{S.form.eyebrow}</span>
+        <h2 class="req__title">{S.form.title}</h2>
+        <p class="req__body">{S.form.body}</p>
+      </div>
+      <div class="req__form">
+        <EnquiryForm locale={locale} variant="mice" id="mice-enquiry" />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .offer__title { margin-top: var(--sp-2); max-width: 20ch; }
+  .offer__intro { margin-top: var(--sp-5); }
+  .offer__grid { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--sp-6) var(--gutter); margin-top: var(--sp-8); }
+  .offer__grid li { display: grid; gap: var(--sp-3); align-content: start; padding-top: var(--sp-5); border-top: 1px solid var(--rule-strong); }
+  .offer__icon { color: var(--rosso); }
+  .offer__grid h3 { font-size: var(--step-1); }
+  .offer__grid p { margin: 0; font-size: var(--step--1); line-height: 1.62; color: var(--ink-soft); }
+
+  .why__inner { display: grid; gap: var(--sp-8) var(--gutter); }
+  @media (min-width: 960px) { .why__inner { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(2rem, 6vw, 6rem); align-items: start; } }
+  .why__title { max-width: 15ch; }
+  .why__list { list-style: none; }
+  .why__list li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--sp-5); padding-block: var(--sp-5); border-top: 1px solid var(--rule-invert); }
+  .why__list li:last-child { border-bottom: 1px solid var(--rule-invert); }
+  .why__num { font-size: var(--step--2); font-weight: 600; letter-spacing: 0.1em; color: #e4787c; padding-top: 0.45em; }
+  .why__list h3 { font-size: var(--step-1); }
+  .why__list p { margin: 0.5em 0 0; font-size: var(--step--1); line-height: 1.6; color: var(--ink-invert-soft); max-width: 46ch; }
+
+  .contactcard { margin-top: var(--sp-7); padding: var(--sp-5); border: 1px solid var(--rule-invert); border-radius: var(--radius-lg); max-width: 330px; }
+  .contactcard__name { margin: 0; font-size: var(--step-0); font-weight: 600; }
+  .contactcard__role { margin: 0.2em 0 var(--sp-4); font-size: var(--step--2); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-invert-mute); }
+  .contactcard ul { list-style: none; display: grid; gap: 0.6em; font-size: var(--step--1); }
+  .contactcard li { display: flex; align-items: center; gap: 0.65em; color: var(--ink-invert-mute); }
+  .contactcard a { color: var(--ink-invert-soft); text-decoration: none; word-break: break-word; }
+  .contactcard a:hover { color: var(--ink-invert); }
+
+  .travel { display: grid; gap: var(--sp-6) var(--gutter); padding: clamp(1.75rem, 1rem + 3vw, 3.25rem); background: var(--avorio); border-radius: var(--radius-lg); }
+  @media (min-width: 880px) { .travel { grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; } }
+  .travel__title { max-width: 18ch; }
+  .travel__body { margin: var(--sp-4) 0 0; max-width: 56ch; color: var(--ink-soft); }
+  .travel__list { list-style: none; display: grid; gap: 0.7em; font-size: var(--step--1); color: var(--ink-soft); }
+  .travel__list li { display: flex; align-items: flex-start; gap: 0.65em; }
+  .travel__list :global(svg) { flex: none; margin-top: 0.22em; color: var(--rosso); }
+
+  .req__inner { display: grid; gap: var(--sp-7) var(--gutter); }
+  @media (min-width: 960px) { .req__inner { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; } }
+  .req__title { font-size: var(--step-3); max-width: 18ch; }
+  .req__body { margin: var(--sp-4) 0 0; max-width: 46ch; color: var(--ink-soft); }
+</style>

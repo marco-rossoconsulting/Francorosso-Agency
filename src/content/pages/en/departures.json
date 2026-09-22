@@ -1,0 +1,19 @@
+{
+  "seo": {
+    "title": "Our departures",
+    "description": "Group journeys organised directly by Francorosso: fixed dates, clear prices, an Italian-speaking tour leader. Departures from Milan, Zurich and Lugano."
+  },
+  "hero": {
+    "eyebrow": "Our departures",
+    "title": "Journeys we organise ourselves, from the first line of the itinerary.",
+    "lede": "Fixed dates, small groups, a tour leader who has already travelled the route. If a departure appeals but the dates do not work, say so — we can often build it around you."
+  },
+  "sections": {
+    "custom": {
+      "eyebrow": "None of the dates work?",
+      "title": "The same itinerary, when it suits you",
+      "body": "Many of these departures also run privately, for a family or a group of friends. Tell us which one interests you and roughly when.",
+      "ctaLabel": "Request a private departure"
+    }
+  }
+}

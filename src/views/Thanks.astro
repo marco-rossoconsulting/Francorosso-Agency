@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { path, type Locale } from '../lib/i18n';
+import { settingsFor, pageFor } from '../lib/content';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const s = await settingsFor(locale);
+const page = await pageFor(locale, 'thanks');
+const S = page.sections as any;
+---
+<Base
+  locale={locale}
+  routeKey="thanks"
+  title={page.seo?.title ?? ''}
+  description={page.seo?.description ?? s.descriptor}
+  noindex
+>
+  <section class="thanks">
+    <div class="shell shell--narrow">
+      <span class="eyebrow">{page.hero!.eyebrow}</span>
+      <h1 class="thanks__title">{page.hero!.title}</h1>
+      <p class="lede thanks__body">{page.hero!.lede}</p>
+
+      <ul class="thanks__direct">
+        <li><Icon name="phone" size={17} /><a href={s.phoneHref}>{s.phone}</a></li>
+        <li>
+          <Icon name="whatsapp" size={17} />
+          <a href={`${s.whatsapp.href}?text=${encodeURIComponent(s.whatsapp.prefillMessage)}`} target="_blank" rel="noopener noreferrer">{s.whatsapp.number}</a>
+        </li>
+        <li><Icon name="mail" size={17} /><a href={`mailto:${s.email}`}>{s.email}</a></li>
+      </ul>
+
+      <div class="thanks__ctas">
+        <a class="btn" href={path(locale, 'departures')}>
+          {S.actions.primaryLabel}
+          <Icon name="arrow" size={17} />
+        </a>
+        <a class="link-arrow" href={path(locale, 'home')}>{S.actions.backLabel}</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .thanks { padding-block: clamp(4rem, 3rem + 6vw, 9rem); }
+  .thanks__title { max-width: 18ch; }
+  .thanks__body { margin-top: var(--sp-5); }
+  .thanks__direct { list-style: none; display: grid; gap: 0.7em; margin: var(--sp-7) 0 0; padding-top: var(--sp-5); border-top: 1px solid var(--rule); font-size: var(--step-0); }
+  .thanks__direct li { display: flex; align-items: center; gap: 0.7em; color: var(--ink-mute); }
+  .thanks__direct a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule); }
+  .thanks__direct a:hover { color: var(--rosso); border-color: var(--rosso); }
+  .thanks__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-5); margin-top: var(--sp-7); }
+</style>

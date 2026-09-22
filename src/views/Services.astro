@@ -1,0 +1,136 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import { path, type Locale } from '../lib/i18n';
+import { pageFor, uiFor, settingsFor } from '../lib/content';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const page = await pageFor(locale, 'services');
+const ui = await uiFor(locale);
+const s = await settingsFor(locale);
+const S = page.sections as any;
+const items = S.list.items as any[];
+---
+<Base
+  locale={locale}
+  routeKey="services"
+  title={page.seo?.title ?? ''}
+  description={page.seo?.description ?? s.descriptor}
+>
+  <PageHero locale={locale} eyebrow={page.hero!.eyebrow} title={page.hero!.title} lede={page.hero!.lede} />
+
+  <section class="section--tight">
+    <div class="shell">
+      <nav class="jump" aria-label={page.hero!.eyebrow}>
+        {items.map((it) => <a href={`#${it.anchor}`}>{it.title}</a>)}
+      </nav>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="shell">
+      <ol class="srv">
+        {items.map((it, i) => (
+          <li class="srv__item" id={it.anchor} data-reveal>
+            <div class="srv__index">
+              <span class="srv__num">{String(i + 1).padStart(2, '0')}</span>
+              <span class="srv__icon"><Icon name={it.icon} size={26} /></span>
+            </div>
+            <div class="srv__body">
+              <h2 class="srv__title">{it.title}</h2>
+              <p class="srv__text">{it.body}</p>
+              <ul class="srv__list">
+                {it.bullets.map((b: string) => (
+                  <li><Icon name="check" size={15} />{b}</li>
+                ))}
+              </ul>
+              {it.anchor === 'assicurazione' || it.anchor === 'insurance' ? (
+                <a class="btn btn--tertiary btn--sm srv__cta" href={path(locale, 'insurance')}>
+                  {ui.readMore}
+                  <Icon name="arrow" size={15} />
+                </a>
+              ) : it.anchor === 'aziende' || it.anchor === 'business' ? (
+                <a class="btn btn--tertiary btn--sm srv__cta" href={path(locale, 'business')}>
+                  {ui.readMore}
+                  <Icon name="arrow" size={15} />
+                </a>
+              ) : it.anchor === 'gruppi' || it.anchor === 'groups' ? (
+                <a class="btn btn--tertiary btn--sm srv__cta" href={path(locale, 'departures')}>
+                  {ui.viewAll}
+                  <Icon name="arrow" size={15} />
+                </a>
+              ) : null}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="shell">
+      <div class="scta on-dark">
+        <div>
+          <span class="eyebrow">{S.cta.eyebrow}</span>
+          <h2 class="scta__title">{S.cta.title}</h2>
+          <p class="scta__body">{S.cta.body}</p>
+        </div>
+        <div class="scta__actions">
+          <a class="btn" href={path(locale, 'quote')}>
+            {S.cta.ctaLabel}
+            <Icon name="arrow" size={17} />
+          </a>
+          <a class="link-arrow" href={s.phoneHref}>{s.phone}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .jump { display: flex; flex-wrap: wrap; gap: var(--sp-3); padding-bottom: var(--sp-5); border-bottom: 1px solid var(--rule); }
+  .jump a {
+    padding: 0.5em 0.95em;
+    font-size: var(--step--2);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+    border: 1px solid var(--rule-strong);
+    border-radius: 999px;
+    transition: all var(--dur-fast) ease;
+  }
+  .jump a:hover { border-color: var(--rosso); color: var(--rosso); }
+
+  .srv { list-style: none; display: grid; }
+  .srv__item { display: grid; gap: var(--sp-5) var(--gutter); padding-block: clamp(2.25rem, 1.4rem + 3.2vw, 4rem); border-bottom: 1px solid var(--rule); scroll-margin-top: calc(var(--header-h) + 2rem); }
+  .srv__item:last-child { border-bottom: 0; }
+  @media (min-width: 880px) { .srv__item { grid-template-columns: 120px minmax(0, 1fr); gap: clamp(2rem, 5vw, 4.5rem); } }
+
+  .srv__index { display: flex; align-items: baseline; gap: var(--sp-4); }
+  @media (min-width: 880px) { .srv__index { flex-direction: column; gap: var(--sp-5); } }
+  .srv__num { font-size: var(--step--2); font-weight: 600; letter-spacing: 0.16em; color: var(--ink-mute); }
+  .srv__icon { color: var(--rosso); }
+
+  .srv__title { font-size: var(--step-3); max-width: 18ch; }
+  .srv__text { margin: var(--sp-4) 0 0; max-width: 64ch; font-size: var(--step-0); line-height: 1.62; color: var(--ink-soft); }
+  .srv__list { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.6em var(--gutter); margin-top: var(--sp-5); }
+  .srv__list li { display: flex; align-items: flex-start; gap: 0.6em; font-size: var(--step--1); color: var(--ink-soft); }
+  .srv__list :global(svg) { flex: none; margin-top: 0.22em; color: var(--rosso); }
+  .srv__cta { margin-top: var(--sp-5); }
+
+  .scta {
+    display: grid;
+    gap: var(--sp-6);
+    align-items: center;
+    padding: clamp(2rem, 1.2rem + 3.6vw, 4rem);
+    border-radius: var(--radius-lg);
+  }
+  @media (min-width: 880px) { .scta { grid-template-columns: minmax(0, 1fr) auto; gap: var(--sp-8); } }
+  .scta__title { max-width: 20ch; }
+  .scta__body { margin: var(--sp-4) 0 0; max-width: 52ch; color: var(--ink-invert-soft); }
+  .scta__actions { display: grid; gap: var(--sp-5); justify-items: start; }
+</style>

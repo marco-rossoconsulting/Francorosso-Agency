@@ -1,0 +1,42 @@
+---
+/**
+ * "ROUTE" from the brand's secondary travel language: one fine continuous line
+ * that carries movement across a composition. Never touches the wordmark.
+ */
+interface Props {
+  variant?: 'arc' | 'sweep' | 'rise';
+  class?: string;
+  stroke?: string;
+  animate?: boolean;
+}
+const { variant = 'arc', class: cls, stroke = 'currentColor', animate = true } = Astro.props;
+const D = {
+  arc: 'M-10 120C120 118 210 74 330 40 450 6 570 2 700 22',
+  sweep: 'M-10 96C90 40 190 14 300 22 410 30 520 88 700 44',
+  rise: 'M-10 130C140 130 240 96 340 62 440 28 560 14 700 8',
+};
+---
+<svg
+  class:list={['route-line', cls]}
+  viewBox="0 0 690 140"
+  fill="none"
+  preserveAspectRatio="none"
+  aria-hidden="true"
+  focusable="false"
+  data-animate={animate ? '' : undefined}
+>
+  <path d={D[variant]} stroke={stroke} stroke-width="1" vector-effect="non-scaling-stroke" />
+</svg>
+
+<style>
+  .route-line { display: block; width: 100%; height: 100%; opacity: 0.55; }
+  .route-line[data-animate] path {
+    stroke-dasharray: 1400;
+    stroke-dashoffset: 1400;
+    animation: draw 2.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .route-line[data-animate] path { animation: none; stroke-dashoffset: 0; }
+  }
+</style>

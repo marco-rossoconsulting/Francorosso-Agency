@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import { type Locale } from '../lib/i18n';
+import { pageFor, settingsFor } from '../lib/content';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const page = await pageFor(locale, 'quote');
+const s = await settingsFor(locale);
+const S = page.sections as any;
+---
+<Base
+  locale={locale}
+  routeKey="quote"
+  title={page.seo?.title ?? ''}
+  description={page.seo?.description ?? s.descriptor}
+>
+  <PageHero locale={locale} eyebrow={page.hero!.eyebrow} title={page.hero!.title} lede={page.hero!.lede} />
+
+  <section class="section--tight">
+    <div class="shell qgrid">
+      <aside class="qside">
+        <ul class="reass">
+          {S.reassurance.items.map((r: any) => (
+            <li>
+              <span class="reass__icon"><Icon name={r.icon} size={20} /></span>
+              <div>
+                <h2 class="reass__title">{r.title}</h2>
+                <p class="reass__body">{r.body}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </aside>
+
+      <div class="qform">
+        <span class="eyebrow">{S.form.eyebrow}</span>
+        <h2 class="qform__title">{S.form.title}</h2>
+        <p class="qform__body">{S.form.body}</p>
+        <EnquiryForm locale={locale} variant="quote" id="quote-enquiry" />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .qgrid { display: grid; gap: var(--sp-7) var(--gutter); }
+  @media (min-width: 960px) { .qgrid { grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; } }
+
+  .reass { list-style: none; display: grid; gap: var(--sp-5); }
+  .reass li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--sp-4); padding-top: var(--sp-5); border-top: 1px solid var(--rule); }
+  .reass__icon { color: var(--rosso); padding-top: 0.15em; }
+  .reass__title { font-size: var(--step-0); font-weight: 600; }
+  .reass__body { margin: 0.4em 0 0; font-size: var(--step--1); line-height: 1.6; color: var(--ink-soft); }
+
+  .qform { padding: clamp(1.5rem, 1rem + 2.4vw, 2.75rem); background: var(--bianco); border: 1px solid var(--rule); border-radius: var(--radius-lg); }
+  .qform__title { font-size: var(--step-2); max-width: 22ch; }
+  .qform__body { margin: var(--sp-4) 0 var(--sp-6); max-width: 54ch; font-size: var(--step--1); color: var(--ink-soft); }
+</style>

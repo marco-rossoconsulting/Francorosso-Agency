@@ -1,0 +1,167 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { path, type Locale, type RouteKey } from '../lib/i18n';
+import { navigationFor, settingsFor } from '../lib/content';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const nav = await navigationFor(locale);
+const s = await settingsFor(locale);
+const year = new Date().getFullYear();
+const socialIcon: Record<string, 'facebook' | 'instagram' | 'linkedin'> = {
+  facebook: 'facebook',
+  instagram: 'instagram',
+  linkedin: 'linkedin',
+};
+---
+<footer class="ftr on-dark">
+  <div class="shell">
+    <div class="ftr__top">
+      <div class="ftr__brand">
+        <Logo variant="avorio" width={230} alt="Francorosso" />
+        <p class="ftr__note">{s.footerNote}</p>
+        <ul class="ftr__social" aria-label="Social">
+          {s.social.map((x) => (
+            <li>
+              <a href={x.href} rel="noopener noreferrer" target="_blank" aria-label={x.label}>
+                <Icon name={socialIcon[x.network] ?? 'external'} size={19} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="ftr__cols">
+        {nav.footerColumns.map((col) => (
+          <nav class="ftr__col" aria-label={col.title}>
+            <h2 class="ftr__coltitle">{col.title}</h2>
+            <ul>
+              {col.items.map((i) => (
+                <li><a href={path(locale, i.route as RouteKey)}>{i.label}</a></li>
+              ))}
+            </ul>
+          </nav>
+        ))}
+
+        <div class="ftr__col">
+          <h2 class="ftr__coltitle">{s.companyName}</h2>
+          <address class="ftr__addr">
+            <span>{s.address.street}</span>
+            <span>{s.address.postalCode} {s.address.city}</span>
+            <span>{s.address.country}</span>
+            <a href={s.phoneHref}>{s.phone}</a>
+            <a href={`mailto:${s.email}`}>{s.email}</a>
+          </address>
+          <ul class="ftr__hours">
+            {s.openingHours.map((h) => (
+              <li><span>{h.days}</span><span>{h.hours}</span></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="ftr__bottom">
+      <p class="ftr__copy">© {year} {s.copyrightName}</p>
+      <ul class="ftr__legal">
+        {nav.legal.map((l) => (
+          <li><a href={path(locale, l.route as RouteKey)}>{l.label}</a></li>
+        ))}
+      </ul>
+      {s.memberships.length > 0 && (
+        <ul class="ftr__badges">
+          {s.memberships.map((m) => <li title={m.note}>{m.label}</li>)}
+        </ul>
+      )}
+    </div>
+  </div>
+</footer>
+
+<style>
+  .ftr { padding-block: var(--sp-9) var(--sp-6); }
+  .ftr__top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-8) var(--gutter);
+    padding-bottom: var(--sp-8);
+  }
+  @media (min-width: 900px) {
+    .ftr__top { grid-template-columns: minmax(280px, 1fr) minmax(0, 1.9fr); gap: var(--sp-9); }
+  }
+  .ftr__brand img { width: clamp(180px, 20vw, 230px); }
+  .ftr__note {
+    margin-top: var(--sp-5);
+    max-width: 34ch;
+    font-size: var(--step--1);
+    line-height: 1.6;
+    color: var(--ink-invert-soft);
+  }
+  .ftr__social { display: flex; gap: var(--sp-3); margin-top: var(--sp-5); list-style: none; }
+  .ftr__social a {
+    display: grid; place-items: center;
+    width: 38px; height: 38px;
+    border: 1px solid var(--rule-invert);
+    border-radius: 50%;
+    color: var(--ink-invert-soft);
+    transition: color var(--dur-fast) ease, border-color var(--dur-fast) ease;
+  }
+  .ftr__social a:hover { color: var(--ink-invert); border-color: var(--ink-invert); }
+
+  .ftr__cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--sp-7) var(--gutter);
+  }
+  .ftr__coltitle {
+    margin-bottom: var(--sp-4);
+    font-size: var(--step--2);
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-invert-mute);
+  }
+  .ftr__col ul { list-style: none; display: grid; gap: 0.62em; }
+  .ftr__col a {
+    font-size: var(--step--1);
+    color: var(--ink-invert-soft);
+    text-decoration: none;
+    transition: color var(--dur-fast) ease;
+  }
+  .ftr__col a:hover { color: var(--ink-invert); }
+
+  .ftr__addr {
+    display: grid;
+    gap: 0.35em;
+    font-style: normal;
+    font-size: var(--step--1);
+    color: var(--ink-invert-soft);
+  }
+  .ftr__addr a { color: var(--ink-invert-soft); text-decoration: none; }
+  .ftr__addr a:hover { color: var(--ink-invert); }
+  .ftr__hours {
+    margin-top: var(--sp-5);
+    display: grid;
+    gap: 0.35em;
+    list-style: none;
+    font-size: var(--step--2);
+    color: var(--ink-invert-mute);
+  }
+  .ftr__hours li { display: flex; justify-content: space-between; gap: var(--sp-4); max-width: 280px; }
+
+  .ftr__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-4) var(--sp-6);
+    padding-top: var(--sp-5);
+    border-top: 1px solid var(--rule-invert);
+    font-size: var(--step--2);
+    color: var(--ink-invert-mute);
+  }
+  .ftr__copy { margin: 0; }
+  .ftr__legal { display: flex; flex-wrap: wrap; gap: var(--sp-5); list-style: none; }
+  .ftr__legal a { color: var(--ink-invert-mute); text-decoration: none; }
+  .ftr__legal a:hover { color: var(--ink-invert); }
+  .ftr__badges { margin-left: auto; display: flex; flex-wrap: wrap; gap: var(--sp-4); list-style: none; letter-spacing: 0.1em; text-transform: uppercase; }
+</style>

@@ -1,0 +1,310 @@
+---
+import Icon from './Icon.astro';
+import { path, type Locale } from '../lib/i18n';
+import { uiFor, settingsFor } from '../lib/content';
+
+type Variant = 'quote' | 'mice' | 'insurance' | 'contact';
+interface Props {
+  locale: Locale;
+  variant: Variant;
+  /** Pre-fills the destination / subject field, e.g. from a departure page. */
+  subject?: string;
+  compact?: boolean;
+  id?: string;
+}
+const { locale, variant, subject = '', compact = false, id = 'enquiry' } = Astro.props;
+const ui = await uiFor(locale);
+const s = await settingsFor(locale);
+const f = ui.form;
+
+/** One Netlify form per department, so notifications route without extra tooling. */
+const FORM_NAME: Record<Variant, string> = {
+  quote: `preventivo-${locale}`,
+  mice: `aziende-mice-${locale}`,
+  insurance: `assicurazione-${locale}`,
+  contact: `contatti-${locale}`,
+};
+const DEPARTMENT: Record<Variant, string> = {
+  quote: 'Leisure / viaggi',
+  mice: 'MICE / aziende',
+  insurance: 'Assicurazioni',
+  contact: 'Generale',
+};
+const formName = FORM_NAME[variant];
+const success = path(locale, 'thanks');
+const req = `(${f.required})`;
+const opt = `(${f.optional})`;
+---
+<form
+  class:list={['form', compact && 'form--compact']}
+  id={id}
+  name={formName}
+  method="POST"
+  action={success}
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  data-form
+>
+  <input type="hidden" name="form-name" value={formName} />
+  <input type="hidden" name="department" value={DEPARTMENT[variant]} />
+  <input type="hidden" name="locale" value={locale} />
+  <input type="hidden" name="page" value={Astro.url.pathname} />
+  <p class="form__hp" aria-hidden="true">
+    <label>Do not fill this in <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+  </p>
+
+  <div class="form__grid">
+    <p class="field">
+      <label for={`${id}-name`}>{f.name} <span class="field__req">{req}</span></label>
+      <input id={`${id}-name`} name="nome" type="text" required autocomplete="name" />
+    </p>
+    <p class="field">
+      <label for={`${id}-email`}>{f.email} <span class="field__req">{req}</span></label>
+      <input id={`${id}-email`} name="email" type="email" required autocomplete="email" />
+    </p>
+    <p class="field">
+      <label for={`${id}-phone`}>{f.phone} <span class="field__opt">{opt}</span></label>
+      <input id={`${id}-phone`} name="telefono" type="tel" autocomplete="tel" inputmode="tel" />
+    </p>
+
+    {variant === 'mice' && (
+      <p class="field">
+        <label for={`${id}-company`}>{f.company} <span class="field__req">{req}</span></label>
+        <input id={`${id}-company`} name="azienda" type="text" required autocomplete="organization" />
+      </p>
+    )}
+
+    {(variant === 'quote' || variant === 'insurance') && (
+      <p class="field field--wide">
+        <label for={`${id}-dest`}>{f.destination} <span class="field__req">{req}</span></label>
+        <input id={`${id}-dest`} name="destinazione" type="text" required value={subject} />
+      </p>
+    )}
+
+    {variant === 'quote' && (
+      <>
+        <p class="field">
+          <label for={`${id}-type`}>{f.tripType}</label>
+          <select id={`${id}-type`} name="tipo_viaggio">
+            {f.tripTypeOptions.map((o) => <option value={o}>{o}</option>)}
+          </select>
+        </p>
+        <p class="field">
+          <label for={`${id}-pax`}>{f.travellers}</label>
+          <input id={`${id}-pax`} name="viaggiatori" type="number" min="1" max="99" inputmode="numeric" />
+        </p>
+        <p class="field">
+          <label for={`${id}-from`}>{f.departureDate}</label>
+          <input id={`${id}-from`} name="data_partenza" type="date" />
+        </p>
+        <p class="field">
+          <label for={`${id}-to`}>{f.returnDate}</label>
+          <input id={`${id}-to`} name="data_rientro" type="date" />
+        </p>
+        <p class="field field--wide">
+          <label for={`${id}-budget`}>{f.budget} <span class="field__opt">{opt}</span></label>
+          <input id={`${id}-budget`} name="budget" type="text" />
+        </p>
+      </>
+    )}
+
+    {variant === 'insurance' && (
+      <>
+        <p class="field">
+          <label for={`${id}-cover`}>{f.coverLevel}</label>
+          <select id={`${id}-cover`} name="copertura">
+            {f.coverLevelOptions.map((o) => <option value={o}>{o}</option>)}
+          </select>
+        </p>
+        <p class="field">
+          <label for={`${id}-pax`}>{f.travellers}</label>
+          <input id={`${id}-pax`} name="viaggiatori" type="number" min="1" max="99" inputmode="numeric" />
+        </p>
+        <p class="field">
+          <label for={`${id}-from`}>{f.departureDate}</label>
+          <input id={`${id}-from`} name="data_partenza" type="date" />
+        </p>
+        <p class="field">
+          <label for={`${id}-to`}>{f.returnDate}</label>
+          <input id={`${id}-to`} name="data_rientro" type="date" />
+        </p>
+        <p class="field field--wide">
+          <label for={`${id}-value`}>{f.tripValue} <span class="field__req">{req}</span></label>
+          <input id={`${id}-value`} name="valore_viaggio" type="text" required />
+        </p>
+      </>
+    )}
+
+    {variant === 'mice' && (
+      <>
+        <p class="field">
+          <label for={`${id}-event`}>{f.eventType}</label>
+          <select id={`${id}-event`} name="tipo_progetto">
+            {f.eventTypeOptions.map((o) => <option value={o}>{o}</option>)}
+          </select>
+        </p>
+        <p class="field">
+          <label for={`${id}-part`}>{f.participants}</label>
+          <input id={`${id}-part`} name="partecipanti" type="number" min="1" inputmode="numeric" />
+        </p>
+        <p class="field">
+          <label for={`${id}-dest`}>{f.destination} <span class="field__opt">{opt}</span></label>
+          <input id={`${id}-dest`} name="destinazione" type="text" value={subject} />
+        </p>
+        <p class="field">
+          <label for={`${id}-from`}>{f.departureDate}</label>
+          <input id={`${id}-from`} name="data_partenza" type="date" />
+        </p>
+      </>
+    )}
+
+    <p class="field field--wide">
+      <label for={`${id}-msg`}>
+        {f.message}
+        <span class={variant === 'contact' ? 'field__req' : 'field__opt'}>
+          {variant === 'contact' ? req : opt}
+        </span>
+      </label>
+      <textarea
+        id={`${id}-msg`}
+        name="messaggio"
+        rows={compact ? 4 : 5}
+        required={variant === 'contact'}
+        placeholder={f.messagePlaceholder}></textarea>
+    </p>
+
+    <fieldset class="field field--wide choices">
+      <legend>{f.preferredContact}</legend>
+      <div class="choices__row">
+        {f.preferredContactOptions.map((o, i) => (
+          <label class="choice">
+            <input type="radio" name="contatto_preferito" value={o} checked={i === 0} />
+            <span>{o}</span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+
+    <p class="field field--wide consent">
+      <label class="choice">
+        <input type="checkbox" name="consenso_privacy" required value="si" />
+        <span>
+          {f.consent} <a href={path(locale, 'privacy')}>Privacy</a>
+        </span>
+      </label>
+    </p>
+  </div>
+
+  <div class="form__foot">
+    <button class="btn" type="submit" data-submit>
+      {f.submit}
+      <Icon name="arrow" size={17} />
+    </button>
+    <p class="form__note meta">{f.responseNote}</p>
+  </div>
+
+  <p class="form__alt meta">
+    <a href={s.phoneHref}>{s.phone}</a>
+    <span aria-hidden="true">·</span>
+    <a href={`${s.whatsapp.href}?text=${encodeURIComponent(s.whatsapp.prefillMessage)}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+    <span aria-hidden="true">·</span>
+    <a href={`mailto:${s.email}`}>{s.email}</a>
+  </p>
+</form>
+
+<style>
+  .form { display: grid; gap: var(--sp-6); }
+  .form__hp { position: absolute; left: -9999px; opacity: 0; height: 0; overflow: hidden; }
+
+  .form__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sp-5) var(--sp-5);
+  }
+  @media (max-width: 620px) { .form__grid { grid-template-columns: 1fr; } }
+  .field--wide { grid-column: 1 / -1; }
+
+  .field { margin: 0; display: grid; gap: 0.45em; }
+  .field label {
+    font-size: var(--step--1);
+    font-weight: 500;
+    color: var(--ink);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em;
+    align-items: baseline;
+  }
+  .field__req, .field__opt {
+    font-size: var(--step--2);
+    font-weight: 400;
+    color: var(--ink-mute);
+    letter-spacing: 0.02em;
+  }
+
+  input[type='text'], input[type='email'], input[type='tel'],
+  input[type='date'], input[type='number'], select, textarea {
+    width: 100%;
+    padding: 0.78em 0.9em;
+    font: inherit;
+    font-size: var(--step-0);
+    color: var(--ink);
+    background: var(--bianco);
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius);
+    transition: border-color var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+  }
+  textarea { resize: vertical; line-height: 1.5; }
+  select {
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--ink-soft) 50%),
+      linear-gradient(135deg, var(--ink-soft) 50%, transparent 50%);
+    background-position: calc(100% - 20px) calc(50% + 2px), calc(100% - 14px) calc(50% + 2px);
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+    padding-right: 2.5em;
+  }
+  input:hover, select:hover, textarea:hover { border-color: var(--ink-mute); }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--rosso);
+    box-shadow: 0 0 0 3px rgba(178, 30, 35, 0.12);
+    outline: none;
+  }
+  input:user-invalid, textarea:user-invalid { border-color: var(--rosso); }
+
+  .choices { border: 0; padding: 0; margin: 0; display: grid; gap: 0.6em; }
+  .choices legend { padding: 0; font-size: var(--step--1); font-weight: 500; }
+  .choices__row { display: flex; flex-wrap: wrap; gap: var(--sp-5); }
+
+  .field label.choice, .choices label.choice {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 0.6em;
+    font-size: var(--step--1);
+    font-weight: 400;
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .choice > span { flex: 1 1 auto; }
+  .choice input { flex: none; width: 17px; height: 17px; margin-top: 0.15em; accent-color: var(--rosso); }
+  .consent { padding-top: var(--sp-2); border-top: 1px solid var(--rule); }
+  .consent a { color: var(--ink); text-decoration-color: var(--rosso); }
+
+  .form__foot { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-4) var(--sp-5); }
+  .form__note { max-width: 40ch; margin: 0; }
+  .form__alt { display: flex; flex-wrap: wrap; gap: 0.6em; margin: 0; padding-top: var(--sp-4); border-top: 1px solid var(--rule); }
+  .form__alt a { color: var(--ink-soft); text-decoration: none; border-bottom: 1px solid var(--rule); }
+  .form__alt a:hover { color: var(--rosso); border-color: var(--rosso); }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-form]').forEach((form) => {
+    form.addEventListener('submit', () => {
+      const btn = form.querySelector<HTMLButtonElement>('[data-submit]');
+      if (btn && form.checkValidity()) {
+        btn.disabled = true;
+        btn.style.opacity = '0.65';
+      }
+    });
+  });
+</script>

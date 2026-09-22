@@ -1,0 +1,34 @@
+{
+  "primary": [
+    { "label": "Le nostre partenze", "route": "departures" },
+    { "label": "Servizi", "route": "services" },
+    { "label": "Aziende e MICE", "route": "business" },
+    { "label": "Chi siamo", "route": "about" },
+    { "label": "Contatti", "route": "contact" }
+  ],
+  "headerCta": { "label": "Richiedi un preventivo", "route": "quote" },
+  "footerColumns": [
+    {
+      "title": "Viaggiare con noi",
+      "items": [
+        { "label": "Le nostre partenze", "route": "departures" },
+        { "label": "Servizi", "route": "services" },
+        { "label": "Assicurazione viaggio", "route": "insurance" },
+        { "label": "Richiedi un preventivo", "route": "quote" }
+      ]
+    },
+    {
+      "title": "Agenzia",
+      "items": [
+        { "label": "Chi siamo", "route": "about" },
+        { "label": "Aziende e MICE", "route": "business" },
+        { "label": "Link utili", "route": "links" },
+        { "label": "Contatti", "route": "contact" }
+      ]
+    }
+  ],
+  "legal": [
+    { "label": "Privacy", "route": "privacy" },
+    { "label": "Note legali", "route": "legal" }
+  ]
+}

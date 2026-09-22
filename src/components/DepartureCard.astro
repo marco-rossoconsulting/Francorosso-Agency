@@ -1,0 +1,179 @@
+---
+import Icon from './Icon.astro';
+import Figure from './Figure.astro';
+import { path, formatDateRange, formatPrice, type Locale } from '../lib/i18n';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  locale: Locale;
+  entry: CollectionEntry<'departures'>;
+  ui: any;
+  feature?: boolean;
+  eager?: boolean;
+}
+const { locale, entry, ui, feature = false, eager = false } = Astro.props;
+const d = entry.data;
+const href = path(locale, 'departures', d.slug);
+const dates = formatDateRange(d.departureDate, d.returnDate, locale);
+const statusLabel = d.status === 'few-places' ? ui.seatsNote : d.status === 'sold-out' ? ui.soldOut : null;
+---
+<article class:list={['dep', feature && 'dep--feature']}>
+  <a class="dep__link" href={href} aria-label={d.title}></a>
+
+  <div class="dep__media">
+    <Figure
+      src={d.heroImage?.src || undefined}
+      alt={d.heroImage?.alt ?? ''}
+      brief={d.heroImage?.brief}
+      ratio={feature ? '16 / 10' : '3 / 2'}
+      eager={eager}
+      placeholderLabel={ui.imagePlaceholderLabel}
+      sizes={feature ? '(max-width: 900px) 100vw, 58vw' : '(max-width: 720px) 100vw, 33vw'}
+    />
+    {statusLabel && <span class:list={['dep__status', d.status === 'sold-out' && 'is-out']}>{statusLabel}</span>}
+  </div>
+
+  <div class="dep__body">
+    <p class="dep__cat">
+      <span>{d.category}</span>
+      {d.countries.length > 0 && <span class="dep__dot" aria-hidden="true">·</span>}
+      {d.countries.length > 0 && <span>{d.countries.join(' · ')}</span>}
+    </p>
+
+    <h3 class="dep__title">{d.title}</h3>
+    <p class="dep__summary">{d.summary}</p>
+
+    <dl class="dep__facts">
+      <div>
+        <dt><Icon name="calendar" size={15} /><span class="visually-hidden">{dates}</span></dt>
+        <dd>{dates}</dd>
+      </div>
+      <div>
+        <dt><Icon name="clock" size={15} /></dt>
+        <dd>{d.durationDays} {ui.days}</dd>
+      </div>
+      {d.departsFrom.length > 0 && (
+        <div>
+          <dt><Icon name="plane" size={15} /></dt>
+          <dd>{d.departsFrom.join(', ')}</dd>
+        </div>
+      )}
+    </dl>
+
+    <div class="dep__foot">
+      {d.priceFrom && (
+        <p class="dep__price">
+          <span class="dep__from">{ui.from}</span>
+          <span class="dep__amount">{formatPrice(d.priceFrom, locale, d.currency)}</span>
+          <span class="dep__pp">{ui.perPerson}</span>
+        </p>
+      )}
+      <span class="link-arrow dep__cta">
+        {ui.readMore}
+        <Icon name="arrow" size={16} />
+      </span>
+    </div>
+  </div>
+</article>
+
+<style>
+  .dep {
+    position: relative;
+    display: grid;
+    gap: var(--sp-5);
+    background: var(--bianco);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color var(--dur-fast) ease, transform var(--dur) var(--ease);
+  }
+  .dep:hover { border-color: var(--rule-strong); }
+  .dep:has(.dep__link:focus-visible) { outline: 2px solid var(--rosso); outline-offset: 3px; }
+
+  .dep__link { position: absolute; inset: 0; z-index: 2; }
+  .dep__link:focus-visible { outline: none; }
+
+  .dep__media { position: relative; }
+  .dep__media :global(.fig) { border-radius: 0; }
+  .dep__media :global(img) { transition: transform 900ms var(--ease); }
+  .dep:hover .dep__media :global(img) { transform: scale(1.03); }
+
+  .dep__status {
+    position: absolute;
+    top: var(--sp-4);
+    left: var(--sp-4);
+    padding: 0.42em 0.8em;
+    background: var(--rosso);
+    color: #fff;
+    font-size: var(--step--2);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: var(--radius);
+  }
+  .dep__status.is-out { background: var(--blu); }
+
+  .dep__body {
+    display: grid;
+    gap: var(--sp-4);
+    align-content: start;
+    padding: 0 var(--sp-5) var(--sp-5);
+  }
+
+  .dep__cat {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em;
+    font-size: var(--step--2);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rosso);
+  }
+  .dep__dot { color: var(--rule-strong); }
+  .dep__cat span:not(.dep__dot):nth-child(3) { color: var(--ink-mute); }
+
+  .dep__title { font-size: var(--step-2); }
+  .dep__summary { margin: 0; font-size: var(--step--1); line-height: 1.55; color: var(--ink-soft); }
+
+  .dep__facts {
+    display: grid;
+    gap: 0.5em;
+    margin: 0;
+    padding-top: var(--sp-4);
+    border-top: 1px solid var(--rule);
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+  }
+  .dep__facts > div { display: flex; align-items: center; gap: 0.6em; }
+  .dep__facts dt { flex: none; display: flex; color: var(--ink-mute); }
+  .dep__facts dd { margin: 0; }
+
+  .dep__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    padding-top: var(--sp-4);
+    border-top: 1px solid var(--rule);
+  }
+  .dep__price { margin: 0; display: flex; align-items: baseline; gap: 0.4em; flex-wrap: wrap; }
+  .dep__from { font-size: var(--step--2); color: var(--ink-mute); }
+  .dep__amount { font-size: var(--step-2); font-weight: 600; letter-spacing: -0.02em; }
+  .dep__pp { font-size: var(--step--2); color: var(--ink-mute); }
+  .dep__cta { pointer-events: none; }
+  .dep:hover .dep__cta { color: var(--rosso); border-color: var(--rosso); }
+  .dep:hover .dep__cta :global(svg) { transform: translateX(4px); }
+
+  /* Featured layout ---------------------------------------------------- */
+  @media (min-width: 900px) {
+    .dep--feature { grid-template-columns: 1.15fr 1fr; align-items: stretch; gap: 0; }
+    .dep--feature .dep__media { height: 100%; }
+    .dep--feature .dep__media :global(.fig) { height: 100%; aspect-ratio: auto; min-height: 380px; }
+    .dep--feature .dep__body { padding: var(--sp-7); gap: var(--sp-5); align-content: center; }
+    .dep--feature .dep__title { font-size: var(--step-3); }
+    .dep--feature .dep__summary { font-size: var(--step-0); }
+  }
+</style>

@@ -1,0 +1,18 @@
+{
+  "seo": { "title": "Pagina non trovata", "description": "L'indirizzo che avete seguito non esiste o è cambiato con il nuovo sito." },
+  "hero": {
+    "eyebrow": "404",
+    "title": "Questa pagina non c'è più. Il viaggio sì.",
+    "lede": "L'indirizzo che avete seguito non esiste, o è cambiato con il nuovo sito. Da qui potete ripartire."
+  },
+  "sections": {
+    "links": {
+      "items": [
+        { "label": "Home", "route": "home" },
+        { "label": "Le nostre partenze", "route": "departures" },
+        { "label": "Servizi", "route": "services" },
+        { "label": "Contatti", "route": "contact" }
+      ]
+    }
+  }
+}
