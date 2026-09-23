@@ -7,12 +7,29 @@
     "eyebrow": "Travel insurance",
     "title": "The part of a journey nobody thinks about, until it matters.",
     "lede": "Flu the week before, a suitcase that never arrives, an emergency room abroad. Those are the three things we are asked about most, and the three a good policy solves. We arrange it without you having to come in.",
-    "primaryCta": { "label": "Request a policy", "route": "insurance", "style": "primary" },
+    "primaryCta": {
+      "label": "Request a policy",
+      "route": "insurance",
+      "style": "primary"
+    },
     "signals": [
-      { "value": "2 min", "label": "to send the request" },
-      { "value": "1 day", "label": "working day to confirm" },
-      { "value": "Also", "label": "for trips booked elsewhere" }
-    ]
+      {
+        "value": "2 min",
+        "label": "to send the request"
+      },
+      {
+        "value": "1 day",
+        "label": "working day to confirm"
+      },
+      {
+        "value": "Also",
+        "label": "for trips booked elsewhere"
+      }
+    ],
+    "image": {
+      "src": "/media/editorial/flight-above-clouds-1280.webp",
+      "alt": "Airplane wing above clouds lit by the setting sun"
+    }
   },
   "sections": {
     "partner": {
@@ -50,7 +67,7 @@
           "body": "Refunds the penalty if you have to cancel before departure for a listed, documented reason: illness, injury, serious family events. It is the cover used most often."
         },
         {
-          "icon": "shield",
+          "icon": "insurance-mark",
           "title": "Medical expenses and assistance",
           "body": "Covers consultations, hospital stays and, if needed, medical repatriation. Outside the area covered by your health insurance this is the line that can hurt most."
         },
@@ -70,10 +87,22 @@
       "eyebrow": "Who it makes sense for",
       "title": "When it is genuinely worth it",
       "items": [
-        { "title": "Trips with large deposits", "body": "Cruises, group tours, safaris: the larger the deposit, the more a cancellation penalty hurts." },
-        { "title": "Long-haul destinations", "body": "Outside Europe medical costs can exceed the cost of the trip. That holds at any age." },
-        { "title": "Frequent travellers", "body": "At four or five trips a year, an annual multi-trip policy costs less than separate ones." },
-        { "title": "Trips booked elsewhere", "body": "If you booked online or with another operator, we can still insure the journey." }
+        {
+          "title": "Trips with large deposits",
+          "body": "Cruises, group tours, safaris: the larger the deposit, the more a cancellation penalty hurts."
+        },
+        {
+          "title": "Long-haul destinations",
+          "body": "Outside Europe medical costs can exceed the cost of the trip. That holds at any age."
+        },
+        {
+          "title": "Frequent travellers",
+          "body": "At four or five trips a year, an annual multi-trip policy costs less than separate ones."
+        },
+        {
+          "title": "Trips booked elsewhere",
+          "body": "If you booked online or with another operator, we can still insure the journey."
+        }
       ]
     },
     "faq": {

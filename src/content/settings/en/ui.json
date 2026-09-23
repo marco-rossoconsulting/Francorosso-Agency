@@ -45,12 +45,14 @@
     "budget": "Indicative budget per person",
     "tripType": "Type of journey",
     "tripTypeOptions": [
-      "Tailor-made journey",
-      "One of your group departures",
-      "Flights only",
-      "Hotel + flight",
-      "Honeymoon",
-      "Not decided yet"
+      { "id": "tailor", "label": "Tailor-made journey" },
+      { "id": "group", "label": "One of your group departures" },
+      { "id": "flight", "label": "Flights only" },
+      { "id": "hotel-flight", "label": "Hotel + flight" },
+      { "id": "honeymoon", "label": "Honeymoon" },
+      { "id": "unsure", "label": "Not decided yet" },
+      { "id": "business", "label": "Business travel / MICE" },
+      { "id": "multiple", "label": "Multiple" }
     ],
     "company": "Company",
     "participants": "Number of participants",
@@ -64,6 +66,7 @@
     ],
     "message": "Tell us about the journey",
     "messagePlaceholder": "Who is travelling, what pace you have in mind, what the trip must include. A few lines are enough to start.",
+    "interestIntro": "Services I am interested in:",
     "preferredContact": "How you would prefer to be contacted",
     "preferredContactOptions": [
       "Email",

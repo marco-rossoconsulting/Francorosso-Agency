@@ -6,10 +6,16 @@
   "hero": {
     "eyebrow": "Servizi",
     "title": "Tutto quello per cui vale la pena avere un'agenzia.",
-    "lede": "Alcune cose si prenotano meglio da soli. Altre no: quando il viaggio ha più pezzi, più persone o più rischi, avere qualcuno che risponde cambia la giornata."
+    "lede": "Alcune cose si prenotano meglio da soli. Altre no: quando il viaggio ha più pezzi, più persone o più rischi, avere qualcuno che risponde cambia la giornata.",
+    "image": {
+      "src": "/media/editorial/traveler-at-doorway-1280.webp",
+      "alt": "Viaggiatore con valigia osserva il paesaggio dalla soglia di una porta"
+    }
   },
   "sections": {
     "list": {
+      "pauseLabel": "Metti in pausa",
+      "playLabel": "Riprendi",
       "items": [
         {
           "icon": "compass",
@@ -60,7 +66,7 @@
           ]
         },
         {
-          "icon": "shield",
+          "icon": "insurance-mark",
           "anchor": "assicurazione",
           "title": "Assicurazione viaggio",
           "body": "Annullamento, spese mediche, bagaglio, rientro sanitario. La sistemiamo a distanza in pochi minuti, anche se il viaggio l'avete prenotato altrove.",

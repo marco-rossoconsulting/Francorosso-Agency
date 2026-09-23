@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
+import InsuranceMark from '../components/InsuranceMark.astro';
 import Figure from '../components/Figure.astro';
 import RouteLine from '../components/RouteLine.astro';
 import SectionHead from '../components/SectionHead.astro';
@@ -20,6 +21,14 @@ const hero = page.hero!;
 const next = departures[0];
 const featured = departures.slice(0, 3);
 const iconOf = (n: string) => n as any;
+const whyGallery = [
+  ...(S.why.image?.src ? [S.why.image] : []),
+  ...(S.why.gallery ?? []),
+].filter((image: any) => image?.src);
+const whyColumns = [
+  whyGallery.filter((_: any, index: number) => index % 2 === 0),
+  whyGallery.filter((_: any, index: number) => index % 2 === 1),
+];
 ---
 <Base
   locale={locale}
@@ -48,6 +57,11 @@ const iconOf = (n: string) => n as any;
             </a>
           )}
         </div>
+        <a class="hero__insurance" href={`${path(locale, 'insurance')}#richiesta`}>
+          <InsuranceMark size={20} />
+          <span>{S.insurance.quickCtaLabel}</span>
+          <Icon name="arrow" size={15} />
+        </a>
         <dl class="hero__signals">
           {hero.signals?.map((sig: any) => (
             <div><dt>{sig.value}</dt><dd>{sig.label}</dd></div>
@@ -80,23 +94,73 @@ const iconOf = (n: string) => n as any;
     </div>
   </section>
 
-  <!-- Services --------------------------------------------------------- -->
+  <!-- Services: Astro adaptation of the numbered Card 3 selection pattern -->
   <section class="section services">
     <div class="shell">
       <SectionHead eyebrow={S.services.eyebrow} title={S.services.title} intro={S.services.intro} align="wide" />
-      <ul class="svc">
+      <div class="svc__toolbar" data-service-toolbar hidden>
+        <p class="svc__prompt">{S.services.selectionPrompt}</p>
+        <div class="svc__toolbar-actions">
+          <p class="svc__count" aria-live="polite"><strong data-service-count>0</strong> / {S.services.items.length} {S.services.countLabel}</p>
+          <button class="svc__reset" type="button" data-service-reset disabled>{S.services.resetLabel}</button>
+        </div>
+      </div>
+      <ul class="svc" data-service-cards>
         {S.services.items.map((item: any, i: number) => (
-          <li class="svc__item" data-reveal style={`--reveal-delay:${i * 70}ms`}>
-            <span class="svc__icon"><Icon name={iconOf(item.icon)} size={22} /></span>
-            <h3 class="svc__title">{item.title}</h3>
-            <p class="svc__body">{item.body}</p>
-            <a class="link-arrow" href={path(locale, item.route as RouteKey)}>
-              {ui.readMore}
-              <Icon name="arrow" size={15} />
-            </a>
+          <li class="svc__item" data-service-card data-service-title={item.title} data-service-form-type={item.formType} data-reveal style={`--reveal-delay:${i * 70}ms`}>
+            <article class="svc__panel">
+              <div class="svc__top">
+                <span class="svc__number" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                <span class="svc__icon"><Icon name={iconOf(item.icon)} size={25} /></span>
+              </div>
+              <div class="svc__copy">
+                <h3 class="svc__title">{item.title}</h3>
+                <p class="svc__body">{item.body}</p>
+              </div>
+              <a class="link-arrow svc__link" href={path(locale, item.route as RouteKey)}>
+                {ui.readMore}
+                <Icon name="arrow" size={15} />
+              </a>
+            </article>
+            <button class="svc__select" type="button" data-service-select data-select-label={S.services.selectLabel} data-selected-label={S.services.selectedLabel} aria-pressed="false" hidden>
+              <span class="svc__check"><Icon name="check" size={14} /></span>
+              <span data-service-select-label>{S.services.selectLabel}</span>
+              <span class="visually-hidden">: {item.title}</span>
+            </button>
           </li>
         ))}
       </ul>
+      <div class="svc__footer" data-service-footer hidden>
+        <p>{S.services.quoteIntro}</p>
+        <a class="btn" href={path(locale, 'quote')} data-service-quote>{S.services.quoteLabel}<Icon name="arrow" size={17} /></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Insurance: visible immediately after the service choices -------- -->
+  <section class="section--tight ins">
+    <div class="shell ins__inner">
+      <div class="ins__mark"><InsuranceMark size={160} loading="lazy" /></div>
+      <div class="ins__text" data-reveal>
+        <span class="eyebrow">{S.insurance.eyebrow}</span>
+        <h2 class="ins__title">{S.insurance.title}</h2>
+        <p class="ins__body">{S.insurance.body}</p>
+        <ul class="ins__list">
+          {S.insurance.bullets.map((b: string) => (
+            <li><Icon name="check" size={15} />{b}</li>
+          ))}
+        </ul>
+        <div class="ins__ctas">
+          <a class="btn" href={`${path(locale, 'insurance')}#richiesta`}>
+            {S.insurance.ctaLabel}
+            <Icon name="arrow" size={17} />
+          </a>
+          <a class="link-arrow" href={path(locale, 'insurance')}>
+            {S.insurance.secondaryLabel}
+            <Icon name="arrow" size={15} />
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -131,63 +195,59 @@ const iconOf = (n: string) => n as any;
     </div>
   </section>
 
-  <!-- Why us ----------------------------------------------------------- -->
+  <!-- Why us: Astro adaptation of the paired Features 3 photo marquees -->
   <section class="section why on-dark">
     <div class="shell why__inner">
-      <div class="why__left">
+      <div class="why__content">
         <span class="eyebrow">{S.why.eyebrow}</span>
         <h2 class="why__title">{S.why.title}</h2>
         <blockquote class="pullquote why__quote">{S.why.pullquote}</blockquote>
-        <div class="why__figure">
-          <Figure
-            src={S.why.image?.src || undefined}
-            alt={S.why.image?.alt ?? ''}
-            brief={S.why.image?.brief}
-            ratio="3 / 4"
-            tone="sabbia"
-            placeholderLabel={ui.imagePlaceholderLabel}
-            sizes="(max-width: 900px) 100vw, 30vw"
-          />
-        </div>
-      </div>
-      <ol class="why__list">
-        {S.why.points.map((p: any, i: number) => (
-          <li data-reveal style={`--reveal-delay:${i * 70}ms`}>
-            <span class="why__num">{String(i + 1).padStart(2, '0')}</span>
-            <div>
+        <ol class="why__list">
+          {S.why.points.map((p: any, i: number) => (
+            <li data-reveal style={`--reveal-delay:${i * 70}ms`}>
+              <span class="why__num">{String(i + 1).padStart(2, '0')}</span>
               <h3 class="why__ptitle">{p.title}</h3>
               <p class="why__pbody">{p.body}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
-
-  <!-- Insurance -------------------------------------------------------- -->
-  <section class="section--tight ins">
-    <div class="shell ins__inner">
-      <div class="ins__text" data-reveal>
-        <span class="eyebrow">{S.insurance.eyebrow}</span>
-        <h2 class="ins__title">{S.insurance.title}</h2>
-        <p class="ins__body">{S.insurance.body}</p>
-        <ul class="ins__list">
-          {S.insurance.bullets.map((b: string) => (
-            <li><Icon name="check" size={15} />{b}</li>
+            </li>
           ))}
-        </ul>
-        <div class="ins__ctas">
-          <a class="btn" href={`${path(locale, 'insurance')}#richiesta`}>
-            {S.insurance.ctaLabel}
-            <Icon name="arrow" size={17} />
-          </a>
-          <a class="link-arrow" href={path(locale, 'insurance')}>
-            {S.insurance.secondaryLabel}
-            <Icon name="arrow" size={15} />
-          </a>
-        </div>
+        </ol>
       </div>
-      <div class="ins__mark" aria-hidden="true"><Icon name="shield" size={140} /></div>
+      {whyGallery.length >= 2 && (
+        <div class="why__visual" data-why-marquee>
+          {whyColumns.map((column: any[], index: number) => (
+            <div class="why__column">
+              <div class:list={['why__track', index === 1 && 'why__track--down']}>
+                {[0, 1].map((copy) => (
+                  <div class="why__group" aria-hidden={copy === 1 ? 'true' : undefined}>
+                    {column.map((photo: any) => (
+                      <figure class="why__photo">
+                        <img
+                          src={photo.src}
+                          srcset={photo.src.endsWith('-640.webp') ? `${photo.src.replace('-640.webp', '-320.webp')} 320w, ${photo.src} 640w` : undefined}
+                          sizes="(max-width: 600px) 46vw, (max-width: 959px) 35vw, 20vw"
+                          width="640"
+                          height="640"
+                          alt={copy === 0 ? photo.alt ?? '' : ''}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </figure>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+          <button
+            class="why__motion"
+            type="button"
+            data-why-motion
+            data-pause-label={S.why.pauseLabel}
+            data-resume-label={S.why.resumeLabel}
+            hidden
+          >{S.why.pauseLabel}</button>
+        </div>
+      )}
     </div>
   </section>
 
@@ -267,6 +327,70 @@ const iconOf = (n: string) => n as any;
       </div>
     </div>
   </section>
+  <script>
+    const serviceCards = Array.from(document.querySelectorAll<HTMLElement>('[data-service-card]'));
+    const serviceToolbar = document.querySelector<HTMLElement>('[data-service-toolbar]');
+    const serviceFooter = document.querySelector<HTMLElement>('[data-service-footer]');
+    const serviceCount = document.querySelector<HTMLElement>('[data-service-count]');
+    const serviceReset = document.querySelector<HTMLButtonElement>('[data-service-reset]');
+    const serviceQuote = document.querySelector<HTMLAnchorElement>('[data-service-quote]');
+    if (serviceCards.length && serviceToolbar && serviceFooter && serviceCount && serviceReset && serviceQuote) {
+      serviceToolbar.hidden = false;
+      serviceCards.forEach((card) => {
+        const button = card.querySelector<HTMLButtonElement>('[data-service-select]');
+        if (button) button.hidden = false;
+      });
+      const updateServices = () => {
+        const selected = serviceCards.filter((card) => card.dataset.selected === 'true');
+        serviceCount.textContent = String(selected.length);
+        serviceReset.disabled = selected.length === 0;
+        serviceFooter.hidden = selected.length === 0;
+        const url = new URL(serviceQuote.dataset.baseHref ?? serviceQuote.href, window.location.origin);
+        selected.forEach((card) => url.searchParams.append('interest', card.dataset.serviceTitle ?? ''));
+        const tripType = selected.length > 1 ? 'multiple' : selected[0]?.dataset.serviceFormType;
+        if (tripType) url.searchParams.set('tripType', tripType);
+        url.hash = 'quote-enquiry';
+        serviceQuote.href = `${url.pathname}${url.search}${url.hash}`;
+      };
+      serviceQuote.dataset.baseHref = serviceQuote.href;
+      serviceCards.forEach((card) => {
+        const button = card.querySelector<HTMLButtonElement>('[data-service-select]');
+        const label = button?.querySelector<HTMLElement>('[data-service-select-label]');
+        button?.addEventListener('click', () => {
+          const selected = card.dataset.selected !== 'true';
+          card.dataset.selected = String(selected);
+          button.setAttribute('aria-pressed', String(selected));
+          if (label) label.textContent = selected ? button.dataset.selectedLabel ?? '' : button.dataset.selectLabel ?? '';
+          updateServices();
+        });
+      });
+      serviceReset.addEventListener('click', () => {
+        serviceCards.forEach((card) => {
+          card.dataset.selected = 'false';
+          const button = card.querySelector<HTMLButtonElement>('[data-service-select]');
+          button?.setAttribute('aria-pressed', 'false');
+          const label = button?.querySelector<HTMLElement>('[data-service-select-label]');
+          if (label && button) label.textContent = button.dataset.selectLabel ?? '';
+        });
+        updateServices();
+      });
+      updateServices();
+    }
+    const marquee = document.querySelector<HTMLElement>('[data-why-marquee]');
+    marquee?.classList.add('has-motion');
+    if (marquee && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(([entry]) => {
+        marquee.classList.toggle('is-paused', !entry.isIntersecting);
+      }, { rootMargin: '100px' });
+      observer.observe(marquee);
+    }
+    const motionButton = marquee?.querySelector<HTMLButtonElement>('[data-why-motion]');
+    if (motionButton) motionButton.hidden = false;
+    motionButton?.addEventListener('click', () => {
+      const isPaused = marquee?.classList.toggle('is-paused-by-user');
+      motionButton.textContent = isPaused ? motionButton.dataset.resumeLabel ?? '' : motionButton.dataset.pauseLabel ?? '';
+    });
+  </script>
 </Base>
 
 <style>
@@ -280,6 +404,9 @@ const iconOf = (n: string) => n as any;
   .hero__title { max-width: 15ch; font-size: var(--step-6); letter-spacing: -0.038em; }
   .hero__lede { margin-top: var(--sp-5); max-width: 48ch; }
   .hero__ctas { display: flex; flex-wrap: wrap; gap: var(--sp-4); margin-top: var(--sp-6); }
+  .hero__insurance { display: inline-flex; align-items: center; gap: var(--sp-2); margin-top: var(--sp-5); color: var(--ink); font-size: var(--step--1); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--rule-strong); padding-bottom: var(--sp-2); }
+  .hero__insurance :global(img) { flex: none; }
+  .hero__insurance:hover { color: var(--rosso); border-color: var(--rosso); }
   .hero__signals {
     display: flex; flex-wrap: wrap; gap: var(--sp-5) var(--sp-7);
     margin: var(--sp-7) 0 0; padding-top: var(--sp-5);
@@ -314,12 +441,38 @@ const iconOf = (n: string) => n as any;
 
   /* Services ----------------------------------------------------------- */
   .services { background: var(--avorio); }
-  .svc { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--sp-7) var(--gutter); list-style: none; }
-  .svc__item { display: grid; gap: var(--sp-3); align-content: start; padding-top: var(--sp-5); border-top: 1px solid var(--rule-strong); }
-  .svc__icon { color: var(--rosso); }
+  .svc__toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--sp-4); margin: calc(-1 * var(--sp-5)) 0 var(--sp-5); padding-top: var(--sp-4); border-top: 1px solid var(--rule); }
+  .svc__toolbar[hidden], .svc__footer[hidden], .svc__select[hidden] { display: none; }
+  .svc__prompt { margin: 0; font-size: var(--step--1); color: var(--ink-soft); }
+  .svc__toolbar-actions { display: flex; align-items: center; flex-wrap: wrap; gap: var(--sp-5); }
+  .svc__count { margin: 0; font-size: var(--step--1); color: var(--ink-soft); }
+  .svc__count strong { color: var(--rosso); font-size: var(--step-1); }
+  .svc__reset { padding: 0; border: 0; border-bottom: 1px solid currentColor; background: transparent; color: var(--ink); font: inherit; font-size: var(--step--1); cursor: pointer; }
+  .svc__reset:disabled { opacity: 0.4; cursor: default; }
+  .svc { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--sp-4); list-style: none; }
+  .svc__item { display: flex; flex-direction: column; min-width: 0; padding: 5px; border: 1px solid var(--rule); border-radius: var(--radius-lg); background: var(--sabbia); transition: border-color var(--dur-fast) ease, transform var(--dur-fast) ease; }
+  .svc__item:hover { transform: translateY(-3px); border-color: var(--rule-strong); }
+  .svc__item[data-selected='true'] { border-color: var(--blu); }
+  .svc__panel { display: flex; flex: 1; flex-direction: column; min-height: 390px; padding: var(--sp-5); border: 1px solid var(--rule); border-radius: var(--radius); background: var(--bianco); }
+  .svc__top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-3); }
+  .svc__number { color: var(--rosso); font-size: var(--step-4); font-weight: 600; letter-spacing: -0.055em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .svc__icon { display: grid; place-items: center; width: 44px; height: 44px; flex: none; border: 1px solid var(--rule); border-radius: var(--radius); color: var(--rosso); }
+  .svc__copy { margin-top: auto; padding-top: var(--sp-7); }
   .svc__title { font-size: var(--step-1); }
-  .svc__body { margin: 0; font-size: var(--step--1); line-height: 1.6; color: var(--ink-soft); }
-  .svc__item .link-arrow { justify-self: start; margin-top: var(--sp-2); }
+  .svc__body { margin: var(--sp-3) 0 0; font-size: var(--step--1); line-height: 1.55; color: var(--ink-soft); }
+  .svc__link { align-self: flex-start; margin-top: var(--sp-5); }
+  .svc__select { display: flex; align-items: center; justify-content: center; gap: var(--sp-2); min-height: 44px; margin-top: 5px; border: 1px solid transparent; border-radius: var(--radius); background: transparent; color: var(--ink); font: inherit; font-size: var(--step--1); font-weight: 600; cursor: pointer; transition: background var(--dur-fast) ease, color var(--dur-fast) ease; }
+  .svc__select:hover { background: var(--sabbia-deep); }
+  .svc__item[data-selected='true'] .svc__select { background: var(--blu); color: var(--ink-invert); }
+  .svc__item[data-selected='true'] .svc__select:hover { background: var(--blu-raised); }
+  .svc__check { display: grid; place-items: center; width: 17px; height: 17px; border: 1px solid currentColor; border-radius: 50%; }
+  .svc__check :global(svg) { opacity: 0; }
+  .svc__item[data-selected='true'] .svc__check :global(svg) { opacity: 1; }
+  .svc__footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--sp-4); margin-top: var(--sp-6); padding-top: var(--sp-5); border-top: 1px solid var(--rule); }
+  .svc__footer p { margin: 0; color: var(--ink-soft); font-size: var(--step--1); }
+  @media (max-width: 1050px) { .svc { grid-template-columns: repeat(2, minmax(0, 1fr)); } .svc__panel { min-height: 330px; } }
+  @media (max-width: 620px) { .svc { grid-template-columns: 1fr; } .svc__panel { min-height: 270px; } .svc__toolbar { align-items: flex-start; } .svc__footer .btn { width: 100%; } }
+  @media (prefers-reduced-motion: reduce) { .svc__item, .svc__select { transition: none; } .svc__item:hover { transform: none; } }
 
   /* Departures --------------------------------------------------------- */
   .deps__head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: var(--sp-5); margin-bottom: var(--sp-7); }
@@ -329,19 +482,33 @@ const iconOf = (n: string) => n as any;
   .deps__grid--single { grid-template-columns: 1fr; }
 
   /* Why ---------------------------------------------------------------- */
-  .why__inner { display: grid; gap: var(--sp-8) var(--gutter); }
-  @media (min-width: 960px) {
-    .why__inner { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(2rem, 6vw, 6rem); align-items: start; }
-  }
-  .why__title { max-width: 14ch; }
-  .why__quote { margin: var(--sp-6) 0 0; color: var(--ink-invert); max-width: 22ch; }
-  .why__figure { margin-top: var(--sp-7); max-width: 320px; }
-  .why__list { list-style: none; display: grid; gap: 0; counter-reset: why; }
-  .why__list li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--sp-5); padding-block: var(--sp-5); border-top: 1px solid var(--rule-invert); }
-  .why__list li:last-child { border-bottom: 1px solid var(--rule-invert); }
-  .why__num { font-size: var(--step--2); font-weight: 600; letter-spacing: 0.1em; color: #e4787c; padding-top: 0.45em; }
-  .why__ptitle { font-size: var(--step-1); }
-  .why__pbody { margin: 0.5em 0 0; font-size: var(--step--1); line-height: 1.6; color: var(--ink-invert-soft); max-width: 46ch; }
+  .why__inner { display: grid; gap: var(--sp-7); align-items: center; }
+  .why__content { min-width: 0; }
+  .why__title { max-width: 17ch; }
+  .why__quote { margin: var(--sp-5) 0 0; color: var(--ink-invert); max-width: 35ch; }
+  .why__list { list-style: none; display: grid; gap: var(--sp-5) var(--sp-6); margin-top: var(--sp-7); }
+  .why__list li { border-top: 1px solid var(--rule-invert); padding-top: var(--sp-4); }
+  .why__num { display: block; margin-bottom: var(--sp-3); font-size: var(--step--2); font-weight: 600; letter-spacing: 0.1em; color: #e4787c; }
+  .why__ptitle { font-size: var(--step-0); }
+  .why__pbody { margin: 0.5em 0 0; font-size: var(--step--1); line-height: 1.6; color: var(--ink-invert-soft); max-width: 42ch; }
+  .why__visual { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; height: clamp(340px, 45vw, 590px); overflow: hidden; }
+  .why__column { min-width: 0; overflow: hidden; -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent); }
+  .why__track { display: flex; flex-direction: column; }
+  .why__visual.has-motion .why__track { animation: why-scroll-up 36s linear infinite; will-change: transform; }
+  .why__visual.has-motion .why__track--down { animation-name: why-scroll-down; animation-duration: 42s; }
+  .why__group { display: grid; gap: 0.75rem; padding-bottom: 0.75rem; }
+  .why__photo { aspect-ratio: 1; margin: 0; overflow: hidden; border-radius: var(--radius-lg); background: var(--blu-raised); }
+  .why__photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .why__visual:hover .why__track, .why__visual.is-paused .why__track, .why__visual.is-paused-by-user .why__track { animation-play-state: paused; will-change: auto; }
+  .why__motion { position: absolute; right: var(--sp-3); top: var(--sp-3); z-index: 1; padding: 0.5rem 0.7rem; border: 1px solid var(--rule-invert); border-radius: var(--radius); background: var(--blu); color: var(--ink-invert); font: inherit; font-size: var(--step--2); line-height: 1.2; cursor: pointer; }
+  .why__motion:hover { border-color: var(--ink-invert); }
+  .why__motion:focus-visible { outline: 2px solid var(--ink-invert); outline-offset: 2px; }
+  @keyframes why-scroll-up { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+  @keyframes why-scroll-down { from { transform: translateY(-50%); } to { transform: translateY(0); } }
+  @media (min-width: 600px) { .why__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 960px) { .why__inner { grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.9fr); gap: clamp(2rem, 5vw, 5rem); } }
+  @media (max-width: 599px) { .why__visual { height: 330px; } }
+  @media (prefers-reduced-motion: reduce) { .why__track, .why__track--down { animation: none; will-change: auto; } .why__motion { display: none; } }
 
   /* Insurance ---------------------------------------------------------- */
   .ins { padding-block: 0; }
@@ -354,15 +521,20 @@ const iconOf = (n: string) => n as any;
     border-radius: var(--radius-lg);
     overflow: hidden;
   }
-  @media (min-width: 900px) { .ins__inner { grid-template-columns: minmax(0, 1fr) auto; align-items: center; } }
+  @media (min-width: 900px) {
+    .ins__inner { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+    .ins__text { grid-column: 1; grid-row: 1; }
+    .ins__mark { grid-column: 2; grid-row: 1; }
+  }
   .ins__title { max-width: 18ch; }
   .ins__body { margin: var(--sp-4) 0 0; max-width: 58ch; color: var(--ink-soft); }
   .ins__list { list-style: none; display: grid; gap: 0.55em; margin-top: var(--sp-5); font-size: var(--step--1); color: var(--ink-soft); }
   .ins__list li { display: flex; align-items: flex-start; gap: 0.6em; }
   .ins__list :global(svg) { flex: none; margin-top: 0.25em; color: var(--rosso); }
   .ins__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-5); margin-top: var(--sp-6); }
-  .ins__mark { color: var(--rosso); opacity: 0.1; margin-inline: auto; }
-  @media (max-width: 899px) { .ins__mark { display: none; } }
+  .ins__mark { width: 160px; height: 160px; margin-inline: auto; }
+  .ins__mark :global(img) { width: 100%; height: 100%; }
+  @media (max-width: 899px) { .ins__mark { width: 72px; height: 72px; margin: 0; } }
 
   /* MICE --------------------------------------------------------------- */
   .mice__inner { display: grid; gap: var(--sp-7) var(--gutter); align-items: center; }

@@ -11,7 +11,7 @@ const href = `${s.whatsapp.href}?text=${encodeURIComponent(s.whatsapp.prefillMes
 ---
 {
   s.whatsapp.enabled && (
-    <a class="fab" href={href} target="_blank" rel="noopener noreferrer" data-fab>
+    <a class="fab" href={href} target="_blank" rel="noopener noreferrer">
       <Icon name="whatsapp" size={22} />
       <span class="fab__label">{ui.whatsappCta}</span>
     </a>
@@ -22,7 +22,7 @@ const href = `${s.whatsapp.href}?text=${encodeURIComponent(s.whatsapp.prefillMes
   .fab {
     position: fixed;
     right: clamp(1rem, 2.4vw, 2rem);
-    bottom: clamp(1rem, 2.4vw, 2rem);
+    bottom: calc(clamp(1rem, 2.4vw, 2rem) + env(safe-area-inset-bottom, 0px));
     z-index: 90;
     display: inline-flex;
     align-items: center;
@@ -36,30 +36,11 @@ const href = `${s.whatsapp.href}?text=${encodeURIComponent(s.whatsapp.prefillMes
     font-weight: 600;
     text-decoration: none;
     box-shadow: 0 10px 30px -18px rgba(14, 27, 43, 0.9);
-    transform: translateY(120%);
-    opacity: 0;
-    transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease),
-      background var(--dur-fast) ease;
+    transition: background var(--dur-fast) ease;
   }
-  .fab[data-in] { transform: none; opacity: 1; }
   .fab:hover { background: var(--blu-raised); }
   @media (max-width: 560px) {
     .fab { padding: 0.9em; }
     .fab__label { display: none; }
   }
-  @media (prefers-reduced-motion: reduce) {
-    .fab { transform: none; opacity: 1; }
-  }
 </style>
-
-<script>
-  const fab = document.querySelector('[data-fab]');
-  if (fab) {
-    const show = () => {
-      if (window.scrollY > 520) fab.setAttribute('data-in', '');
-      else fab.removeAttribute('data-in');
-    };
-    show();
-    window.addEventListener('scroll', show, { passive: true });
-  }
-</script>

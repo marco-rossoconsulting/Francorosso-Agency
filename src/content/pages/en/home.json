@@ -8,16 +8,32 @@
     "title": "A journey takes shape when you talk to someone who has already been.",
     "lede": "We are an agency on Via Canova. We build tailor-made itineraries, escort our own group departures and look after the travel of companies across Ticino. You can start here, or come and see us.",
     "image": {
-      "src": "",
-      "alt": "",
-      "brief": "Horizontal photograph of the team at work on an itinerary, natural light. Not a posed group shot."
+      "src": "/media/editorial/journey-planning-1280.webp",
+      "alt": "Camera and tablet showing New York laid out on a map"
     },
-    "primaryCta": { "label": "Request a quote", "route": "quote", "style": "primary" },
-    "secondaryCta": { "label": "Our departures", "route": "departures", "style": "secondary" },
+    "primaryCta": {
+      "label": "Request a quote",
+      "route": "quote",
+      "style": "primary"
+    },
+    "secondaryCta": {
+      "label": "Our departures",
+      "route": "departures",
+      "style": "secondary"
+    },
     "signals": [
-      { "value": "30+", "label": "years in Lugano" },
-      { "value": "6", "label": "consultants in the office" },
-      { "value": "1", "label": "working day to reply" }
+      {
+        "value": "30+",
+        "label": "years in Lugano"
+      },
+      {
+        "value": "6",
+        "label": "consultants in the office"
+      },
+      {
+        "value": "1",
+        "label": "working day to reply"
+      }
     ]
   },
   "sections": {
@@ -29,27 +45,38 @@
       "eyebrow": "What we do",
       "title": "Four ways to travel with us",
       "intro": "Every request lands on one named person's desk, not in a queue.",
+      "selectionPrompt": "Select the services you are interested in",
+      "countLabel": "services selected",
+      "resetLabel": "Clear",
+      "selectLabel": "I'm interested",
+      "selectedLabel": "Selected",
+      "quoteIntro": "Your selection will follow you to the enquiry form.",
+      "quoteLabel": "Tell us what you need",
       "items": [
         {
           "icon": "compass",
+          "formType": "tailor",
           "title": "Tailor-made journeys",
           "body": "It starts with a conversation: who is travelling, how much time you have, what you do not want to miss. We write the itinerary, you correct it until it looks like you.",
           "route": "services"
         },
         {
           "icon": "users",
+          "formType": "group",
           "title": "Group departures",
           "body": "Journeys we organise ourselves, with fixed dates, clear prices and an Italian-speaking tour leader. It is the part of the work we are proudest of.",
           "route": "departures"
         },
         {
           "icon": "ticket",
+          "formType": "flight",
           "title": "Flight ticketing",
           "body": "Issuing, reissues, changes and negotiated fares. If something goes wrong at the airport, you have a number that answers.",
           "route": "services"
         },
         {
           "icon": "briefcase",
+          "formType": "business",
           "title": "Business & MICE",
           "body": "Meetings, conventions, incentives, corporate events and recurring business travel. One contact for logistics, suppliers and budget.",
           "route": "business"
@@ -66,6 +93,8 @@
       "eyebrow": "Why us",
       "title": "The difference is who picks up the phone",
       "pullquote": "Tell us how you want the journey to feel, and we will shape the details with you.",
+      "pauseLabel": "Pause images",
+      "resumeLabel": "Resume images",
       "points": [
         {
           "title": "A person, not a ticket number",
@@ -88,10 +117,19 @@
         "src": "",
         "alt": "",
         "brief": "Detail of the Via Canova 19 shopfront or entrance, portrait format, late afternoon light."
-      }
+      },
+      "gallery": [
+        { "src": "/media/editorial/travelers-on-trail-640.webp", "alt": "Group of travelers walking along a mountain trail" },
+        { "src": "/media/editorial/airport-concourse-640.webp", "alt": "Passengers in a spacious airport concourse" },
+        { "src": "/media/editorial/journey-map-640.webp", "alt": "World map with a camera and travel accessories" },
+        { "src": "/media/editorial/mount-fuji-pagoda-640.webp", "alt": "Japanese pagoda with Mount Fuji in the background" },
+        { "src": "/media/editorial/savanna-at-sunset-640.webp", "alt": "Giraffe on the savanna at sunset" },
+        { "src": "/media/editorial/balloon-at-sunrise-640.webp", "alt": "Hot air balloon above a sunlit plain" }
+      ]
     },
     "insurance": {
       "eyebrow": "Before you go",
+      "quickCtaLabel": "Travel insurance · Request a policy",
       "title": "Travel insurance, settled in two minutes",
       "body": "Cancellation, medical expenses, baggage. It is the part of a trip nobody thinks about until it matters. Send us the dates and the value of the journey and we will send back the right policy and a link to pay for it.",
       "bullets": [
@@ -114,9 +152,8 @@
       ],
       "ctaLabel": "Tell us about the project",
       "image": {
-        "src": "",
-        "alt": "",
-        "brief": "Horizontal format: a meeting room or gala dinner set up, seen from inside the group."
+        "src": "/media/editorial/conference-audience-1280.webp",
+        "alt": "Attendees seated in a conference room during an event"
       }
     },
     "team": {

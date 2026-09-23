@@ -281,7 +281,13 @@ collections:
                   label: 'Opzioni tipo di viaggio',
                   name: 'tripTypeOptions',
                   widget: 'list',
-                  field: { label: 'Opzione', name: 'option', widget: 'string' },
+                  i18n: true,
+                  summary: '{{fields.label}}',
+                  fields:
+                    [
+                      { label: 'Codice stabile', name: 'id', widget: 'select', i18n: duplicate, options: [tailor, group, flight, hotel-flight, honeymoon, unsure, business, multiple] },
+                      { label: 'Etichetta visibile', name: 'label', widget: 'string', i18n: true },
+                    ],
                 }
               - { label: 'Azienda', name: 'company', widget: 'string' }
               - { label: 'Numero di partecipanti', name: 'participants', widget: 'string' }
@@ -294,6 +300,7 @@ collections:
                 }
               - { label: 'Messaggio', name: 'message', widget: 'string' }
               - { label: 'Testo guida del messaggio', name: 'messagePlaceholder', widget: 'text' }
+              - { label: 'Introduzione ai servizi selezionati nel preventivo', name: 'interestIntro', widget: 'string' }
               - { label: 'Contatto preferito', name: 'preferredContact', widget: 'string' }
               - {
                   label: 'Opzioni contatto preferito',
@@ -398,6 +405,13 @@ collections:
                   - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
                   - { label: 'Titolo', name: 'title', widget: 'string' }
                   - { label: 'Introduzione', name: 'intro', widget: 'text', required: false }
+                  - { label: 'Invito a selezionare i servizi', name: 'selectionPrompt', widget: 'string' }
+                  - { label: 'Etichetta contatore selezione', name: 'countLabel', widget: 'string' }
+                  - { label: 'Pulsante azzera selezione', name: 'resetLabel', widget: 'string' }
+                  - { label: 'Pulsante seleziona', name: 'selectLabel', widget: 'string' }
+                  - { label: 'Stato selezionato', name: 'selectedLabel', widget: 'string' }
+                  - { label: 'Nota sotto le schede selezionate', name: 'quoteIntro', widget: 'string' }
+                  - { label: 'Pulsante richiesta selezione', name: 'quoteLabel', widget: 'string' }
                   - label: 'Servizi'
                     name: items
                     widget: list
@@ -407,6 +421,7 @@ collections:
                       - { label: 'Titolo', name: 'title', widget: 'string' }
                       - { label: 'Testo', name: 'body', widget: 'text' }
                       - { label: 'Pagina collegata', name: 'route', widget: 'select', i18n: duplicate, options: [departures, services, insurance, business, about, contact, quote] }
+                      - { label: 'Tipo di viaggio nel modulo', name: 'formType', widget: 'select', i18n: duplicate, options: [tailor, group, flight, business] }
               - label: 'Partenze in evidenza'
                 name: departures
                 widget: object
@@ -422,6 +437,8 @@ collections:
                   - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
                   - { label: 'Titolo', name: 'title', widget: 'string' }
                   - { label: 'Citazione', name: 'pullquote', widget: 'text' }
+                  - { label: 'Pulsante pausa immagini', name: 'pauseLabel', widget: 'string' }
+                  - { label: 'Pulsante riprendi immagini', name: 'resumeLabel', widget: 'string' }
                   - label: 'Punti'
                     name: points
                     widget: list
@@ -429,7 +446,7 @@ collections:
                     fields:
                       - { label: 'Titolo', name: 'title', widget: 'string' }
                       - { label: 'Testo', name: 'body', widget: 'text' }
-                  - label: 'Immagine'
+                  - label: 'Foto agenzia facoltativa (prima della galleria)'
                     name: image
                     widget: object
                     required: false
@@ -437,11 +454,21 @@ collections:
                       - { label: 'File', name: 'src', widget: 'image', required: false, i18n: duplicate }
                       - { label: 'Testo alternativo', name: 'alt', widget: 'string', required: false }
                       - { label: 'Brief fotografico', name: 'brief', widget: 'text', required: false }
+                  - label: 'Galleria fotografica in movimento'
+                    name: gallery
+                    widget: list
+                    required: false
+                    i18n: true
+                    summary: '{{fields.alt}}'
+                    fields:
+                      - { label: 'File', name: 'src', widget: 'image', i18n: duplicate }
+                      - { label: 'Testo alternativo descrittivo', name: 'alt', widget: 'string', i18n: true }
               - label: 'Fascia assicurazione'
                 name: insurance
                 widget: object
                 fields:
                   - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Link rapido nella hero', name: 'quickCtaLabel', widget: 'string' }
                   - { label: 'Titolo', name: 'title', widget: 'string' }
                   - { label: 'Testo', name: 'body', widget: 'text' }
                   - { label: 'Punti', name: 'bullets', widget: 'list', field: { label: 'Punto', name: 'item', widget: 'string' } }
@@ -536,6 +563,13 @@ collections:
               - { label: 'Occhiello', name: 'eyebrow', widget: 'string', required: false }
               - { label: 'Titolo', name: 'title', widget: 'text' }
               - { label: 'Testo introduttivo', name: 'lede', widget: 'text', required: false }
+              - label: 'Immagine'
+                name: image
+                widget: object
+                required: false
+                fields:
+                  - { label: 'File', name: 'src', widget: 'image', required: false, i18n: duplicate }
+                  - { label: 'Testo alternativo', name: 'alt', widget: 'string', required: false }
           - label: 'Sezioni'
             name: sections
             widget: object
@@ -544,12 +578,14 @@ collections:
                 name: list
                 widget: object
                 fields:
+                  - { label: 'Etichetta pausa automatica', name: 'pauseLabel', widget: 'string' }
+                  - { label: 'Etichetta ripresa automatica', name: 'playLabel', widget: 'string' }
                   - label: 'Servizi'
                     name: items
                     widget: list
                     summary: '{{fields.title}}'
                     fields:
-                      - { label: 'Icona', name: 'icon', widget: 'select', i18n: duplicate, options: [compass, plane, ticket, users, shield, briefcase, calendar, clock] }
+                      - { label: 'Icona', name: 'icon', widget: 'select', i18n: duplicate, options: [compass, plane, ticket, users, shield, insurance-mark, briefcase, calendar, clock] }
                       - {
                           label: 'Ancora (parte finale del link)',
                           name: 'anchor',
@@ -590,6 +626,13 @@ collections:
               - { label: 'Occhiello', name: 'eyebrow', widget: 'string', required: false }
               - { label: 'Titolo', name: 'title', widget: 'text' }
               - { label: 'Testo introduttivo', name: 'lede', widget: 'text', required: false }
+              - label: 'Immagine'
+                name: image
+                widget: object
+                required: false
+                fields:
+                  - { label: 'File', name: 'src', widget: 'image', required: false, i18n: duplicate }
+                  - { label: 'Testo alternativo', name: 'alt', widget: 'string', required: false }
               - label: 'Pulsante principale'
                 name: primaryCta
                 widget: object
@@ -654,7 +697,7 @@ collections:
                     widget: list
                     summary: '{{fields.title}}'
                     fields:
-                      - { label: 'Icona', name: 'icon', widget: 'select', i18n: duplicate, options: [calendar, shield, briefcase, plane, clock, check] }
+                      - { label: 'Icona', name: 'icon', widget: 'select', i18n: duplicate, options: [calendar, shield, insurance-mark, briefcase, plane, clock, check] }
                       - { label: 'Titolo', name: 'title', widget: 'string' }
                       - { label: 'Testo', name: 'body', widget: 'text' }
               - label: 'Per chi ha senso'
@@ -825,6 +868,13 @@ collections:
                   - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
                   - { label: 'Titolo', name: 'title', widget: 'string' }
                   - { label: 'Paragrafi', name: 'paragraphs', widget: 'list', field: { label: 'Paragrafo', name: 'p', widget: 'text' } }
+                  - label: 'Immagine'
+                    name: image
+                    widget: object
+                    required: false
+                    fields:
+                      - { label: 'File', name: 'src', widget: 'image', required: false, i18n: duplicate }
+                      - { label: 'Testo alternativo', name: 'alt', widget: 'string', required: false }
               - label: 'Come lavoriamo'
                 name: values
                 widget: object

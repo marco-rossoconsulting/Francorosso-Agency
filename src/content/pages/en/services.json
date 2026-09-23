@@ -6,10 +6,16 @@
   "hero": {
     "eyebrow": "Services",
     "title": "Everything an agency is actually worth having for.",
-    "lede": "Some things are better booked alone. Others are not: when a journey has more moving parts, more people or more risk, having someone who answers changes the day."
+    "lede": "Some things are better booked alone. Others are not: when a journey has more moving parts, more people or more risk, having someone who answers changes the day.",
+    "image": {
+      "src": "/media/editorial/traveler-at-doorway-1280.webp",
+      "alt": "Traveler with a suitcase looking out from a doorway toward the landscape"
+    }
   },
   "sections": {
     "list": {
+      "pauseLabel": "Pause rotation",
+      "playLabel": "Resume rotation",
       "items": [
         {
           "icon": "compass",
@@ -60,7 +66,7 @@
           ]
         },
         {
-          "icon": "shield",
+          "icon": "insurance-mark",
           "anchor": "insurance",
           "title": "Travel insurance",
           "body": "Cancellation, medical expenses, baggage, medical repatriation. We arrange it remotely in a few minutes, even if you booked the trip somewhere else.",

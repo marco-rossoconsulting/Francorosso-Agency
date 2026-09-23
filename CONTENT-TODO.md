@@ -21,17 +21,18 @@ pagina contatti: confermare che siano ancora corretti.
 
 ## 2. Fotografie
 
-Il sito è costruito perché la mancanza di foto si veda e non si nasconda: dove
-manca un'immagine compare un riquadro con il **brief fotografico**. Servono, in
-ordine di importanza:
+Le foto stock fornite dall'agenzia sono ora presenti nell'apertura della home,
+nella fascia MICE, nelle pagine Servizi, Assicurazione e Aziende e nella sezione
+storica di Chi siamo. Sono versioni WebP responsive; le fonti sono elencate in
+`IMAGE-SOURCES.md`. Dove manca una foto autentica dell'agenzia compare ancora
+un riquadro con il **brief fotografico**. Servono, in ordine di importanza:
 
-1. **Home, apertura** — orizzontale: il team al lavoro su un itinerario, luce
-   naturale, non in posa.
-2. **Team, sei ritratti** — verticale, stesso trattamento per tutti, in agenzia.
+1. **Team, sei ritratti** — verticale, stesso trattamento per tutti, in agenzia.
    Nadia ha scritto che le foto in agenzia si faranno appena possibile.
-3. **Chi siamo, apertura** — verticale: l'agenzia in Via Canova.
-4. **Home, "perché sceglierci"** — verticale: la vetrina o l'ingresso.
-5. **Aziende e MICE** — orizzontale: sala riunioni o cena aziendale allestita.
+2. **Chi siamo, apertura** — verticale: l'agenzia in Via Canova.
+3. **Home, "perché sceglierci"** — verticale: la vetrina o l'ingresso.
+4. **Home, apertura** — in futuro una foto autentica del team al lavoro su un itinerario.
+5. **Aziende e MICE** — in futuro una sala riunioni o cena aziendale allestita da Francorosso.
 
 Formato consigliato: WebP o JPEG, larghezza massima 2000 px, sotto i 300 KB.
 

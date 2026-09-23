@@ -21,7 +21,11 @@
         "Francorosso began by introducing Ticino travellers to Kenya, and for years that was our speciality: destinations you did not book alone, where you needed someone who had already been.",
         "Over time the trade widened. Today we handle tailor-made individual journeys, group departures we organise ourselves, flight ticketing, and all the events and travel of companies across the region.",
         "What has stayed the same is the scale. We are one office, not a network: the person who answers the phone is the one who wrote your itinerary, and the one who will answer if something goes wrong while you are away."
-      ]
+      ],
+      "image": {
+        "src": "/media/editorial/kenyan-savanna-1280.webp",
+        "alt": "Giraffe on the Kenyan savanna at sunset"
+      }
     },
     "values": {
       "eyebrow": "How we work",

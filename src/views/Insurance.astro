@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
+import InsuranceMark from '../components/InsuranceMark.astro';
 import PageHero from '../components/PageHero.astro';
 import EnquiryForm from '../components/EnquiryForm.astro';
 import { type Locale } from '../lib/i18n';
@@ -37,6 +38,7 @@ const directBuy = partner.mode === 'link' && partner.linkUrl;
     eyebrow={page.hero!.eyebrow}
     title={page.hero!.title}
     lede={page.hero!.lede}
+    image={page.hero!.image}
     signals={page.hero!.signals}
   >
   </PageHero>
@@ -44,7 +46,10 @@ const directBuy = partner.mode === 'link' && partner.linkUrl;
   <section class="section--tight">
     <div class="shell">
       <div class="quick">
-        <p class="quick__text">{S.how.title}</p>
+        <div class="quick__intro">
+          <InsuranceMark size={50} />
+          <p class="quick__text">{S.how.title}</p>
+        </div>
         {directBuy ? (
           <a class="btn" href={partner.linkUrl} target="_blank" rel="noopener noreferrer">
             {partner.linkLabel}
@@ -82,7 +87,9 @@ const directBuy = partner.mode === 'link' && partner.linkUrl;
       <ul class="covers__grid">
         {S.covers.items.map((c: any, i: number) => (
           <li data-reveal style={`--reveal-delay:${i * 70}ms`}>
-            <span class="covers__icon"><Icon name={c.icon} size={24} /></span>
+            <span class:list={['covers__icon', { 'covers__icon--insurance': c.icon === 'insurance-mark' }]}>
+              {c.icon === 'insurance-mark' ? <InsuranceMark size={28} /> : <Icon name={c.icon} size={24} />}
+            </span>
             <h3 class="covers__ctitle">{c.title}</h3>
             <p class="covers__cbody">{c.body}</p>
           </li>
@@ -161,6 +168,8 @@ const directBuy = partner.mode === 'link' && partner.linkUrl;
     background: var(--rosso-tint);
     border-radius: var(--radius-lg);
   }
+  .quick__intro { display: flex; align-items: center; gap: var(--sp-4); }
+  .quick__intro :global(img) { flex: none; }
   .quick__text { margin: 0; font-size: var(--step-2); font-weight: 600; letter-spacing: -0.02em; max-width: 24ch; }
 
   .steps { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--sp-6) var(--gutter); }
@@ -174,6 +183,7 @@ const directBuy = partner.mode === 'link' && partner.linkUrl;
   .covers__grid { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--sp-6) var(--gutter); margin-top: var(--sp-8); }
   .covers__grid li { display: grid; gap: var(--sp-3); align-content: start; padding-top: var(--sp-5); border-top: 1px solid var(--rule-invert); }
   .covers__icon { color: #e4787c; }
+  .covers__icon--insurance { display: grid; place-items: center; width: 36px; height: 36px; background: var(--avorio); border-radius: 50%; }
   .covers__ctitle { font-size: var(--step-1); }
   .covers__cbody { margin: 0; font-size: var(--step--1); line-height: 1.62; color: var(--ink-invert-soft); }
 

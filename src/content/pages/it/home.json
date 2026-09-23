@@ -8,16 +8,32 @@
     "title": "Il viaggio prende forma parlando con qualcuno che lo ha già fatto.",
     "lede": "Siamo un'agenzia di Via Canova. Costruiamo itinerari su misura, accompagniamo le nostre partenze di gruppo e gestiamo i viaggi delle aziende del Ticino. Potete iniziare da qui, o passare a trovarci.",
     "image": {
-      "src": "",
-      "alt": "",
-      "brief": "Foto orizzontale del team in agenzia, luce naturale, mentre lavora a un itinerario. Non una posa di gruppo."
+      "src": "/media/editorial/journey-planning-1280.webp",
+      "alt": "Macchina fotografica e tablet con una foto di New York appoggiati su una mappa"
     },
-    "primaryCta": { "label": "Richiedi un preventivo", "route": "quote", "style": "primary" },
-    "secondaryCta": { "label": "Le nostre partenze", "route": "departures", "style": "secondary" },
+    "primaryCta": {
+      "label": "Richiedi un preventivo",
+      "route": "quote",
+      "style": "primary"
+    },
+    "secondaryCta": {
+      "label": "Le nostre partenze",
+      "route": "departures",
+      "style": "secondary"
+    },
     "signals": [
-      { "value": "30+", "label": "anni a Lugano" },
-      { "value": "6", "label": "consulenti in agenzia" },
-      { "value": "1", "label": "giorno lavorativo per la risposta" }
+      {
+        "value": "30+",
+        "label": "anni a Lugano"
+      },
+      {
+        "value": "6",
+        "label": "consulenti in agenzia"
+      },
+      {
+        "value": "1",
+        "label": "giorno lavorativo per la risposta"
+      }
     ]
   },
   "sections": {
@@ -29,27 +45,38 @@
       "eyebrow": "Cosa facciamo",
       "title": "Quattro modi di partire con noi",
       "intro": "Ogni richiesta finisce sulla scrivania di una persona precisa, non in una coda.",
+      "selectionPrompt": "Selezionate i servizi che vi interessano",
+      "countLabel": "servizi selezionati",
+      "resetLabel": "Azzera",
+      "selectLabel": "Mi interessa",
+      "selectedLabel": "Selezionato",
+      "quoteIntro": "La vostra selezione vi segue nel modulo di richiesta.",
+      "quoteLabel": "Raccontateci cosa vi serve",
       "items": [
         {
           "icon": "compass",
+          "formType": "tailor",
           "title": "Viaggi su misura",
           "body": "Si parte da una conversazione: chi viaggia, quanto tempo avete, cosa non volete perdere. L'itinerario lo scriviamo noi, voi lo correggete finché non vi somiglia.",
           "route": "services"
         },
         {
           "icon": "users",
+          "formType": "group",
           "title": "Partenze di gruppo",
           "body": "Viaggi che organizziamo direttamente, con date fisse, quote chiare e un accompagnatore che parla italiano. Sono la parte di lavoro di cui andiamo più fieri.",
           "route": "departures"
         },
         {
           "icon": "ticket",
+          "formType": "flight",
           "title": "Biglietteria aerea",
           "body": "Emissione biglietti, riprotezioni, cambi e tariffe negoziate. Se qualcosa va storto in aeroporto, avete un numero che risponde.",
           "route": "services"
         },
         {
           "icon": "briefcase",
+          "formType": "business",
           "title": "Aziende e MICE",
           "body": "Meeting, convention, incentive, eventi e viaggi d'affari ricorrenti. Un unico referente per la logistica, i fornitori e il budget.",
           "route": "business"
@@ -66,6 +93,8 @@
       "eyebrow": "Perché sceglierci",
       "title": "La differenza la fa chi risponde al telefono",
       "pullquote": "Diteci come volete che il viaggio vi faccia sentire, e i dettagli li mettiamo a posto insieme.",
+      "pauseLabel": "Pausa immagini",
+      "resumeLabel": "Riprendi immagini",
       "points": [
         {
           "title": "Una persona, non un ticket",
@@ -88,10 +117,19 @@
         "src": "",
         "alt": "",
         "brief": "Dettaglio della vetrina o dell'ingresso di Via Canova 19, formato verticale, luce di fine giornata."
-      }
+      },
+      "gallery": [
+        { "src": "/media/editorial/travelers-on-trail-640.webp", "alt": "Gruppo di viaggiatori lungo un sentiero di montagna" },
+        { "src": "/media/editorial/airport-concourse-640.webp", "alt": "Passeggeri nell'ampio atrio di un aeroporto" },
+        { "src": "/media/editorial/journey-map-640.webp", "alt": "Mappa del mondo con macchina fotografica e accessori da viaggio" },
+        { "src": "/media/editorial/mount-fuji-pagoda-640.webp", "alt": "Pagoda giapponese con il monte Fuji sullo sfondo" },
+        { "src": "/media/editorial/savanna-at-sunset-640.webp", "alt": "Giraffa nella savana al tramonto" },
+        { "src": "/media/editorial/balloon-at-sunrise-640.webp", "alt": "Mongolfiera sopra la pianura illuminata dal sole" }
+      ]
     },
     "insurance": {
       "eyebrow": "Prima di partire",
+      "quickCtaLabel": "Assicurazione viaggio · Richiedi la polizza",
       "title": "L'assicurazione viaggio, sistemata in due minuti",
       "body": "Annullamento, spese mediche, bagaglio. È la parte del viaggio a cui nessuno pensa finché non serve. Diteci le date e il valore del viaggio: vi mandiamo la polizza giusta e il link per pagarla.",
       "bullets": [
@@ -114,9 +152,8 @@
       ],
       "ctaLabel": "Parlaci del progetto",
       "image": {
-        "src": "",
-        "alt": "",
-        "brief": "Formato orizzontale: sala riunioni o cena di gala allestita, punto di vista dall'interno del gruppo."
+        "src": "/media/editorial/conference-audience-1280.webp",
+        "alt": "Partecipanti seduti in una sala conferenze durante un evento"
       }
     },
     "team": {

@@ -101,7 +101,7 @@ const isActive = (r: string) => {
     gap: var(--sp-6);
   }
   .hdr__brand { display: flex; align-items: center; flex: none; }
-  .hdr__brand img { width: clamp(132px, 14vw, 186px); }
+  .hdr__inner .hdr__brand :global(img) { width: clamp(132px, 14vw, 186px); }
 
   .hdr__nav { margin-left: auto; }
   .hdr__nav ul { display: flex; align-items: center; gap: clamp(1rem, 2vw, 2rem); list-style: none; }

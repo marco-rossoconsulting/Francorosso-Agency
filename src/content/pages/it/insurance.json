@@ -7,12 +7,29 @@
     "eyebrow": "Assicurazione viaggio",
     "title": "La parte del viaggio a cui nessuno pensa, finché non serve.",
     "lede": "Un'influenza la settimana prima, una valigia che non arriva, un pronto soccorso all'estero. Sono le tre cose che ci sentiamo chiedere più spesso, e sono le tre che una buona polizza risolve. Ve la sistemiamo senza che dobbiate passare in agenzia.",
-    "primaryCta": { "label": "Richiedi la polizza", "route": "insurance", "style": "primary" },
+    "primaryCta": {
+      "label": "Richiedi la polizza",
+      "route": "insurance",
+      "style": "primary"
+    },
     "signals": [
-      { "value": "2 min", "label": "per la richiesta" },
-      { "value": "1 giorno", "label": "lavorativo per la conferma" },
-      { "value": "Anche", "label": "su viaggi prenotati altrove" }
-    ]
+      {
+        "value": "2 min",
+        "label": "per la richiesta"
+      },
+      {
+        "value": "1 giorno",
+        "label": "lavorativo per la conferma"
+      },
+      {
+        "value": "Anche",
+        "label": "su viaggi prenotati altrove"
+      }
+    ],
+    "image": {
+      "src": "/media/editorial/flight-above-clouds-1280.webp",
+      "alt": "Ala di un aereo sopra le nuvole illuminate dal tramonto"
+    }
   },
   "sections": {
     "partner": {
@@ -50,7 +67,7 @@
           "body": "Rimborsa la penale se dovete rinunciare prima di partire per un motivo previsto e documentabile: malattia, infortunio, eventi familiari gravi. È la copertura che si usa più spesso."
         },
         {
-          "icon": "shield",
+          "icon": "insurance-mark",
           "title": "Spese mediche e assistenza",
           "body": "Copre visite, ricoveri e, se necessario, il rientro sanitario. Fuori dall'area di validità della vostra cassa malati è la voce che può pesare di più."
         },
@@ -70,10 +87,22 @@
       "eyebrow": "Per chi ha senso",
       "title": "Quando vale davvero la pena",
       "items": [
-        { "title": "Viaggi con acconti alti", "body": "Crociere, tour di gruppo, safari: più l'acconto è alto, più la penale in caso di rinuncia pesa." },
-        { "title": "Destinazioni lontane", "body": "Fuori Europa le spese mediche possono superare il costo del viaggio. Vale per tutti, a qualsiasi età." },
-        { "title": "Chi viaggia spesso", "body": "Con quattro o cinque viaggi all'anno la polizza annuale multiviaggio costa meno delle singole." },
-        { "title": "Viaggi prenotati altrove", "body": "Se avete prenotato online o con un altro operatore, possiamo comunque assicurare il viaggio." }
+        {
+          "title": "Viaggi con acconti alti",
+          "body": "Crociere, tour di gruppo, safari: più l'acconto è alto, più la penale in caso di rinuncia pesa."
+        },
+        {
+          "title": "Destinazioni lontane",
+          "body": "Fuori Europa le spese mediche possono superare il costo del viaggio. Vale per tutti, a qualsiasi età."
+        },
+        {
+          "title": "Chi viaggia spesso",
+          "body": "Con quattro o cinque viaggi all'anno la polizza annuale multiviaggio costa meno delle singole."
+        },
+        {
+          "title": "Viaggi prenotati altrove",
+          "body": "Se avete prenotato online o con un altro operatore, possiamo comunque assicurare il viaggio."
+        }
       ]
     },
     "faq": {
