@@ -203,11 +203,11 @@ Da fare al primo collegamento:
 
 ## Marchio
 
-Il logo è il wordmark fornito dall'agenzia, usato senza modifiche in tre varianti
-di colore generate dall'originale (`public/media/brand/`). Il manuale vieta di
-ritagliare la parola, creare un monogramma o ridisegnarla: per questo la favicon
-e l'icona applicazione sono per ora un quadrato pieno Rosso Orizzonte, in attesa
-del **compact asset** che il manuale stesso indica come da approvare.
+Il logo principale è il wordmark fornito dall'agenzia, usato senza modifiche in
+tre varianti di colore generate dall'originale (`public/media/brand/`). La favicon
+e le icone applicazione usano il simbolo FR fornito separatamente dall'agenzia.
+La comunicazione dell'assicurazione viaggio usa il marchio dedicato fornito
+dall'agenzia, esportato in due dimensioni ottimizzate nella stessa cartella.
 
 Colori: Rosso Orizzonte `#B21E23`, Blu Notte `#0E1B2B`, Sabbia Chiara `#F6EFE9`,
 Avorio `#F2F2F2`. Caratteri: Inter (testi e interfaccia), Source Serif 4 corsivo
