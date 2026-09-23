@@ -1,6 +1,6 @@
 ---
 name: "Debora Gnoni"
-role: "Travel Consultant"
+role: "Senior Travel Consultant"
 order: 3
 email: "d.gnoni@francorosso.ch"
 phone: ""
