@@ -155,6 +155,7 @@ const ui = defineCollection({
       eventTypeOptions: z.array(z.string()),
       message: z.string(),
       messagePlaceholder: z.string(),
+      interestIntro: z.string(),
       preferredContact: z.string(),
       preferredContactOptions: z.array(z.string()),
       consent: z.string(),

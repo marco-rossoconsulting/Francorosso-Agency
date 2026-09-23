@@ -294,6 +294,7 @@ collections:
                 }
               - { label: 'Messaggio', name: 'message', widget: 'string' }
               - { label: 'Testo guida del messaggio', name: 'messagePlaceholder', widget: 'text' }
+              - { label: 'Introduzione ai servizi selezionati nel preventivo', name: 'interestIntro', widget: 'string' }
               - { label: 'Contatto preferito', name: 'preferredContact', widget: 'string' }
               - {
                   label: 'Opzioni contatto preferito',
@@ -398,6 +399,13 @@ collections:
                   - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
                   - { label: 'Titolo', name: 'title', widget: 'string' }
                   - { label: 'Introduzione', name: 'intro', widget: 'text', required: false }
+                  - { label: 'Invito a selezionare i servizi', name: 'selectionPrompt', widget: 'string' }
+                  - { label: 'Etichetta contatore selezione', name: 'countLabel', widget: 'string' }
+                  - { label: 'Pulsante azzera selezione', name: 'resetLabel', widget: 'string' }
+                  - { label: 'Pulsante seleziona', name: 'selectLabel', widget: 'string' }
+                  - { label: 'Stato selezionato', name: 'selectedLabel', widget: 'string' }
+                  - { label: 'Nota sotto le schede selezionate', name: 'quoteIntro', widget: 'string' }
+                  - { label: 'Pulsante richiesta selezione', name: 'quoteLabel', widget: 'string' }
                   - label: 'Servizi'
                     name: items
                     widget: list

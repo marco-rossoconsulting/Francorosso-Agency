@@ -64,6 +64,7 @@
     ],
     "message": "Tell us about the journey",
     "messagePlaceholder": "Who is travelling, what pace you have in mind, what the trip must include. A few lines are enough to start.",
+    "interestIntro": "Services I am interested in:",
     "preferredContact": "How you would prefer to be contacted",
     "preferredContactOptions": [
       "Email",

@@ -45,6 +45,13 @@
       "eyebrow": "What we do",
       "title": "Four ways to travel with us",
       "intro": "Every request lands on one named person's desk, not in a queue.",
+      "selectionPrompt": "Select the services you are interested in",
+      "countLabel": "services selected",
+      "resetLabel": "Clear",
+      "selectLabel": "I'm interested",
+      "selectedLabel": "Selected",
+      "quoteIntro": "Your selection will follow you to the enquiry form.",
+      "quoteLabel": "Tell us what you need",
       "items": [
         {
           "icon": "compass",

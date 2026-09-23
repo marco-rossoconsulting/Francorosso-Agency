@@ -45,6 +45,13 @@
       "eyebrow": "Cosa facciamo",
       "title": "Quattro modi di partire con noi",
       "intro": "Ogni richiesta finisce sulla scrivania di una persona precisa, non in una coda.",
+      "selectionPrompt": "Selezionate i servizi che vi interessano",
+      "countLabel": "servizi selezionati",
+      "resetLabel": "Azzera",
+      "selectLabel": "Mi interessa",
+      "selectedLabel": "Selezionato",
+      "quoteIntro": "La vostra selezione vi segue nel modulo di richiesta.",
+      "quoteLabel": "Raccontateci cosa vi serve",
       "items": [
         {
           "icon": "compass",

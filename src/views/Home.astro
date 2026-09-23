@@ -88,23 +88,46 @@ const whyColumns = [
     </div>
   </section>
 
-  <!-- Services --------------------------------------------------------- -->
+  <!-- Services: Astro adaptation of the numbered Card 3 selection pattern -->
   <section class="section services">
     <div class="shell">
       <SectionHead eyebrow={S.services.eyebrow} title={S.services.title} intro={S.services.intro} align="wide" />
-      <ul class="svc">
+      <div class="svc__toolbar" data-service-toolbar hidden>
+        <p class="svc__prompt">{S.services.selectionPrompt}</p>
+        <div class="svc__toolbar-actions">
+          <p class="svc__count" aria-live="polite"><strong data-service-count>0</strong> / {S.services.items.length} {S.services.countLabel}</p>
+          <button class="svc__reset" type="button" data-service-reset disabled>{S.services.resetLabel}</button>
+        </div>
+      </div>
+      <ul class="svc" data-service-cards>
         {S.services.items.map((item: any, i: number) => (
-          <li class="svc__item" data-reveal style={`--reveal-delay:${i * 70}ms`}>
-            <span class="svc__icon"><Icon name={iconOf(item.icon)} size={22} /></span>
-            <h3 class="svc__title">{item.title}</h3>
-            <p class="svc__body">{item.body}</p>
-            <a class="link-arrow" href={path(locale, item.route as RouteKey)}>
-              {ui.readMore}
-              <Icon name="arrow" size={15} />
-            </a>
+          <li class="svc__item" data-service-card data-service-title={item.title} data-reveal style={`--reveal-delay:${i * 70}ms`}>
+            <article class="svc__panel">
+              <div class="svc__top">
+                <span class="svc__number" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                <span class="svc__icon"><Icon name={iconOf(item.icon)} size={25} /></span>
+              </div>
+              <div class="svc__copy">
+                <h3 class="svc__title">{item.title}</h3>
+                <p class="svc__body">{item.body}</p>
+              </div>
+              <a class="link-arrow svc__link" href={path(locale, item.route as RouteKey)}>
+                {ui.readMore}
+                <Icon name="arrow" size={15} />
+              </a>
+            </article>
+            <button class="svc__select" type="button" data-service-select data-select-label={S.services.selectLabel} data-selected-label={S.services.selectedLabel} aria-pressed="false" hidden>
+              <span class="svc__check"><Icon name="check" size={14} /></span>
+              <span data-service-select-label>{S.services.selectLabel}</span>
+              <span class="visually-hidden">: {item.title}</span>
+            </button>
           </li>
         ))}
       </ul>
+      <div class="svc__footer" data-service-footer hidden>
+        <p>{S.services.quoteIntro}</p>
+        <a class="btn" href={path(locale, 'quote')} data-service-quote>{S.services.quoteLabel}<Icon name="arrow" size={17} /></a>
+      </div>
     </div>
   </section>
 
@@ -299,6 +322,52 @@ const whyColumns = [
     </div>
   </section>
   <script>
+    const serviceCards = Array.from(document.querySelectorAll<HTMLElement>('[data-service-card]'));
+    const serviceToolbar = document.querySelector<HTMLElement>('[data-service-toolbar]');
+    const serviceFooter = document.querySelector<HTMLElement>('[data-service-footer]');
+    const serviceCount = document.querySelector<HTMLElement>('[data-service-count]');
+    const serviceReset = document.querySelector<HTMLButtonElement>('[data-service-reset]');
+    const serviceQuote = document.querySelector<HTMLAnchorElement>('[data-service-quote]');
+    if (serviceCards.length && serviceToolbar && serviceFooter && serviceCount && serviceReset && serviceQuote) {
+      serviceToolbar.hidden = false;
+      serviceCards.forEach((card) => {
+        const button = card.querySelector<HTMLButtonElement>('[data-service-select]');
+        if (button) button.hidden = false;
+      });
+      const updateServices = () => {
+        const selected = serviceCards.filter((card) => card.dataset.selected === 'true');
+        serviceCount.textContent = String(selected.length);
+        serviceReset.disabled = selected.length === 0;
+        serviceFooter.hidden = selected.length === 0;
+        const url = new URL(serviceQuote.dataset.baseHref ?? serviceQuote.href, window.location.origin);
+        selected.forEach((card) => url.searchParams.append('interest', card.dataset.serviceTitle ?? ''));
+        url.hash = 'quote-enquiry';
+        serviceQuote.href = `${url.pathname}${url.search}${url.hash}`;
+      };
+      serviceQuote.dataset.baseHref = serviceQuote.href;
+      serviceCards.forEach((card) => {
+        const button = card.querySelector<HTMLButtonElement>('[data-service-select]');
+        const label = button?.querySelector<HTMLElement>('[data-service-select-label]');
+        button?.addEventListener('click', () => {
+          const selected = card.dataset.selected !== 'true';
+          card.dataset.selected = String(selected);
+          button.setAttribute('aria-pressed', String(selected));
+          if (label) label.textContent = selected ? button.dataset.selectedLabel ?? '' : button.dataset.selectLabel ?? '';
+          updateServices();
+        });
+      });
+      serviceReset.addEventListener('click', () => {
+        serviceCards.forEach((card) => {
+          card.dataset.selected = 'false';
+          const button = card.querySelector<HTMLButtonElement>('[data-service-select]');
+          button?.setAttribute('aria-pressed', 'false');
+          const label = button?.querySelector<HTMLElement>('[data-service-select-label]');
+          if (label && button) label.textContent = button.dataset.selectLabel ?? '';
+        });
+        updateServices();
+      });
+      updateServices();
+    }
     const marquee = document.querySelector<HTMLElement>('[data-why-marquee]');
     marquee?.classList.add('has-motion');
     if (marquee && 'IntersectionObserver' in window) {
@@ -361,12 +430,38 @@ const whyColumns = [
 
   /* Services ----------------------------------------------------------- */
   .services { background: var(--avorio); }
-  .svc { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--sp-7) var(--gutter); list-style: none; }
-  .svc__item { display: grid; gap: var(--sp-3); align-content: start; padding-top: var(--sp-5); border-top: 1px solid var(--rule-strong); }
-  .svc__icon { color: var(--rosso); }
+  .svc__toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--sp-4); margin: calc(-1 * var(--sp-5)) 0 var(--sp-5); padding-top: var(--sp-4); border-top: 1px solid var(--rule); }
+  .svc__toolbar[hidden], .svc__footer[hidden], .svc__select[hidden] { display: none; }
+  .svc__prompt { margin: 0; font-size: var(--step--1); color: var(--ink-soft); }
+  .svc__toolbar-actions { display: flex; align-items: center; flex-wrap: wrap; gap: var(--sp-5); }
+  .svc__count { margin: 0; font-size: var(--step--1); color: var(--ink-soft); }
+  .svc__count strong { color: var(--rosso); font-size: var(--step-1); }
+  .svc__reset { padding: 0; border: 0; border-bottom: 1px solid currentColor; background: transparent; color: var(--ink); font: inherit; font-size: var(--step--1); cursor: pointer; }
+  .svc__reset:disabled { opacity: 0.4; cursor: default; }
+  .svc { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--sp-4); list-style: none; }
+  .svc__item { display: flex; flex-direction: column; min-width: 0; padding: 5px; border: 1px solid var(--rule); border-radius: var(--radius-lg); background: var(--sabbia); transition: border-color var(--dur-fast) ease, transform var(--dur-fast) ease; }
+  .svc__item:hover { transform: translateY(-3px); border-color: var(--rule-strong); }
+  .svc__item[data-selected='true'] { border-color: var(--blu); }
+  .svc__panel { display: flex; flex: 1; flex-direction: column; min-height: 390px; padding: var(--sp-5); border: 1px solid var(--rule); border-radius: var(--radius); background: var(--bianco); }
+  .svc__top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-3); }
+  .svc__number { color: var(--rosso); font-size: var(--step-4); font-weight: 600; letter-spacing: -0.055em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .svc__icon { display: grid; place-items: center; width: 44px; height: 44px; flex: none; border: 1px solid var(--rule); border-radius: var(--radius); color: var(--rosso); }
+  .svc__copy { margin-top: auto; padding-top: var(--sp-7); }
   .svc__title { font-size: var(--step-1); }
-  .svc__body { margin: 0; font-size: var(--step--1); line-height: 1.6; color: var(--ink-soft); }
-  .svc__item .link-arrow { justify-self: start; margin-top: var(--sp-2); }
+  .svc__body { margin: var(--sp-3) 0 0; font-size: var(--step--1); line-height: 1.55; color: var(--ink-soft); }
+  .svc__link { align-self: flex-start; margin-top: var(--sp-5); }
+  .svc__select { display: flex; align-items: center; justify-content: center; gap: var(--sp-2); min-height: 44px; margin-top: 5px; border: 1px solid transparent; border-radius: var(--radius); background: transparent; color: var(--ink); font: inherit; font-size: var(--step--1); font-weight: 600; cursor: pointer; transition: background var(--dur-fast) ease, color var(--dur-fast) ease; }
+  .svc__select:hover { background: var(--sabbia-deep); }
+  .svc__item[data-selected='true'] .svc__select { background: var(--blu); color: var(--ink-invert); }
+  .svc__item[data-selected='true'] .svc__select:hover { background: var(--blu-raised); }
+  .svc__check { display: grid; place-items: center; width: 17px; height: 17px; border: 1px solid currentColor; border-radius: 50%; }
+  .svc__check :global(svg) { opacity: 0; }
+  .svc__item[data-selected='true'] .svc__check :global(svg) { opacity: 1; }
+  .svc__footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--sp-4); margin-top: var(--sp-6); padding-top: var(--sp-5); border-top: 1px solid var(--rule); }
+  .svc__footer p { margin: 0; color: var(--ink-soft); font-size: var(--step--1); }
+  @media (max-width: 1050px) { .svc { grid-template-columns: repeat(2, minmax(0, 1fr)); } .svc__panel { min-height: 330px; } }
+  @media (max-width: 620px) { .svc { grid-template-columns: 1fr; } .svc__panel { min-height: 270px; } .svc__toolbar { align-items: flex-start; } .svc__footer .btn { width: 100%; } }
+  @media (prefers-reduced-motion: reduce) { .svc__item, .svc__select { transition: none; } .svc__item:hover { transform: none; } }
 
   /* Departures --------------------------------------------------------- */
   .deps__head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: var(--sp-5); margin-bottom: var(--sp-7); }

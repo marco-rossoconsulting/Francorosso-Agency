@@ -64,6 +64,7 @@
     ],
     "message": "Raccontateci il viaggio",
     "messagePlaceholder": "Chi parte, che ritmo avete in mente, cosa non deve mancare. Anche poche righe ci bastano per iniziare.",
+    "interestIntro": "Servizi che mi interessano:",
     "preferredContact": "Come preferite essere contattati",
     "preferredContactOptions": [
       "E-mail",

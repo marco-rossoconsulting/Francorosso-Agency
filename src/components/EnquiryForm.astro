@@ -44,6 +44,7 @@ const opt = `(${f.optional})`;
   data-netlify="true"
   netlify-honeypot="bot-field"
   data-form
+  data-interest-intro={variant === 'quote' ? f.interestIntro : undefined}
 >
   <input type="hidden" name="form-name" value={formName} />
   <input type="hidden" name="department" value={DEPARTMENT[variant]} />
@@ -299,6 +300,17 @@ const opt = `(${f.optional})`;
 
 <script>
   document.querySelectorAll<HTMLFormElement>('[data-form]').forEach((form) => {
+    if (form.dataset.interestIntro) {
+      const interests = new URLSearchParams(window.location.search)
+        .getAll('interest')
+        .map((value) => value.trim().slice(0, 80))
+        .filter(Boolean)
+        .slice(0, 8);
+      const message = form.querySelector<HTMLTextAreaElement>('[name="messaggio"]');
+      if (message && interests.length && !message.value) {
+        message.value = `${form.dataset.interestIntro}\n${interests.map((interest) => `• ${interest}`).join('\n')}\n\n`;
+      }
+    }
     form.addEventListener('submit', () => {
       const btn = form.querySelector<HTMLButtonElement>('[data-submit]');
       if (btn && form.checkValidity()) {
