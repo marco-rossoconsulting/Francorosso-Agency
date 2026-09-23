@@ -281,7 +281,13 @@ collections:
                   label: 'Opzioni tipo di viaggio',
                   name: 'tripTypeOptions',
                   widget: 'list',
-                  field: { label: 'Opzione', name: 'option', widget: 'string' },
+                  i18n: true,
+                  summary: '{{fields.label}}',
+                  fields:
+                    [
+                      { label: 'Codice stabile', name: 'id', widget: 'select', i18n: duplicate, options: [tailor, group, flight, hotel-flight, honeymoon, unsure, business, multiple] },
+                      { label: 'Etichetta visibile', name: 'label', widget: 'string', i18n: true },
+                    ],
                 }
               - { label: 'Azienda', name: 'company', widget: 'string' }
               - { label: 'Numero di partecipanti', name: 'participants', widget: 'string' }
@@ -415,6 +421,7 @@ collections:
                       - { label: 'Titolo', name: 'title', widget: 'string' }
                       - { label: 'Testo', name: 'body', widget: 'text' }
                       - { label: 'Pagina collegata', name: 'route', widget: 'select', i18n: duplicate, options: [departures, services, insurance, business, about, contact, quote] }
+                      - { label: 'Tipo di viaggio nel modulo', name: 'formType', widget: 'select', i18n: duplicate, options: [tailor, group, flight, business] }
               - label: 'Partenze in evidenza'
                 name: departures
                 widget: object
@@ -461,6 +468,7 @@ collections:
                 widget: object
                 fields:
                   - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                  - { label: 'Link rapido nella hero', name: 'quickCtaLabel', widget: 'string' }
                   - { label: 'Titolo', name: 'title', widget: 'string' }
                   - { label: 'Testo', name: 'body', widget: 'text' }
                   - { label: 'Punti', name: 'bullets', widget: 'list', field: { label: 'Punto', name: 'item', widget: 'string' } }

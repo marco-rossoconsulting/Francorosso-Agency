@@ -56,6 +56,11 @@ const whyColumns = [
             </a>
           )}
         </div>
+        <a class="hero__insurance" href={`${path(locale, 'insurance')}#richiesta`}>
+          <Icon name="shield" size={18} />
+          <span>{S.insurance.quickCtaLabel}</span>
+          <Icon name="arrow" size={15} />
+        </a>
         <dl class="hero__signals">
           {hero.signals?.map((sig: any) => (
             <div><dt>{sig.value}</dt><dd>{sig.label}</dd></div>
@@ -101,7 +106,7 @@ const whyColumns = [
       </div>
       <ul class="svc" data-service-cards>
         {S.services.items.map((item: any, i: number) => (
-          <li class="svc__item" data-service-card data-service-title={item.title} data-reveal style={`--reveal-delay:${i * 70}ms`}>
+          <li class="svc__item" data-service-card data-service-title={item.title} data-service-form-type={item.formType} data-reveal style={`--reveal-delay:${i * 70}ms`}>
             <article class="svc__panel">
               <div class="svc__top">
                 <span class="svc__number" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
@@ -128,6 +133,33 @@ const whyColumns = [
         <p>{S.services.quoteIntro}</p>
         <a class="btn" href={path(locale, 'quote')} data-service-quote>{S.services.quoteLabel}<Icon name="arrow" size={17} /></a>
       </div>
+    </div>
+  </section>
+
+  <!-- Insurance: visible immediately after the service choices -------- -->
+  <section class="section--tight ins">
+    <div class="shell ins__inner">
+      <div class="ins__text" data-reveal>
+        <span class="eyebrow">{S.insurance.eyebrow}</span>
+        <h2 class="ins__title">{S.insurance.title}</h2>
+        <p class="ins__body">{S.insurance.body}</p>
+        <ul class="ins__list">
+          {S.insurance.bullets.map((b: string) => (
+            <li><Icon name="check" size={15} />{b}</li>
+          ))}
+        </ul>
+        <div class="ins__ctas">
+          <a class="btn" href={`${path(locale, 'insurance')}#richiesta`}>
+            {S.insurance.ctaLabel}
+            <Icon name="arrow" size={17} />
+          </a>
+          <a class="link-arrow" href={path(locale, 'insurance')}>
+            {S.insurance.secondaryLabel}
+            <Icon name="arrow" size={15} />
+          </a>
+        </div>
+      </div>
+      <div class="ins__mark" aria-hidden="true"><Icon name="shield" size={140} /></div>
     </div>
   </section>
 
@@ -215,33 +247,6 @@ const whyColumns = [
           >{S.why.pauseLabel}</button>
         </div>
       )}
-    </div>
-  </section>
-
-  <!-- Insurance -------------------------------------------------------- -->
-  <section class="section--tight ins">
-    <div class="shell ins__inner">
-      <div class="ins__text" data-reveal>
-        <span class="eyebrow">{S.insurance.eyebrow}</span>
-        <h2 class="ins__title">{S.insurance.title}</h2>
-        <p class="ins__body">{S.insurance.body}</p>
-        <ul class="ins__list">
-          {S.insurance.bullets.map((b: string) => (
-            <li><Icon name="check" size={15} />{b}</li>
-          ))}
-        </ul>
-        <div class="ins__ctas">
-          <a class="btn" href={`${path(locale, 'insurance')}#richiesta`}>
-            {S.insurance.ctaLabel}
-            <Icon name="arrow" size={17} />
-          </a>
-          <a class="link-arrow" href={path(locale, 'insurance')}>
-            {S.insurance.secondaryLabel}
-            <Icon name="arrow" size={15} />
-          </a>
-        </div>
-      </div>
-      <div class="ins__mark" aria-hidden="true"><Icon name="shield" size={140} /></div>
     </div>
   </section>
 
@@ -341,6 +346,8 @@ const whyColumns = [
         serviceFooter.hidden = selected.length === 0;
         const url = new URL(serviceQuote.dataset.baseHref ?? serviceQuote.href, window.location.origin);
         selected.forEach((card) => url.searchParams.append('interest', card.dataset.serviceTitle ?? ''));
+        const tripType = selected.length > 1 ? 'multiple' : selected[0]?.dataset.serviceFormType;
+        if (tripType) url.searchParams.set('tripType', tripType);
         url.hash = 'quote-enquiry';
         serviceQuote.href = `${url.pathname}${url.search}${url.hash}`;
       };
@@ -396,6 +403,9 @@ const whyColumns = [
   .hero__title { max-width: 15ch; font-size: var(--step-6); letter-spacing: -0.038em; }
   .hero__lede { margin-top: var(--sp-5); max-width: 48ch; }
   .hero__ctas { display: flex; flex-wrap: wrap; gap: var(--sp-4); margin-top: var(--sp-6); }
+  .hero__insurance { display: inline-flex; align-items: center; gap: var(--sp-2); margin-top: var(--sp-5); color: var(--ink); font-size: var(--step--1); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--rule-strong); padding-bottom: var(--sp-2); }
+  .hero__insurance :global(svg:first-child) { color: var(--rosso); }
+  .hero__insurance:hover { color: var(--rosso); border-color: var(--rosso); }
   .hero__signals {
     display: flex; flex-wrap: wrap; gap: var(--sp-5) var(--sp-7);
     margin: var(--sp-7) 0 0; padding-top: var(--sp-5);

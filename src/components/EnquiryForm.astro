@@ -87,7 +87,7 @@ const opt = `(${f.optional})`;
         <p class="field">
           <label for={`${id}-type`}>{f.tripType}</label>
           <select id={`${id}-type`} name="tipo_viaggio">
-            {f.tripTypeOptions.map((o) => <option value={o}>{o}</option>)}
+            {f.tripTypeOptions.map((o) => <option value={o.label} data-trip-type={o.id}>{o.label}</option>)}
           </select>
         </p>
         <p class="field">
@@ -301,7 +301,8 @@ const opt = `(${f.optional})`;
 <script>
   document.querySelectorAll<HTMLFormElement>('[data-form]').forEach((form) => {
     if (form.dataset.interestIntro) {
-      const interests = new URLSearchParams(window.location.search)
+      const query = new URLSearchParams(window.location.search);
+      const interests = query
         .getAll('interest')
         .map((value) => value.trim().slice(0, 80))
         .filter(Boolean)
@@ -309,6 +310,12 @@ const opt = `(${f.optional})`;
       const message = form.querySelector<HTMLTextAreaElement>('[name="messaggio"]');
       if (message && interests.length && !message.value) {
         message.value = `${form.dataset.interestIntro}\n${interests.map((interest) => `• ${interest}`).join('\n')}\n\n`;
+      }
+      const requestedType = query.get('tripType') ?? (interests.length > 1 ? 'multiple' : null);
+      const typeSelect = form.querySelector<HTMLSelectElement>('[name="tipo_viaggio"]');
+      if (typeSelect && requestedType) {
+        const match = Array.from(typeSelect.options).find((option) => option.dataset.tripType === requestedType);
+        if (match) typeSelect.value = match.value;
       }
     }
     form.addEventListener('submit', () => {

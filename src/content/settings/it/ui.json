@@ -45,12 +45,14 @@
     "budget": "Budget indicativo a persona",
     "tripType": "Tipo di viaggio",
     "tripTypeOptions": [
-      "Viaggio su misura",
-      "Una delle vostre partenze di gruppo",
-      "Solo volo / biglietteria",
-      "Hotel + volo",
-      "Viaggio di nozze",
-      "Non so ancora"
+      { "id": "tailor", "label": "Viaggio su misura" },
+      { "id": "group", "label": "Una delle vostre partenze di gruppo" },
+      { "id": "flight", "label": "Solo volo / biglietteria" },
+      { "id": "hotel-flight", "label": "Hotel + volo" },
+      { "id": "honeymoon", "label": "Viaggio di nozze" },
+      { "id": "unsure", "label": "Non so ancora" },
+      { "id": "business", "label": "Viaggio aziendale / MICE" },
+      { "id": "multiple", "label": "Multiplo" }
     ],
     "company": "Azienda",
     "participants": "Numero di partecipanti",

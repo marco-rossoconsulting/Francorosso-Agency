@@ -148,7 +148,7 @@ const ui = defineCollection({
       returnDate: z.string(),
       budget: z.string(),
       tripType: z.string(),
-      tripTypeOptions: z.array(z.string()),
+      tripTypeOptions: z.array(z.object({ id: z.string(), label: z.string() })),
       company: z.string(),
       participants: z.string(),
       eventType: z.string(),
