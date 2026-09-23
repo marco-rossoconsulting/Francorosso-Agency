@@ -422,6 +422,8 @@ collections:
                   - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
                   - { label: 'Titolo', name: 'title', widget: 'string' }
                   - { label: 'Citazione', name: 'pullquote', widget: 'text' }
+                  - { label: 'Pulsante pausa immagini', name: 'pauseLabel', widget: 'string' }
+                  - { label: 'Pulsante riprendi immagini', name: 'resumeLabel', widget: 'string' }
                   - label: 'Punti'
                     name: points
                     widget: list
@@ -429,7 +431,7 @@ collections:
                     fields:
                       - { label: 'Titolo', name: 'title', widget: 'string' }
                       - { label: 'Testo', name: 'body', widget: 'text' }
-                  - label: 'Immagine'
+                  - label: 'Foto agenzia facoltativa (prima della galleria)'
                     name: image
                     widget: object
                     required: false
@@ -437,6 +439,15 @@ collections:
                       - { label: 'File', name: 'src', widget: 'image', required: false, i18n: duplicate }
                       - { label: 'Testo alternativo', name: 'alt', widget: 'string', required: false }
                       - { label: 'Brief fotografico', name: 'brief', widget: 'text', required: false }
+                  - label: 'Galleria fotografica in movimento'
+                    name: gallery
+                    widget: list
+                    required: false
+                    i18n: true
+                    summary: '{{fields.alt}}'
+                    fields:
+                      - { label: 'File', name: 'src', widget: 'image', i18n: duplicate }
+                      - { label: 'Testo alternativo descrittivo', name: 'alt', widget: 'string', i18n: true }
               - label: 'Fascia assicurazione'
                 name: insurance
                 widget: object

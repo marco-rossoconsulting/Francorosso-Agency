@@ -82,6 +82,8 @@
       "eyebrow": "Perché sceglierci",
       "title": "La differenza la fa chi risponde al telefono",
       "pullquote": "Diteci come volete che il viaggio vi faccia sentire, e i dettagli li mettiamo a posto insieme.",
+      "pauseLabel": "Pausa immagini",
+      "resumeLabel": "Riprendi immagini",
       "points": [
         {
           "title": "Una persona, non un ticket",
@@ -104,7 +106,15 @@
         "src": "",
         "alt": "",
         "brief": "Dettaglio della vetrina o dell'ingresso di Via Canova 19, formato verticale, luce di fine giornata."
-      }
+      },
+      "gallery": [
+        { "src": "/media/editorial/travelers-on-trail-640.webp", "alt": "Gruppo di viaggiatori lungo un sentiero di montagna" },
+        { "src": "/media/editorial/airport-concourse-640.webp", "alt": "Passeggeri nell'ampio atrio di un aeroporto" },
+        { "src": "/media/editorial/journey-map-640.webp", "alt": "Mappa del mondo con macchina fotografica e accessori da viaggio" },
+        { "src": "/media/editorial/mount-fuji-pagoda-640.webp", "alt": "Pagoda giapponese con il monte Fuji sullo sfondo" },
+        { "src": "/media/editorial/savanna-at-sunset-640.webp", "alt": "Giraffa nella savana al tramonto" },
+        { "src": "/media/editorial/balloon-at-sunrise-640.webp", "alt": "Mongolfiera sopra la pianura illuminata dal sole" }
+      ]
     },
     "insurance": {
       "eyebrow": "Prima di partire",

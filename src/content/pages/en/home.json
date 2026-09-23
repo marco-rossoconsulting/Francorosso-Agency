@@ -82,6 +82,8 @@
       "eyebrow": "Why us",
       "title": "The difference is who picks up the phone",
       "pullquote": "Tell us how you want the journey to feel, and we will shape the details with you.",
+      "pauseLabel": "Pause images",
+      "resumeLabel": "Resume images",
       "points": [
         {
           "title": "A person, not a ticket number",
@@ -104,7 +106,15 @@
         "src": "",
         "alt": "",
         "brief": "Detail of the Via Canova 19 shopfront or entrance, portrait format, late afternoon light."
-      }
+      },
+      "gallery": [
+        { "src": "/media/editorial/travelers-on-trail-640.webp", "alt": "Group of travelers walking along a mountain trail" },
+        { "src": "/media/editorial/airport-concourse-640.webp", "alt": "Passengers in a spacious airport concourse" },
+        { "src": "/media/editorial/journey-map-640.webp", "alt": "World map with a camera and travel accessories" },
+        { "src": "/media/editorial/mount-fuji-pagoda-640.webp", "alt": "Japanese pagoda with Mount Fuji in the background" },
+        { "src": "/media/editorial/savanna-at-sunset-640.webp", "alt": "Giraffe on the savanna at sunset" },
+        { "src": "/media/editorial/balloon-at-sunrise-640.webp", "alt": "Hot air balloon above a sunlit plain" }
+      ]
     },
     "insurance": {
       "eyebrow": "Before you go",

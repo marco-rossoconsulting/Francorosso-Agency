@@ -20,6 +20,16 @@ const images = [
   { source: 'harshil-gudka-kfxEUCTUeyg-unsplash.jpg', name: 'kenyan-savanna', ratio: 4 / 3 },
 ];
 
+// Small square exports for the home page's paired photo columns.
+const whyImages = [
+  { source: 'luke-porter-NEqEC7qa9FM-unsplash.jpg', name: 'travelers-on-trail' },
+  { source: 'chris-lawton-duQ1ulzTJbM-unsplash.jpg', name: 'journey-map' },
+  { source: 'joseph-barrientos-JGhje7WBHdg-unsplash.jpg', name: 'airport-concourse' },
+  { source: 'sutirta-budiman-kjOBqwMUnWw-unsplash.jpg', name: 'balloon-at-sunrise' },
+  { source: 'david-edelstein-N4DbvTUDikw-unsplash.jpg', name: 'mount-fuji-pagoda' },
+  { source: 'harshil-gudka-kfxEUCTUeyg-unsplash.jpg', name: 'savanna-at-sunset' },
+];
+
 for (const image of images) {
   for (const width of [640, 1280]) {
     const output = new URL(`${image.name}-${width}.webp`, outputDir);
@@ -27,6 +37,19 @@ for (const image of images) {
       .rotate()
       .resize(width, Math.round(width / image.ratio), { fit: 'cover', position: 'attention' })
       .webp({ quality: 78, effort: 6 })
+      .toFile(fileURLToPath(output));
+    const { size } = await fs.stat(output);
+    console.log(`${image.name}-${width}.webp ${Math.round(size / 1024)} KB`);
+  }
+}
+
+for (const image of whyImages) {
+  for (const width of [320, 640]) {
+    const output = new URL(`${image.name}-${width}.webp`, outputDir);
+    await sharp(path.join(sourceDir, image.source))
+      .rotate()
+      .resize(width, width, { fit: 'cover', position: 'attention' })
+      .webp({ quality: 74, effort: 6 })
       .toFile(fileURLToPath(output));
     const { size } = await fs.stat(output);
     console.log(`${image.name}-${width}.webp ${Math.round(size / 1024)} KB`);
