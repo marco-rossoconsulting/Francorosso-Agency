@@ -94,7 +94,7 @@ const whyColumns = [
     </div>
   </section>
 
-  <!-- Services: Astro adaptation of the numbered Card 3 selection pattern -->
+  <!-- Services: selectable cards linked to the enquiry form -->
   <section class="section services">
     <div class="shell">
       <SectionHead eyebrow={S.services.eyebrow} title={S.services.title} intro={S.services.intro} align="wide" />
@@ -110,11 +110,10 @@ const whyColumns = [
           <li class="svc__item" data-service-card data-service-title={item.title} data-service-form-type={item.formType} data-reveal style={`--reveal-delay:${i * 70}ms`}>
             <article class="svc__panel">
               <div class="svc__top">
-                <span class="svc__number" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                <h3 class="svc__title">{item.title}</h3>
                 <span class="svc__icon"><Icon name={iconOf(item.icon)} size={25} /></span>
               </div>
               <div class="svc__copy">
-                <h3 class="svc__title">{item.title}</h3>
                 <p class="svc__body">{item.body}</p>
               </div>
               <a class="link-arrow svc__link" href={path(locale, item.route as RouteKey)}>
@@ -453,14 +452,13 @@ const whyColumns = [
   .svc__item { display: flex; flex-direction: column; min-width: 0; padding: 5px; border: 1px solid var(--rule); border-radius: var(--radius-lg); background: var(--sabbia); transition: border-color var(--dur-fast) ease, transform var(--dur-fast) ease; }
   .svc__item:hover { transform: translateY(-3px); border-color: var(--rule-strong); }
   .svc__item[data-selected='true'] { border-color: var(--blu); }
-  .svc__panel { display: flex; flex: 1; flex-direction: column; min-height: 390px; padding: var(--sp-5); border: 1px solid var(--rule); border-radius: var(--radius); background: var(--bianco); }
+  .svc__panel { display: flex; flex: 1; flex-direction: column; min-height: 320px; padding: var(--sp-5); border: 1px solid var(--rule); border-radius: var(--radius); background: var(--bianco); }
   .svc__top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-3); }
-  .svc__number { color: var(--rosso); font-size: var(--step-4); font-weight: 600; letter-spacing: -0.055em; line-height: 1; font-variant-numeric: tabular-nums; }
-  .svc__icon { display: grid; place-items: center; width: 44px; height: 44px; flex: none; border: 1px solid var(--rule); border-radius: var(--radius); color: var(--rosso); }
-  .svc__copy { margin-top: auto; padding-top: var(--sp-7); }
-  .svc__title { font-size: var(--step-1); }
-  .svc__body { margin: var(--sp-3) 0 0; font-size: var(--step--1); line-height: 1.55; color: var(--ink-soft); }
-  .svc__link { align-self: flex-start; margin-top: var(--sp-5); }
+  .svc__icon { display: grid; place-items: center; width: 40px; height: 40px; flex: none; border: 1px solid var(--rule); border-radius: var(--radius); color: var(--ink-mute); }
+  .svc__copy { margin-top: var(--sp-5); }
+  .svc__title { color: var(--rosso); font-size: var(--step-2); font-weight: 700; line-height: 1.2; letter-spacing: -0.025em; }
+  .svc__body { margin: 0; font-size: var(--step--1); line-height: 1.55; color: var(--ink-soft); }
+  .svc__link { align-self: flex-start; margin-top: auto; padding-top: var(--sp-5); }
   .svc__select { display: flex; align-items: center; justify-content: center; gap: var(--sp-2); min-height: 44px; margin-top: 5px; border: 1px solid transparent; border-radius: var(--radius); background: transparent; color: var(--ink); font: inherit; font-size: var(--step--1); font-weight: 600; cursor: pointer; transition: background var(--dur-fast) ease, color var(--dur-fast) ease; }
   .svc__select:hover { background: var(--sabbia-deep); }
   .svc__item[data-selected='true'] .svc__select { background: var(--blu); color: var(--ink-invert); }
@@ -470,8 +468,8 @@ const whyColumns = [
   .svc__item[data-selected='true'] .svc__check :global(svg) { opacity: 1; }
   .svc__footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--sp-4); margin-top: var(--sp-6); padding-top: var(--sp-5); border-top: 1px solid var(--rule); }
   .svc__footer p { margin: 0; color: var(--ink-soft); font-size: var(--step--1); }
-  @media (max-width: 1050px) { .svc { grid-template-columns: repeat(2, minmax(0, 1fr)); } .svc__panel { min-height: 330px; } }
-  @media (max-width: 620px) { .svc { grid-template-columns: 1fr; } .svc__panel { min-height: 270px; } .svc__toolbar { align-items: flex-start; } .svc__footer .btn { width: 100%; } }
+  @media (max-width: 1050px) { .svc { grid-template-columns: repeat(2, minmax(0, 1fr)); } .svc__panel { min-height: 265px; } }
+  @media (max-width: 620px) { .svc { grid-template-columns: 1fr; } .svc__panel { min-height: 0; } .svc__toolbar { align-items: flex-start; } .svc__footer .btn { width: 100%; } }
   @media (prefers-reduced-motion: reduce) { .svc__item, .svc__select { transition: none; } .svc__item:hover { transform: none; } }
 
   /* Departures --------------------------------------------------------- */
