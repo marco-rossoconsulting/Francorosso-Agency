@@ -1,9 +1,10 @@
 ---
 import Icon from './Icon.astro';
+import InsuranceMark from './InsuranceMark.astro';
 import { path, type Locale } from '../lib/i18n';
 
 interface ServiceItem {
-  icon: 'compass' | 'plane' | 'ticket' | 'users' | 'shield' | 'briefcase' | 'calendar' | 'clock';
+  icon: 'compass' | 'plane' | 'ticket' | 'users' | 'shield' | 'insurance-mark' | 'briefcase' | 'calendar' | 'clock';
   anchor: string;
   title: string;
   body: string;
@@ -39,7 +40,7 @@ const detailLink = (anchor: string) => {
               <li>
                 <a class="service-nav__link" href={`#${item.anchor}`} aria-label={item.title} data-service-tab>
                   <span class="service-nav__number">{String(index + 1).padStart(2, '0')}</span>
-                  <span class="service-nav__icon"><Icon name={item.icon} size={22} /></span>
+                  <span class="service-nav__icon">{item.icon === 'insurance-mark' ? <InsuranceMark size={22} /> : <Icon name={item.icon} size={22} />}</span>
                   <span class="service-nav__copy">
                     <strong>{item.title}</strong>
                     <span>{item.body}</span>
@@ -71,7 +72,9 @@ const detailLink = (anchor: string) => {
             <article class="service-panel" id={item.anchor} data-service-panel>
               <div class="service-panel__head">
                 <span class="service-panel__count">{String(index + 1).padStart(2, '0')} / {String(items.length).padStart(2, '0')}</span>
-                <span class="service-panel__icon"><Icon name={item.icon} size={32} /></span>
+                <span class:list={['service-panel__icon', { 'service-panel__icon--insurance': item.icon === 'insurance-mark' }]}>
+                  {item.icon === 'insurance-mark' ? <InsuranceMark size={40} /> : <Icon name={item.icon} size={32} />}
+                </span>
               </div>
               <h2>{item.title}</h2>
               <p class="service-panel__body">{item.body}</p>
@@ -266,6 +269,7 @@ const detailLink = (anchor: string) => {
   .service-panel__head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-5); margin-bottom: var(--sp-5); }
   .service-panel__count { color: var(--ink-mute); font-size: var(--step--2); font-weight: 600; letter-spacing: 0.13em; }
   .service-panel__icon { display: grid; place-items: center; width: 62px; height: 62px; flex: none; color: var(--ink-invert); background: var(--blu); border-radius: var(--radius-lg); }
+  .service-panel__icon--insurance { background: var(--rosso-tint); }
   .service-panel h2 { max-width: 19ch; font-size: var(--step-4); }
   .service-panel__body { max-width: 60ch; margin-top: var(--sp-5); color: var(--ink-soft); font-size: var(--step-0); line-height: 1.65; }
   .service-panel__features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-4) var(--sp-6); list-style: none; margin-top: var(--sp-6); padding-top: var(--sp-6); border-top: 1px solid var(--rule); }

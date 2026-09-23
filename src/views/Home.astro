@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
+import InsuranceMark from '../components/InsuranceMark.astro';
 import Figure from '../components/Figure.astro';
 import RouteLine from '../components/RouteLine.astro';
 import SectionHead from '../components/SectionHead.astro';
@@ -57,7 +58,7 @@ const whyColumns = [
           )}
         </div>
         <a class="hero__insurance" href={`${path(locale, 'insurance')}#richiesta`}>
-          <Icon name="shield" size={18} />
+          <InsuranceMark size={20} />
           <span>{S.insurance.quickCtaLabel}</span>
           <Icon name="arrow" size={15} />
         </a>
@@ -139,6 +140,7 @@ const whyColumns = [
   <!-- Insurance: visible immediately after the service choices -------- -->
   <section class="section--tight ins">
     <div class="shell ins__inner">
+      <div class="ins__mark"><InsuranceMark size={160} loading="lazy" /></div>
       <div class="ins__text" data-reveal>
         <span class="eyebrow">{S.insurance.eyebrow}</span>
         <h2 class="ins__title">{S.insurance.title}</h2>
@@ -159,7 +161,6 @@ const whyColumns = [
           </a>
         </div>
       </div>
-      <div class="ins__mark" aria-hidden="true"><Icon name="shield" size={140} /></div>
     </div>
   </section>
 
@@ -404,7 +405,7 @@ const whyColumns = [
   .hero__lede { margin-top: var(--sp-5); max-width: 48ch; }
   .hero__ctas { display: flex; flex-wrap: wrap; gap: var(--sp-4); margin-top: var(--sp-6); }
   .hero__insurance { display: inline-flex; align-items: center; gap: var(--sp-2); margin-top: var(--sp-5); color: var(--ink); font-size: var(--step--1); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--rule-strong); padding-bottom: var(--sp-2); }
-  .hero__insurance :global(svg:first-child) { color: var(--rosso); }
+  .hero__insurance :global(img) { flex: none; }
   .hero__insurance:hover { color: var(--rosso); border-color: var(--rosso); }
   .hero__signals {
     display: flex; flex-wrap: wrap; gap: var(--sp-5) var(--sp-7);
@@ -520,15 +521,20 @@ const whyColumns = [
     border-radius: var(--radius-lg);
     overflow: hidden;
   }
-  @media (min-width: 900px) { .ins__inner { grid-template-columns: minmax(0, 1fr) auto; align-items: center; } }
+  @media (min-width: 900px) {
+    .ins__inner { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+    .ins__text { grid-column: 1; grid-row: 1; }
+    .ins__mark { grid-column: 2; grid-row: 1; }
+  }
   .ins__title { max-width: 18ch; }
   .ins__body { margin: var(--sp-4) 0 0; max-width: 58ch; color: var(--ink-soft); }
   .ins__list { list-style: none; display: grid; gap: 0.55em; margin-top: var(--sp-5); font-size: var(--step--1); color: var(--ink-soft); }
   .ins__list li { display: flex; align-items: flex-start; gap: 0.6em; }
   .ins__list :global(svg) { flex: none; margin-top: 0.25em; color: var(--rosso); }
   .ins__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-5); margin-top: var(--sp-6); }
-  .ins__mark { color: var(--rosso); opacity: 0.1; margin-inline: auto; }
-  @media (max-width: 899px) { .ins__mark { display: none; } }
+  .ins__mark { width: 160px; height: 160px; margin-inline: auto; }
+  .ins__mark :global(img) { width: 100%; height: 100%; }
+  @media (max-width: 899px) { .ins__mark { width: 72px; height: 72px; margin: 0; } }
 
   /* MICE --------------------------------------------------------------- */
   .mice__inner { display: grid; gap: var(--sp-7) var(--gutter); align-items: center; }

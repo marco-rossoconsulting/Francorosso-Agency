@@ -2,6 +2,7 @@
 import { render, type CollectionEntry } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
+import InsuranceMark from '../components/InsuranceMark.astro';
 import Figure from '../components/Figure.astro';
 import EnquiryForm from '../components/EnquiryForm.astro';
 import { path, formatDateRange, formatPrice, type Locale } from '../lib/i18n';
@@ -281,7 +282,7 @@ const soldOut = d.status === 'sold-out';
         <h2 class="req__title">{d.title}</h2>
         <p class="req__meta">{dates}{d.departsFrom.length > 0 && ` · ${ui.departsFrom} ${d.departsFrom.join(', ')}`}</p>
         <a class="link-arrow req__ins" href={path(locale, 'insurance')}>
-          <Icon name="shield" size={16} />
+          <InsuranceMark size={18} />
           {ui.form.insuranceSubject}
         </a>
       </div>

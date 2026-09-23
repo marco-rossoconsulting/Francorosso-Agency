@@ -585,7 +585,7 @@ collections:
                     widget: list
                     summary: '{{fields.title}}'
                     fields:
-                      - { label: 'Icona', name: 'icon', widget: 'select', i18n: duplicate, options: [compass, plane, ticket, users, shield, briefcase, calendar, clock] }
+                      - { label: 'Icona', name: 'icon', widget: 'select', i18n: duplicate, options: [compass, plane, ticket, users, shield, insurance-mark, briefcase, calendar, clock] }
                       - {
                           label: 'Ancora (parte finale del link)',
                           name: 'anchor',
@@ -697,7 +697,7 @@ collections:
                     widget: list
                     summary: '{{fields.title}}'
                     fields:
-                      - { label: 'Icona', name: 'icon', widget: 'select', i18n: duplicate, options: [calendar, shield, briefcase, plane, clock, check] }
+                      - { label: 'Icona', name: 'icon', widget: 'select', i18n: duplicate, options: [calendar, shield, insurance-mark, briefcase, plane, clock, check] }
                       - { label: 'Titolo', name: 'title', widget: 'string' }
                       - { label: 'Testo', name: 'body', widget: 'text' }
               - label: 'Per chi ha senso'
