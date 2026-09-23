@@ -551,6 +551,8 @@ collections:
                 name: list
                 widget: object
                 fields:
+                  - { label: 'Etichetta pausa automatica', name: 'pauseLabel', widget: 'string' }
+                  - { label: 'Etichetta ripresa automatica', name: 'playLabel', widget: 'string' }
                   - label: 'Servizi'
                     name: items
                     widget: list

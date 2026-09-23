@@ -1,0 +1,295 @@
+---
+import Icon from './Icon.astro';
+import { path, type Locale } from '../lib/i18n';
+
+interface ServiceItem {
+  icon: 'compass' | 'plane' | 'ticket' | 'users' | 'shield' | 'briefcase' | 'calendar' | 'clock';
+  anchor: string;
+  title: string;
+  body: string;
+  bullets: string[];
+}
+
+interface Props {
+  locale: Locale;
+  items: ServiceItem[];
+  label: string;
+  pauseLabel: string;
+  playLabel: string;
+  readMore: string;
+  viewAll: string;
+}
+
+const { locale, items, label, pauseLabel, playLabel, readMore, viewAll } = Astro.props;
+const detailLink = (anchor: string) => {
+  if (anchor === 'assicurazione' || anchor === 'insurance') return { href: path(locale, 'insurance'), label: readMore };
+  if (anchor === 'aziende' || anchor === 'business') return { href: path(locale, 'business'), label: readMore };
+  if (anchor === 'gruppi' || anchor === 'groups') return { href: path(locale, 'departures'), label: viewAll };
+  return null;
+};
+---
+
+{items.length > 0 && (
+  <section class="service-explorer section--tight" data-service-explorer>
+    <div class="shell service-explorer__grid">
+      <div class="service-explorer__navigation">
+        <nav class="service-nav" aria-label={label} data-service-nav>
+          <ol>
+            {items.map((item, index) => (
+              <li>
+                <a class="service-nav__link" href={`#${item.anchor}`} aria-label={item.title} data-service-tab>
+                  <span class="service-nav__number">{String(index + 1).padStart(2, '0')}</span>
+                  <span class="service-nav__icon"><Icon name={item.icon} size={22} /></span>
+                  <span class="service-nav__copy">
+                    <strong>{item.title}</strong>
+                    <span>{item.body}</span>
+                  </span>
+                  <span class="service-nav__arrow" aria-hidden="true"><Icon name="arrow" size={16} /></span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+        <button
+          class="rotation-toggle"
+          type="button"
+          hidden
+          data-rotation-toggle
+          data-pause-label={pauseLabel}
+          data-play-label={playLabel}
+          aria-pressed="false"
+        >
+          <span class="rotation-toggle__mark" aria-hidden="true"></span>
+          <span data-rotation-label>{pauseLabel}</span>
+        </button>
+      </div>
+
+      <div class="service-explorer__panels">
+        {items.map((item, index) => {
+          const detail = detailLink(item.anchor);
+          return (
+            <article class="service-panel" id={item.anchor} data-service-panel>
+              <div class="service-panel__head">
+                <span class="service-panel__count">{String(index + 1).padStart(2, '0')} / {String(items.length).padStart(2, '0')}</span>
+                <span class="service-panel__icon"><Icon name={item.icon} size={32} /></span>
+              </div>
+              <h2>{item.title}</h2>
+              <p class="service-panel__body">{item.body}</p>
+              <ul class="service-panel__features">
+                {item.bullets.map((bullet) => (
+                  <li><Icon name="check" size={17} /><span>{bullet}</span></li>
+                ))}
+              </ul>
+              {detail && (
+                <a class="service-panel__link link-arrow" href={detail.href}>
+                  {detail.label}
+                  <Icon name="arrow" size={15} />
+                </a>
+              )}
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+)}
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-service-explorer]').forEach((root) => {
+    const nav = root.querySelector<HTMLElement>('[data-service-nav]');
+    const tabs = Array.from(root.querySelectorAll<HTMLAnchorElement>('[data-service-tab]'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-service-panel]'));
+    const toggle = root.querySelector<HTMLButtonElement>('[data-rotation-toggle]');
+    const toggleLabel = toggle?.querySelector<HTMLElement>('[data-rotation-label]');
+    if (!nav || !toggle || !toggleLabel || tabs.length < 2 || tabs.length !== panels.length) return;
+
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const hoverPreference = window.matchMedia('(hover: hover)');
+    const delay = 10000;
+    let active = 0;
+    let timeout: number | undefined;
+    let inView = false;
+    let hovering = false;
+    let paused = false;
+    let resumeOverride = false;
+
+    const fromHash = () => panels.findIndex((panel) => `#${panel.id}` === window.location.hash);
+    const shouldRotate = () =>
+      inView && !document.hidden && !motionPreference.matches && !paused &&
+      (resumeOverride || (!hovering && !root.contains(document.activeElement)));
+
+    const schedule = () => {
+      window.clearTimeout(timeout);
+      root.dataset.running = String(shouldRotate());
+      if (shouldRotate()) {
+        timeout = window.setTimeout(() => {
+          select((active + 1) % tabs.length);
+          schedule();
+        }, delay);
+      }
+    };
+
+    const select = (index: number, focus = false) => {
+      active = index;
+      tabs.forEach((tab, i) => {
+        tab.setAttribute('aria-selected', String(i === index));
+        tab.tabIndex = i === index ? 0 : -1;
+        tab.dataset.active = String(i === index);
+      });
+      panels.forEach((panel, i) => {
+        panel.hidden = i !== index;
+      });
+      if (focus) tabs[index].focus({ preventScroll: true });
+    };
+
+    nav.setAttribute('role', 'tablist');
+    tabs.forEach((tab, i) => {
+      tab.id = `service-tab-${i}`;
+      tab.setAttribute('role', 'tab');
+      tab.setAttribute('aria-controls', panels[i].id);
+      panels[i].setAttribute('role', 'tabpanel');
+      panels[i].setAttribute('aria-labelledby', tab.id);
+      panels[i].tabIndex = 0;
+      tab.addEventListener('click', (event) => {
+        event.preventDefault();
+        resumeOverride = false;
+        select(i);
+        window.history.replaceState(null, '', `#${panels[i].id}`);
+        schedule();
+      });
+      tab.addEventListener('keydown', (event) => {
+        const next = event.key === 'ArrowRight' || event.key === 'ArrowDown'
+          ? (i + 1) % tabs.length
+          : event.key === 'ArrowLeft' || event.key === 'ArrowUp'
+            ? (i - 1 + tabs.length) % tabs.length
+            : event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : -1;
+        if (next < 0) return;
+        event.preventDefault();
+        resumeOverride = false;
+        select(next, true);
+        window.history.replaceState(null, '', `#${panels[next].id}`);
+        schedule();
+      });
+    });
+
+    toggle.hidden = motionPreference.matches;
+    toggle.addEventListener('click', () => {
+      paused = !paused;
+      resumeOverride = !paused;
+      toggle.setAttribute('aria-pressed', String(paused));
+      toggleLabel.textContent = paused ? toggle.dataset.playLabel ?? '' : toggle.dataset.pauseLabel ?? '';
+      schedule();
+    });
+    root.addEventListener('focusin', () => { if (!resumeOverride) schedule(); });
+    root.addEventListener('focusout', () => queueMicrotask(schedule));
+    root.addEventListener('pointerenter', () => { if (hoverPreference.matches) { hovering = true; schedule(); } });
+    root.addEventListener('pointerleave', () => { hovering = false; schedule(); });
+    document.addEventListener('visibilitychange', schedule);
+    motionPreference.addEventListener('change', () => {
+      toggle.hidden = motionPreference.matches;
+      schedule();
+    });
+    window.addEventListener('hashchange', () => {
+      const index = fromHash();
+      if (index < 0) return;
+      select(index);
+      schedule();
+    });
+
+    const initial = fromHash();
+    select(initial >= 0 ? initial : 0);
+    root.dataset.enhanced = 'true';
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(([entry]) => {
+        inView = entry.isIntersecting;
+        schedule();
+      }, { threshold: 0.15 });
+      observer.observe(root);
+    } else {
+      inView = true;
+      schedule();
+    }
+    if (initial >= 0) requestAnimationFrame(() => root.scrollIntoView({ block: 'start' }));
+  });
+</script>
+
+<style>
+  .service-explorer { padding-top: 0; scroll-margin-top: calc(var(--header-h) + var(--sp-4)); }
+  .service-explorer__grid { display: grid; gap: var(--sp-6); align-items: start; }
+  @media (min-width: 980px) {
+    .service-explorer__grid { grid-template-columns: minmax(280px, 0.82fr) minmax(0, 1.18fr); gap: var(--gutter); }
+  }
+  .service-nav ol { list-style: none; display: grid; }
+  .service-nav li { min-width: 0; }
+  .service-nav__link {
+    position: relative; display: flex; align-items: center; gap: var(--sp-4); min-height: 94px;
+    padding: var(--sp-4) var(--sp-5); color: var(--ink); text-decoration: none;
+    border-top: 1px solid var(--rule); background: transparent;
+    transition: background var(--dur-fast) ease, color var(--dur-fast) ease;
+    scroll-margin-top: calc(var(--header-h) + var(--sp-5));
+  }
+  .service-nav li:last-child .service-nav__link { border-bottom: 1px solid var(--rule); }
+  .service-nav__link:hover { background: var(--bianco); }
+  .service-nav__link::before {
+    content: ''; position: absolute; inset: 0 auto 0 0; width: 3px;
+    background: var(--rosso); opacity: 0; transition: opacity var(--dur-fast) ease;
+  }
+  [data-enhanced='true'] .service-nav__link[data-active='true'] { background: var(--bianco); }
+  [data-enhanced='true'] .service-nav__link[data-active='true']::before { opacity: 1; }
+  .service-nav__number { align-self: flex-start; padding-top: 0.3em; flex: none; color: var(--ink-mute); font-size: var(--step--2); font-weight: 600; letter-spacing: 0.1em; }
+  .service-nav__icon { display: grid; place-items: center; width: 42px; height: 42px; flex: none; color: var(--rosso); background: var(--rosso-tint); border-radius: var(--radius-lg); }
+  .service-nav__copy { display: grid; gap: 0.15em; min-width: 0; }
+  .service-nav__copy strong { font-size: var(--step-0); font-weight: 600; line-height: 1.25; }
+  .service-nav__copy > span { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; font-size: var(--step--2); line-height: 1.4; color: var(--ink-soft); }
+  .service-nav__arrow { margin-left: auto; flex: none; opacity: 0; transform: translateX(-4px); transition: opacity var(--dur-fast) ease, transform var(--dur-fast) ease; }
+  .service-nav__link:hover .service-nav__arrow,
+  [data-enhanced='true'] .service-nav__link[data-active='true'] .service-nav__arrow { opacity: 1; transform: none; }
+  .rotation-toggle {
+    display: inline-flex; align-items: center; gap: var(--sp-2); margin-top: var(--sp-5); padding: 0.5em 0;
+    border: 0; background: none; color: var(--ink-soft); cursor: pointer;
+    font: inherit; font-size: var(--step--1); font-weight: 600;
+  }
+  .rotation-toggle[hidden] { display: none; }
+  .rotation-toggle:hover { color: var(--rosso); }
+  .rotation-toggle__mark { width: 12px; height: 12px; border-left: 3px solid currentColor; border-right: 3px solid currentColor; }
+  .rotation-toggle[aria-pressed='true'] .rotation-toggle__mark { width: 0; height: 0; border: 6px solid transparent; border-left-color: currentColor; border-right: 0; }
+
+  .service-explorer__panels { min-width: 0; }
+  .service-panel {
+    display: flex; flex-direction: column; min-height: 550px; padding: clamp(1.75rem, 1.1rem + 2.6vw, 3.5rem);
+    border: 1px solid var(--rule); border-radius: var(--radius-lg); background: var(--bianco);
+    scroll-margin-top: calc(var(--header-h) + var(--sp-5));
+  }
+  .service-panel[hidden] { display: none; }
+  .service-explorer:not([data-enhanced='true']) .service-panel + .service-panel { margin-top: var(--sp-5); }
+  [data-enhanced='true'] .service-panel { animation: service-enter 340ms var(--ease) both; }
+  .service-panel__head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-5); margin-bottom: var(--sp-5); }
+  .service-panel__count { color: var(--ink-mute); font-size: var(--step--2); font-weight: 600; letter-spacing: 0.13em; }
+  .service-panel__icon { display: grid; place-items: center; width: 62px; height: 62px; flex: none; color: var(--ink-invert); background: var(--blu); border-radius: var(--radius-lg); }
+  .service-panel h2 { max-width: 19ch; font-size: var(--step-4); }
+  .service-panel__body { max-width: 60ch; margin-top: var(--sp-5); color: var(--ink-soft); font-size: var(--step-0); line-height: 1.65; }
+  .service-panel__features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-4) var(--sp-6); list-style: none; margin-top: var(--sp-6); padding-top: var(--sp-6); border-top: 1px solid var(--rule); }
+  .service-panel__features li { display: flex; align-items: flex-start; gap: var(--sp-3); font-size: var(--step--1); line-height: 1.45; color: var(--ink); }
+  .service-panel__features :global(svg) { flex: none; margin-top: 0.15em; color: var(--rosso); }
+  .service-panel__link { align-self: flex-start; margin-top: auto; padding-top: var(--sp-6); }
+  @keyframes service-enter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @media (max-width: 979px) {
+    .service-nav ol { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-2); }
+    .service-nav__link { min-height: 90px; height: 100%; padding: var(--sp-3); border: 1px solid var(--rule); }
+    .service-nav li:last-child .service-nav__link { border-bottom: 1px solid var(--rule); }
+    .service-nav__number { padding-top: 0.15em; }
+    .service-nav__icon { width: 34px; height: 34px; }
+    .service-nav__copy > span, .service-nav__arrow { display: none; }
+    .rotation-toggle { margin-top: var(--sp-4); }
+    .service-panel { min-height: 0; }
+  }
+  @media (max-width: 620px) {
+    .service-nav__link { align-items: flex-start; gap: var(--sp-2); }
+    .service-nav__icon { display: none; }
+    .service-nav__copy strong { font-size: var(--step--1); }
+    .service-panel__features { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-enhanced='true'] .service-panel { animation: none; }
+  }
+</style>

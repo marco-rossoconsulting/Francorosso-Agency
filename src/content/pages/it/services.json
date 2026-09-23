@@ -14,6 +14,8 @@
   },
   "sections": {
     "list": {
+      "pauseLabel": "Metti in pausa",
+      "playLabel": "Riprendi",
       "items": [
         {
           "icon": "compass",
