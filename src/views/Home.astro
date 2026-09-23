@@ -483,7 +483,7 @@ const whyColumns = [
     position: relative;
     display: grid;
     gap: .35em;
-    align-self: end;
+    align-self: center;
     padding: var(--sp-5);
     border: 1px solid rgba(247,243,239,.27);
     border-radius: var(--radius-lg);
@@ -520,9 +520,12 @@ const whyColumns = [
     .hero__ctas { margin-top: var(--sp-5); }
     .hero__insurance { margin-top: var(--sp-4); }
     .hero__veil { background: linear-gradient(0deg, rgba(14,27,43,.98) 0%, rgba(14,27,43,.82) 32%, rgba(14,27,43,.18) 88%), linear-gradient(180deg, rgba(14,27,43,.35), transparent 43%); }
-    .nextcard { width: min(100%, 430px); padding: var(--sp-4); }
+    .nextcard { width: min(calc(100% - 4rem), 430px); align-self: end; padding: var(--sp-4); }
     .nextcard__go { right: var(--sp-4); bottom: var(--sp-4); }
     .hero__signals { justify-content: flex-start; }
+  }
+  @media (min-width: 561px) and (max-width: 740px) {
+    .nextcard { width: min(calc(100% - 16rem), 430px); }
   }
   @media (max-width: 440px) {
     .hero__inner { padding-top: 8rem; }
