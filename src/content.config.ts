@@ -183,6 +183,13 @@ const pages = defineCollection({
         title: z.string(),
         lede: z.string().optional(),
         image,
+        mobileImage: image,
+        video: z.object({
+          desktopSrc: z.string().optional(),
+          mobileSrc: z.string().optional(),
+          pauseLabel: z.string(),
+          playLabel: z.string(),
+        }).optional(),
         primaryCta: cta.optional(),
         secondaryCta: cta.optional(),
         signals: z.array(z.object({ label: z.string(), value: z.string() })).optional().default([]),

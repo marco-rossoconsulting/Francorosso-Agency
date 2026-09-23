@@ -5,11 +5,20 @@
   },
   "hero": {
     "eyebrow": "Lugano · Travel agency",
-    "title": "A journey takes shape when you talk to someone who has already been.",
-    "lede": "We are an agency on Via Canova. We build tailor-made itineraries, escort our own group departures and look after the travel of companies across Ticino. You can start here, or come and see us.",
+    "title": "Every journey begins with a conversation.",
+    "lede": "From Lugano, we plan tailor-made journeys, escorted departures and business travel. Always with a real person by your side.",
     "image": {
-      "src": "/media/editorial/journey-planning-1280.webp",
-      "alt": "Camera and tablet showing New York laid out on a map"
+      "src": "/media/editorial/home-hero-doorway-1600.webp",
+      "alt": "Traveller with suitcase looking out over a sunset landscape"
+    },
+    "mobileImage": {
+      "src": "/media/editorial/home-hero-doorway-720.webp"
+    },
+    "video": {
+      "desktopSrc": "/media/editorial/home-hero-desktop.mp4",
+      "mobileSrc": "/media/editorial/home-hero-mobile.mp4",
+      "pauseLabel": "Pause background video",
+      "playLabel": "Play background video"
     },
     "primaryCta": {
       "label": "Request a quote",

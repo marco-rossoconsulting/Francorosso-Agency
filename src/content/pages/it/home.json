@@ -5,11 +5,20 @@
   },
   "hero": {
     "eyebrow": "Lugano · Agenzia di viaggi",
-    "title": "Il viaggio prende forma parlando con qualcuno che lo ha già fatto.",
-    "lede": "Siamo un'agenzia di Via Canova. Costruiamo itinerari su misura, accompagniamo le nostre partenze di gruppo e gestiamo i viaggi delle aziende del Ticino. Potete iniziare da qui, o passare a trovarci.",
+    "title": "Il viaggio comincia da una conversazione.",
+    "lede": "Da Lugano creiamo viaggi su misura, partenze accompagnate e trasferte aziendali. Sempre con una persona che vi segue davvero.",
     "image": {
-      "src": "/media/editorial/journey-planning-1280.webp",
-      "alt": "Macchina fotografica e tablet con una foto di New York appoggiati su una mappa"
+      "src": "/media/editorial/home-hero-doorway-1600.webp",
+      "alt": "Viaggiatore con valigia davanti a un paesaggio al tramonto"
+    },
+    "mobileImage": {
+      "src": "/media/editorial/home-hero-doorway-720.webp"
+    },
+    "video": {
+      "desktopSrc": "/media/editorial/home-hero-desktop.mp4",
+      "mobileSrc": "/media/editorial/home-hero-mobile.mp4",
+      "pauseLabel": "Metti in pausa il video",
+      "playLabel": "Riprendi il video"
     },
     "primaryCta": {
       "label": "Richiedi un preventivo",
