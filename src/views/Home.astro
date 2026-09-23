@@ -3,7 +3,6 @@ import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import InsuranceMark from '../components/InsuranceMark.astro';
 import Figure from '../components/Figure.astro';
-import RouteLine from '../components/RouteLine.astro';
 import SectionHead from '../components/SectionHead.astro';
 import DepartureCard from '../components/DepartureCard.astro';
 import { path, formatDateRange, formatPrice, type Locale, type RouteKey } from '../lib/i18n';
@@ -35,10 +34,17 @@ const whyColumns = [
   routeKey="home"
   title={page.seo?.title ?? 'Francorosso'}
   description={page.seo?.description ?? s.descriptor}
+  ogImage={page.seo?.ogImage ?? hero.image?.src}
 >
   <!-- Hero ------------------------------------------------------------- -->
-  <section class="hero">
-    <span class="hero__route" aria-hidden="true"><RouteLine variant="arc" stroke="var(--rosso)" /></span>
+  <section class="hero on-dark">
+    {hero.image?.src && (
+      <picture class="hero__picture">
+        {hero.mobileImage?.src && <source media="(max-width: 700px)" srcset={hero.mobileImage.src} />}
+        <img src={hero.image.src} alt={hero.image.alt ?? ''} width="1600" height="900" loading="eager" fetchpriority="high" decoding="async" />
+      </picture>
+    )}
+    <div class="hero__veil" aria-hidden="true"></div>
     <div class="shell hero__inner">
       <div class="hero__text">
         <span class="eyebrow">{hero.eyebrow}</span>
@@ -62,23 +68,6 @@ const whyColumns = [
           <span>{S.insurance.quickCtaLabel}</span>
           <Icon name="arrow" size={15} />
         </a>
-        <dl class="hero__signals">
-          {hero.signals?.map((sig: any) => (
-            <div><dt>{sig.value}</dt><dd>{sig.label}</dd></div>
-          ))}
-        </dl>
-      </div>
-
-      <div class="hero__media">
-        <Figure
-          src={hero.image?.src || undefined}
-          alt={hero.image?.alt ?? ''}
-          brief={hero.image?.brief}
-          ratio="5 / 6"
-          eager
-          placeholderLabel={ui.imagePlaceholderLabel}
-          sizes="(max-width: 900px) 100vw, 44vw"
-        />
         {next && (
           <a class="nextcard" href={path(locale, 'departures', next.data.slug)}>
             <span class="nextcard__eyebrow">{S.nextDeparture.eyebrow}</span>
@@ -93,6 +82,13 @@ const whyColumns = [
       </div>
     </div>
   </section>
+  {hero.signals?.length > 0 && (
+    <div class="hero__signals-band">
+      <dl class="shell hero__signals">
+        {hero.signals.map((sig: any) => <div><dt>{sig.value}</dt><dd>{sig.label}</dd></div>)}
+      </dl>
+    </div>
+  )}
 
   <!-- Services: selectable cards linked to the enquiry form -->
   <section class="section services">
@@ -394,49 +390,75 @@ const whyColumns = [
 
 <style>
   /* Hero --------------------------------------------------------------- */
-  .hero { position: relative; padding-block: clamp(2.5rem, 1.4rem + 4.6vw, 5.5rem) clamp(3rem, 2rem + 4vw, 5.5rem); overflow: hidden; }
-  .hero__route { position: absolute; inset: 38% 0 auto 0; height: 50%; opacity: 0.3; pointer-events: none; }
-  .hero__inner { position: relative; display: grid; gap: var(--sp-8) var(--gutter); }
-  @media (min-width: 900px) {
-    .hero__inner { grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr); align-items: center; gap: clamp(2rem, 5vw, 5rem); }
+  .hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: max(690px, calc(100svh - var(--header-h)));
+    overflow: hidden;
+    isolation: isolate;
   }
-  .hero__title { max-width: 15ch; font-size: var(--step-6); letter-spacing: -0.038em; }
-  .hero__lede { margin-top: var(--sp-5); max-width: 48ch; }
-  .hero__ctas { display: flex; flex-wrap: wrap; gap: var(--sp-4); margin-top: var(--sp-6); }
-  .hero__insurance { display: inline-flex; align-items: center; gap: var(--sp-2); margin-top: var(--sp-5); color: var(--ink); font-size: var(--step--1); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--rule-strong); padding-bottom: var(--sp-2); }
+  .hero__picture, .hero__veil { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .hero__picture { z-index: -2; }
+  .hero__picture img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  .hero__veil {
+    z-index: -1;
+    background: linear-gradient(90deg, rgba(14,27,43,.91) 0%, rgba(14,27,43,.7) 36%, rgba(14,27,43,.18) 78%),
+                linear-gradient(0deg, rgba(14,27,43,.75) 0%, rgba(14,27,43,.12) 64%, transparent 100%);
+  }
+  .hero__inner { position: relative; padding-top: clamp(2.5rem, 6vh, 4rem); padding-bottom: clamp(2.5rem, 6vh, 4rem); }
+  .hero__text { max-width: 700px; }
+  .hero__title { max-width: 14ch; font-size: clamp(3.25rem, 5vw, 5.5rem); line-height: 1.04; letter-spacing: -.048em; text-wrap: balance; }
+  .hero__lede { margin-top: var(--sp-4); max-width: 53ch; color: var(--ink-invert); text-shadow: 0 1px 12px rgba(14,27,43,.5); }
+  .hero__ctas { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: var(--sp-5); }
+  .hero__insurance { display: inline-flex; align-items: center; gap: var(--sp-2); margin-top: var(--sp-4); padding-bottom: var(--sp-2); border-bottom: 1px solid var(--rule-invert); color: var(--ink-invert); font-size: var(--step--1); font-weight: 600; text-decoration: none; }
   .hero__insurance :global(img) { flex: none; }
-  .hero__insurance:hover { color: var(--rosso); border-color: var(--rosso); }
-  .hero__signals {
-    display: flex; flex-wrap: wrap; gap: var(--sp-5) var(--sp-7);
-    margin: var(--sp-7) 0 0; padding-top: var(--sp-5);
-    border-top: 1px solid var(--rule);
-  }
-  .hero__signals dt { font-size: var(--step-2); font-weight: 600; letter-spacing: -0.02em; line-height: 1; }
-  .hero__signals dd { margin: 0.45em 0 0; font-size: var(--step--2); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); max-width: 16ch; }
-
-  .hero__media { position: relative; }
+  .hero__insurance:hover { border-color: var(--ink-invert); }
   .nextcard {
-    position: absolute;
-    left: clamp(-1rem, -2vw, 0rem);
-    bottom: clamp(-1.25rem, -2vw, -1.75rem);
-    width: min(330px, 86%);
+    position: relative;
     display: grid;
-    gap: 0.3em;
-    padding: var(--sp-5);
-    background: var(--blu);
-    color: var(--ink-invert);
+    gap: .3em;
+    width: min(520px, calc(100vw - 18.5rem));
+    margin-top: var(--sp-5);
+    padding: var(--sp-4) var(--sp-5);
+    border: 1px solid rgba(247,243,239,.27);
     border-radius: var(--radius-lg);
+    background: rgba(14,27,43,.82);
+    backdrop-filter: blur(12px);
+    color: var(--ink-invert);
     text-decoration: none;
-    box-shadow: 0 24px 50px -32px rgba(14, 27, 43, 0.85);
-    transition: transform var(--dur) var(--ease), background var(--dur-fast) ease;
+    box-shadow: 0 18px 40px -30px rgba(0,0,0,.8);
+    transition: transform var(--dur-fast) var(--ease), background var(--dur-fast) ease;
   }
-  .nextcard:hover { transform: translateY(-3px); background: var(--blu-raised); }
-  .nextcard__eyebrow { font-size: var(--step--2); font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #e4787c; }
-  .nextcard__title { margin-top: 0.4em; font-size: var(--step-1); font-weight: 600; letter-spacing: -0.015em; line-height: 1.25; }
+  .nextcard:hover { transform: translateY(-3px); background: rgba(14,27,43,.96); }
+  .nextcard__eyebrow { font-size: var(--step--2); font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: #f1a5a7; }
+  .nextcard__title { margin-top: .15em; padding-right: 1.5rem; font-size: var(--step-1); font-weight: 600; letter-spacing: -.015em; line-height: 1.25; }
   .nextcard__meta { font-size: var(--step--1); color: var(--ink-invert-soft); }
-  .nextcard__go { position: absolute; right: var(--sp-5); bottom: var(--sp-5); color: var(--ink-invert-mute); transition: transform var(--dur-fast) var(--ease); }
+  .nextcard__go { position: absolute; right: var(--sp-5); bottom: var(--sp-4); color: var(--ink-invert-mute); transition: transform var(--dur-fast) var(--ease); }
   .nextcard:hover .nextcard__go { transform: translateX(4px); color: var(--ink-invert); }
-  @media (max-width: 899px) { .nextcard { position: static; width: 100%; margin-top: var(--sp-4); } .nextcard__go { display: none; } }
+  .hero__signals-band { background: var(--bianco); border-bottom: 1px solid var(--rule); }
+  .hero__signals { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--sp-5) var(--sp-7); margin-block: 0; padding-block: var(--sp-5); }
+  .hero__signals > div { display: flex; align-items: baseline; gap: var(--sp-3); }
+  .hero__signals dt { color: var(--rosso); font-size: var(--step-2); font-weight: 700; letter-spacing: -.02em; line-height: 1; }
+  .hero__signals dd { color: var(--ink-soft); font-size: var(--step--1); margin: 0; }
+  @media (max-width: 740px) {
+    .hero { min-height: calc(100svh - var(--header-h)); }
+    .hero__inner { padding-top: clamp(3.5rem, 11vh, 5.5rem); padding-bottom: var(--sp-6); }
+    .hero__title { max-width: 12ch; font-size: clamp(2.65rem, 9vw, 4.25rem); }
+    .hero__lede { font-size: var(--step-0); max-width: 44ch; }
+    .hero__veil { background: linear-gradient(0deg, rgba(14,27,43,.97) 0%, rgba(14,27,43,.79) 48%, rgba(14,27,43,.35) 100%); }
+    .hero__signals { justify-content: flex-start; }
+  }
+  @media (max-width: 560px) {
+    .nextcard { width: min(520px, calc(100vw - 5.5rem)); padding: var(--sp-4); }
+    .nextcard__go { right: var(--sp-4); }
+    .hero__ctas .btn { padding-inline: 1rem; }
+  }
+  @media (max-width: 440px) {
+    .hero__signals { gap: var(--sp-4); }
+    .hero__signals > div { width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) { .nextcard { transition: none; } }
 
   /* Services ----------------------------------------------------------- */
   .services { background: var(--avorio); }

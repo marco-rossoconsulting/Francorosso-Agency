@@ -364,6 +364,13 @@ collections:
                   - { label: 'File', name: 'src', widget: 'image', required: false, i18n: duplicate }
                   - { label: 'Testo alternativo', name: 'alt', widget: 'string', required: false }
                   - { label: 'Brief fotografico', name: 'brief', widget: 'text', required: false }
+              - label: 'Immagine verticale per smartphone'
+                name: mobileImage
+                widget: object
+                required: false
+                hint: 'Usare un ritaglio della stessa foto: il testo alternativo dell’immagine principale descrive entrambe.'
+                fields:
+                  - { label: 'File', name: 'src', widget: 'image', required: false, i18n: duplicate }
               - label: 'Pulsante principale'
                 name: primaryCta
                 widget: object
