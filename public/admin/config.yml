@@ -112,7 +112,7 @@ collections:
             widget: list
             field: { label: 'Riga', name: 'row', widget: 'string' }
             i18n: duplicate
-            hint: 'Formato tecnico, es. “Mo-Fr 09:00-12:00”. Serve a Google, non appare sul sito.'
+            hint: 'Formato tecnico, es. “Mo-Fr 08:30-18:00” per orario continuato. Serve a Google, non appare sul sito.'
           - label: 'Social'
             name: social
             widget: list
@@ -1298,7 +1298,7 @@ collections:
     sortable_fields: [order, name]
     fields:
       - { label: 'Nome e cognome', name: 'name', widget: 'string', i18n: duplicate }
-      - { label: 'Ruolo', name: 'role', widget: 'string', i18n: true }
+      - { label: 'Ruolo', name: 'role', widget: 'string', i18n: true, hint: 'Compare nella home e nella pagina Chi siamo; verificare entrambe le lingue.' }
       - { label: 'Ordine', name: 'order', widget: 'number', value_type: int, default: 99, i18n: duplicate }
       - { label: 'Pubblicata sul sito', name: 'published', widget: 'boolean', default: true, i18n: duplicate }
       - { label: 'E-mail', name: 'email', widget: 'string', required: false, i18n: duplicate }

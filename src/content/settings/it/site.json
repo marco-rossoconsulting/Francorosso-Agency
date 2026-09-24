@@ -25,12 +25,12 @@
     "prefillMessage": "Buongiorno Francorosso, vorrei informazioni su un viaggio."
   },
   "openingHours": [
-    { "days": "Lunedì – Venerdì", "hours": "09.00 – 12.00 / 14.00 – 18.00" },
+    { "days": "Lunedì – Venerdì", "hours": "08:30 – 18:00" },
     { "days": "Sabato", "hours": "Su appuntamento" },
     { "days": "Domenica", "hours": "Chiuso" }
   ],
-  "openingHoursNote": "Fuori orario rispondiamo su WhatsApp e per e-mail, di norma entro un giorno lavorativo.",
-  "openingHoursSchema": ["Mo-Fr 09:00-12:00", "Mo-Fr 14:00-18:00"],
+  "openingHoursNote": "Dal lunedì al venerdì siamo aperti con orario continuato. Fuori orario rispondiamo su WhatsApp e per e-mail, di norma entro un giorno lavorativo.",
+  "openingHoursSchema": ["Mo-Fr 08:30-18:00"],
   "social": [
     { "network": "facebook", "label": "Francorosso su Facebook", "href": "https://www.facebook.com/AgenziaFrancorossoLugano" },
     { "network": "instagram", "label": "Francorosso su Instagram", "href": "https://www.instagram.com/francorosso.lugano/" }

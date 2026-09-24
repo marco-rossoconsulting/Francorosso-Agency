@@ -1,6 +1,6 @@
 ---
 name: "Cristina Comolli"
-role: "Consulente di viaggio"
+role: "Senior Travel Consultant"
 order: 2
 email: "c.comolli@francorosso.ch"
 phone: ""
