@@ -2,18 +2,18 @@
   "seo": {
     "title": "Francorosso",
     "description": "Agenzia di viaggi a Lugano. Viaggi su misura, partenze di gruppo accompagnate, biglietteria aerea, assicurazioni e organizzazione di eventi aziendali. Via Canova 19.",
-    "ogImage": "/media/editorial/home-hero-plane-social-1200.jpg"
+    "ogImage": "/media/editorial/francorosso-airplane-wing-sunset-social-1200.jpg"
   },
   "hero": {
     "eyebrow": "Lugano · Agenzia di viaggi",
     "title": "Il viaggio comincia da una conversazione.",
     "lede": "Da Lugano creiamo viaggi su misura, partenze accompagnate e trasferte aziendali. Sempre con una persona che vi segue davvero.",
     "image": {
-      "src": "/media/editorial/home-hero-plane-1600.webp",
-      "alt": "Ala di un aereo con il logo Francorosso sopra un paesaggio al tramonto"
+      "src": "/media/editorial/francorosso-airplane-wing-sunset-1672.webp",
+      "alt": "Ala di un aereo con il logo Francorosso sopra una città al tramonto"
     },
     "mobileImage": {
-      "src": "/media/editorial/home-hero-plane-mobile-720.webp"
+      "src": "/media/editorial/francorosso-airplane-wing-sunset-mobile-720.webp"
     },
     "primaryCta": {
       "label": "Richiedi un preventivo",

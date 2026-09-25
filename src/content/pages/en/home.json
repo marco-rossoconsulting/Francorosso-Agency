@@ -2,18 +2,18 @@
   "seo": {
     "title": "Francorosso",
     "description": "A travel agency in Lugano. Tailor-made journeys, escorted group departures, flight ticketing, insurance and corporate events. Via Canova 19.",
-    "ogImage": "/media/editorial/home-hero-plane-social-1200.jpg"
+    "ogImage": "/media/editorial/francorosso-airplane-wing-sunset-social-1200.jpg"
   },
   "hero": {
     "eyebrow": "Lugano · Travel agency",
     "title": "Every journey begins with a conversation.",
     "lede": "From Lugano, we plan tailor-made journeys, escorted departures and business travel. Always with a real person by your side.",
     "image": {
-      "src": "/media/editorial/home-hero-plane-1600.webp",
-      "alt": "Airplane wing with the Francorosso logo above a sunset landscape"
+      "src": "/media/editorial/francorosso-airplane-wing-sunset-1672.webp",
+      "alt": "Airplane wing with the Francorosso logo above a city at sunset"
     },
     "mobileImage": {
-      "src": "/media/editorial/home-hero-plane-mobile-720.webp"
+      "src": "/media/editorial/francorosso-airplane-wing-sunset-mobile-720.webp"
     },
     "primaryCta": {
       "label": "Request a quote",
