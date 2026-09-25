@@ -149,7 +149,7 @@ un riquadro con il brief al posto dell'immagine, così si vede subito cosa manca
 
 ## Moduli e lead
 
-I moduli usano **Netlify Forms**. Ne esistono quattro, in due lingue:
+I moduli usano **Netlify Forms**. Ne esistono cinque, in due lingue:
 
 | Nome del modulo | Dove | Reparto |
 | --- | --- | --- |
@@ -157,13 +157,20 @@ I moduli usano **Netlify Forms**. Ne esistono quattro, in due lingue:
 | `aziende-mice-it` / `aziende-mice-en` | Aziende e MICE | MICE |
 | `assicurazione-it` / `assicurazione-en` | Assicurazione viaggio | Assicurazioni |
 | `contatti-it` / `contatti-en` | Contatti | Generale |
+| `newsletter-it` / `newsletter-en` | Contatti, sezione Seguici e newsletter | Iscrizioni newsletter |
 
 Dopo il primo deploy, in Netlify → *Forms* si imposta una notifica e-mail per
 ciascuno, verso la casella del reparto giusto. Ogni invio porta con sé i campi
 nascosti `department`, `locale` e `page`, così si sa da dove arriva.
 
-Tutti i moduli hanno honeypot antispam e reindirizzano a `/grazie/` (o
-`/en/thank-you/`).
+Tutti i moduli hanno honeypot antispam. Le richieste reindirizzano a `/grazie/`
+(o `/en/thank-you/`); l'iscrizione newsletter ha una conferma dedicata a
+`/newsletter-grazie/` (o `/en/newsletter-thank-you/`). La newsletter raccoglie
+indirizzo e-mail e consenso in Netlify Forms; non invia ancora e-mail. Quando si
+sceglie un servizio di mailing, esportare gli iscritti dal modulo newsletter o
+collegarlo tramite webhook. Le etichette della sezione si modificano in Sveltia
+CMS → Pagine → Contatti, mentre gli URL social restano in Impostazioni → Agenzia,
+contatti e orari → Social.
 
 ---
 

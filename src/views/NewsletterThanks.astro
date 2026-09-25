@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { path, type Locale } from '../lib/i18n';
+import { pageFor } from '../lib/content';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const page = await pageFor(locale, 'contact');
+const content = (page.sections as any).connect.newsletter;
+---
+<Base locale={locale} routeKey="newsletterThanks" title={content.successTitle} description={content.successBody} noindex>
+  <section class="section success">
+    <div class="shell shell--narrow">
+      <span class="eyebrow">{content.successEyebrow}</span>
+      <h1>{content.successTitle}</h1>
+      <p class="lede">{content.successBody}</p>
+      <a class="link-arrow" href={path(locale, 'contact')}>
+        {content.successBackLabel}
+        <Icon name="arrow" size={16} />
+      </a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .success { min-height: 55vh; display: flex; align-items: center; }
+  .success h1 { max-width: 18ch; }
+  .success .lede { margin-block: var(--sp-5) var(--sp-7); }
+</style>

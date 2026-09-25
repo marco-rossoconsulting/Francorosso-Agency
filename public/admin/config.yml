@@ -949,6 +949,34 @@ collections:
                       - { label: 'Titolo', name: 'title', widget: 'string' }
                       - { label: 'Testo', name: 'body', widget: 'text' }
                       - { label: 'Azione', name: 'action', widget: 'select', i18n: duplicate, options: [phone, whatsapp, email] }
+              - label: 'Seguici e newsletter'
+                name: connect
+                widget: object
+                hint: 'I link ai social si modificano in Impostazioni → Agenzia, contatti e orari → Social.'
+                fields:
+                  - label: 'Seguici'
+                    name: social
+                    widget: object
+                    fields:
+                      - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                      - { label: 'Titolo', name: 'title', widget: 'string' }
+                      - { label: 'Testo', name: 'body', widget: 'text' }
+                  - label: 'Newsletter'
+                    name: newsletter
+                    widget: object
+                    fields:
+                      - { label: 'Occhiello', name: 'eyebrow', widget: 'string' }
+                      - { label: 'Titolo', name: 'title', widget: 'string' }
+                      - { label: 'Testo', name: 'body', widget: 'text' }
+                      - { label: 'Etichetta e-mail', name: 'emailLabel', widget: 'string' }
+                      - { label: 'Segnaposto e-mail', name: 'emailPlaceholder', widget: 'string' }
+                      - { label: 'Pulsante iscrizione', name: 'submitLabel', widget: 'string' }
+                      - { label: 'Consenso newsletter', name: 'consent', widget: 'text' }
+                      - { label: 'Etichetta link privacy', name: 'privacyLabel', widget: 'string' }
+                      - { label: 'Occhiello conferma', name: 'successEyebrow', widget: 'string' }
+                      - { label: 'Titolo conferma', name: 'successTitle', widget: 'string' }
+                      - { label: 'Testo conferma', name: 'successBody', widget: 'text' }
+                      - { label: 'Link ritorno ai contatti', name: 'successBackLabel', widget: 'string' }
               - label: 'Orari'
                 name: hours
                 widget: object
