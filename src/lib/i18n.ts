@@ -20,7 +20,8 @@ export type RouteKey =
   | 'links'
   | 'privacy'
   | 'legal'
-  | 'thanks';
+  | 'thanks'
+  | 'newsletterThanks';
 
 const SLUGS: Record<RouteKey, Record<Locale, string>> = {
   home: { it: '', en: '' },
@@ -35,6 +36,7 @@ const SLUGS: Record<RouteKey, Record<Locale, string>> = {
   privacy: { it: 'privacy', en: 'privacy' },
   legal: { it: 'note-legali', en: 'legal-notice' },
   thanks: { it: 'grazie', en: 'thank-you' },
+  newsletterThanks: { it: 'newsletter-grazie', en: 'newsletter-thank-you' },
 };
 
 /** Absolute, trailing-slashed path for a route key in a given locale. */

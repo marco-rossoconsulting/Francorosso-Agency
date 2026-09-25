@@ -19,6 +19,8 @@ const hrefFor = (action: string) =>
       : `mailto:${s.email}`;
 const labelFor = (action: string) =>
   action === 'phone' ? s.phone : action === 'whatsapp' ? s.whatsapp.number : s.email;
+const socialIcon = (network: string): 'facebook' | 'instagram' | 'linkedin' | 'external' =>
+  network === 'facebook' || network === 'instagram' || network === 'linkedin' ? network : 'external';
 ---
 <Base
   locale={locale}
@@ -45,6 +47,68 @@ const labelFor = (action: string) =>
           </li>
         ))}
       </ul>
+    </div>
+  </section>
+
+  <section class="connect section--tight on-dark">
+    <div class="shell connect__grid">
+      <div class="connect__social" data-reveal>
+        <span class="eyebrow">{S.connect.social.eyebrow}</span>
+        <h2>{S.connect.social.title}</h2>
+        <p>{S.connect.social.body}</p>
+        <ul class="connect__links">
+          {s.social.map((account) => (
+            <li>
+              <a href={account.href} target="_blank" rel="noopener noreferrer" aria-label={account.label}>
+                <Icon name={socialIcon(account.network)} size={21} />
+                <span>{account.network.charAt(0).toUpperCase() + account.network.slice(1)}</span>
+                <Icon name="external" size={13} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="connect__newsletter" data-reveal>
+        <span class="eyebrow">{S.connect.newsletter.eyebrow}</span>
+        <h2>{S.connect.newsletter.title}</h2>
+        <p>{S.connect.newsletter.body}</p>
+        <form
+          class="newsletter"
+          name={`newsletter-${locale}`}
+          method="POST"
+          action={path(locale, 'newsletterThanks')}
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+        >
+          <input type="hidden" name="form-name" value={`newsletter-${locale}`} />
+          <input type="hidden" name="department" value="Newsletter" />
+          <input type="hidden" name="locale" value={locale} />
+          <input type="hidden" name="page" value={Astro.url.pathname} />
+          <p class="newsletter__hp" aria-hidden="true">
+            <label>Do not fill this in <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+          </p>
+          <label class="newsletter__label" for={`newsletter-email-${locale}`}>{S.connect.newsletter.emailLabel}</label>
+          <div class="newsletter__row">
+            <input
+              id={`newsletter-email-${locale}`}
+              name="email"
+              type="email"
+              autocomplete="email"
+              placeholder={S.connect.newsletter.emailPlaceholder}
+              required
+            />
+            <button class="btn" type="submit">
+              {S.connect.newsletter.submitLabel}
+              <Icon name="arrow" size={16} />
+            </button>
+          </div>
+          <label class="newsletter__consent">
+            <input type="checkbox" name="newsletter_consent" value="yes" required />
+            <span>{S.connect.newsletter.consent} <a href={path(locale, 'privacy')}>{S.connect.newsletter.privacyLabel}</a></span>
+          </label>
+        </form>
+      </div>
     </div>
   </section>
 
@@ -132,6 +196,44 @@ const labelFor = (action: string) =>
     word-break: break-word;
   }
   .chan a:hover .chan__value { color: var(--rosso); }
+
+  .connect { position: relative; overflow: hidden; }
+  .connect::before { content: ''; position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--rosso); }
+  .connect__grid { display: grid; gap: var(--sp-7) var(--gutter); }
+  @media (min-width: 860px) {
+    .connect__grid { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(2.5rem, 6vw, 6rem); }
+    .connect__newsletter { padding-left: clamp(2rem, 5vw, 5rem); border-left: 1px solid var(--rule-invert); }
+  }
+  .connect h2 { max-width: 19ch; font-size: var(--step-3); }
+  .connect p { max-width: 48ch; margin-top: var(--sp-4); color: var(--ink-invert-soft); font-size: var(--step--1); }
+  .connect__links { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: var(--sp-6); list-style: none; }
+  .connect__links a {
+    display: inline-flex; align-items: center; gap: var(--sp-3);
+    min-height: 48px; padding: 0.6rem 0.9rem;
+    border: 1px solid var(--rule-invert); border-radius: var(--radius);
+    color: var(--ink-invert); font-size: var(--step--1); font-weight: 600; text-decoration: none;
+    transition: border-color var(--dur-fast) ease, background var(--dur-fast) ease;
+  }
+  .connect__links a:hover { border-color: var(--ink-invert-soft); background: var(--blu-raised); }
+  .connect__links a svg:last-child { color: var(--ink-invert-mute); }
+  .newsletter { margin-top: var(--sp-6); }
+  .newsletter__hp { position: absolute; left: -9999px; opacity: 0; height: 0; overflow: hidden; }
+  .newsletter__label { display: block; margin-bottom: var(--sp-2); font-size: var(--step--1); font-weight: 600; }
+  .newsletter__row { display: flex; gap: var(--sp-2); }
+  .newsletter__row input {
+    flex: 1; min-width: 0; min-height: 48px; padding: 0.75rem 0.9rem;
+    border: 1px solid var(--rule-invert); border-radius: var(--radius);
+    background: var(--bianco); color: var(--ink); font: inherit; font-size: var(--step--1);
+  }
+  .newsletter__row input::placeholder { color: var(--ink-mute); }
+  .newsletter__row .btn { flex: none; }
+  .newsletter__consent { display: flex; align-items: flex-start; gap: var(--sp-3); margin-top: var(--sp-4); max-width: 62ch; color: var(--ink-invert-soft); font-size: var(--step--2); line-height: 1.6; cursor: pointer; }
+  .newsletter__consent input { flex: none; width: 18px; height: 18px; margin: 0.15em 0 0; accent-color: var(--rosso); }
+  .newsletter__consent a { color: var(--ink-invert); }
+  @media (max-width: 580px) {
+    .newsletter__row { flex-direction: column; }
+    .newsletter__row .btn { width: 100%; }
+  }
 
   .info { display: grid; gap: var(--sp-7) var(--gutter); margin-bottom: var(--sp-7); }
   @media (min-width: 780px) { .info { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(2rem, 5vw, 4rem); } }

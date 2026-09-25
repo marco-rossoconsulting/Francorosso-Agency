@@ -16,7 +16,7 @@ export default defineConfig({
       i18n: { defaultLocale: 'it', locales: { it: 'it-CH', en: 'en' } },
       // Pages that carry `noindex` should not be advertised in the sitemap.
       filter: (page) =>
-        !['/grazie/', '/thank-you/', '/privacy/', '/note-legali/', '/legal-notice/'].some((p) =>
+        !['/grazie/', '/thank-you/', '/newsletter-grazie/', '/newsletter-thank-you/', '/privacy/', '/note-legali/', '/legal-notice/'].some((p) =>
           page.endsWith(p),
         ),
     }),

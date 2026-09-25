@@ -1,6 +1,6 @@
 ---
 title: "Informativa sulla protezione dei dati"
-updated: "2026-09-22"
+updated: "2026-09-25"
 seo:
   title: "Privacy"
   description: "Come Francorosso SA tratta i dati personali raccolti tramite il sito francorosso.ch, ai sensi della Legge federale sulla protezione dei dati."
@@ -15,7 +15,7 @@ E-mail: francorosso@francorosso.ch — Telefono: +41 91 923 60 92.
 
 ## Quali dati raccogliamo
 
-Raccogliamo i dati che ci fornite volontariamente compilando i moduli di questo sito: nome e cognome, indirizzo e-mail, numero di telefono e le informazioni relative al viaggio che ci descrivete. Non sono richiesti dati sensibili e vi invitiamo a non inserirne nei campi liberi.
+Raccogliamo i dati che ci fornite volontariamente compilando i moduli di questo sito: nome e cognome, indirizzo e-mail, numero di telefono e le informazioni relative al viaggio che ci descrivete. Se vi iscrivete alla newsletter, raccogliamo il vostro indirizzo e-mail e la conferma del consenso all'invio di comunicazioni su viaggi, offerte e novità dell'agenzia. Non sono richiesti dati sensibili e vi invitiamo a non inserirne nei campi liberi.
 
 Il sito non utilizza cookie di profilazione né strumenti di tracciamento pubblicitario. La mappa presente nella pagina Contatti è fornita da Google Maps e viene caricata solo quando la aprite.
 
@@ -25,6 +25,7 @@ Utilizziamo i vostri dati esclusivamente per:
 
 - rispondere alla vostra richiesta e preparare un preventivo;
 - gestire il rapporto contrattuale se decidete di prenotare;
+- inviare la newsletter, solo a chi ha scelto di iscriversi;
 - adempiere agli obblighi di legge, in particolare contabili e fiscali.
 
 La base giuridica è il vostro consenso, l'esecuzione di un contratto o di misure precontrattuali, e l'adempimento di obblighi legali.
@@ -39,7 +40,7 @@ Conserviamo le richieste non seguite da prenotazione per un periodo limitato, e 
 
 ## I vostri diritti
 
-Potete chiedere in qualsiasi momento di accedere ai vostri dati, di farli correggere, cancellare o di opporvi al loro trattamento, scrivendo a francorosso@francorosso.ch. Avete inoltre il diritto di rivolgervi all'Incaricato federale della protezione dei dati e della trasparenza (IFPDT).
+Potete chiedere in qualsiasi momento di accedere ai vostri dati, di farli correggere, cancellare o di opporvi al loro trattamento, scrivendo a francorosso@francorosso.ch. Potete anche revocare l'iscrizione alla newsletter scrivendo allo stesso indirizzo. Avete inoltre il diritto di rivolgervi all'Incaricato federale della protezione dei dati e della trasparenza (IFPDT).
 
 ## Sicurezza
 
