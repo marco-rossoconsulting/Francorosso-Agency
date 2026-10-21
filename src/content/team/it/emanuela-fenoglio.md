@@ -13,4 +13,4 @@ photo:
 published: true
 ---
 
-Tiene in ordine la parte amministrativa: conferme, acconti, fatture e documenti di viaggio.
+Responsabile della gestione amministrativa.

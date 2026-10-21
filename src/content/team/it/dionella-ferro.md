@@ -13,4 +13,4 @@ photo:
 published: true
 ---
 
-Si occupa della contabilità dell'agenzia e dei pagamenti verso i fornitori.
+Gestisce la contabilità ordinaria e la fatturazione. Di supporto al responsabile amministrativo.
