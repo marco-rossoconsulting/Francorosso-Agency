@@ -13,4 +13,4 @@ photo:
 published: true
 ---
 
-Keeps the administrative side in order: confirmations, deposits, invoices and travel documents.
+Responsible for the agency's administrative management.

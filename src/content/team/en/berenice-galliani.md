@@ -13,4 +13,4 @@ photo:
 published: true
 ---
 
-Runs the agency and personally handles tailor-made journeys and corporate clients. She is the reference point when a request has more moving parts than usual.
+Leading the agency since March 2026, she brings almost thirty years of experience in tourism and a strongly international outlook, shaped in part by a period living in Australia. She sets the commercial strategy and coordinates a team of senior consultants, overseeing both the Business and Leisure divisions while personally looking after business travel and tailor-made journeys.
