@@ -1,6 +1,6 @@
 ---
 name: "Dionella Ferro"
-role: "Accounts"
+role: "Accounting"
 order: 6
 email: "d.ferro@francorosso.ch"
 phone: ""
@@ -13,4 +13,4 @@ photo:
 published: true
 ---
 
-Looks after the agency's accounts and payments to suppliers.
+Handles day-to-day accounting and invoicing, and supports the administration manager.

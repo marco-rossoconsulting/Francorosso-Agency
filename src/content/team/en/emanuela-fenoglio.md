@@ -1,6 +1,6 @@
 ---
 name: "Emanuela Fenoglio"
-role: "Administration Manager"
+role: "Administrative Manager"
 order: 5
 email: "e.fenoglio@francorosso.ch"
 phone: ""
@@ -13,4 +13,4 @@ photo:
 published: true
 ---
 
-Keeps the administrative side in order: confirmations, deposits, invoices and travel documents.
+Responsible for the agency's administrative management.

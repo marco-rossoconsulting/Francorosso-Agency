@@ -1,6 +1,6 @@
 ---
 name: "Dionella Ferro"
-role: "Contabilità"
+role: "Accounting"
 order: 6
 email: "d.ferro@francorosso.ch"
 phone: ""
@@ -13,4 +13,4 @@ photo:
 published: true
 ---
 
-Si occupa della contabilità dell'agenzia e dei pagamenti verso i fornitori.
+Gestisce la contabilità ordinaria e la fatturazione. Di supporto al responsabile amministrativo.

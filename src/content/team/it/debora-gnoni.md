@@ -13,4 +13,4 @@ photo:
 published: true
 ---
 
-Costruisce itinerari individuali e combinazioni hotel, volo e tour. È la persona a cui rivolgersi per i viaggi che hanno una data importante dietro.
+Specialista nella progettazione e gestione completa di viaggi leisure complessi e su misura. Cura ogni fase della prenotazione, dalla ricerca delle soluzioni ideali alla pianificazione strategica degli itinerari e dei servizi integrativi. Grazie a una consolidata esperienza nel settore, garantisce ai clienti un'assistenza esclusiva, precisa e altamente personalizzata, trasformando ogni viaggio in un'esperienza d'eccellenza.

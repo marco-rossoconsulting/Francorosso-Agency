@@ -1,6 +1,6 @@
 ---
 name: "Emanuela Fenoglio"
-role: "Responsabile amministrativa"
+role: "Administrative Manager"
 order: 5
 email: "e.fenoglio@francorosso.ch"
 phone: ""
@@ -13,4 +13,4 @@ photo:
 published: true
 ---
 
-Tiene in ordine la parte amministrativa: conferme, acconti, fatture e documenti di viaggio.
+Responsabile della gestione amministrativa.

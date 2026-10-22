@@ -13,4 +13,4 @@ photo:
 published: true
 ---
 
-Si occupa di viaggi individuali, biglietteria e pacchetti combinati. Conosce bene le pratiche che nessuno ha voglia di seguire: cambi, riprotezioni, rimborsi.
+Con oltre 35 anni di esperienza, progetta itinerari complessi e soluzioni di viaggio tailor-made dove ogni dettaglio fa la differenza. “Un viaggio su misura non si sceglie da un catalogo. Si ascolta, si disegna, si crea”
