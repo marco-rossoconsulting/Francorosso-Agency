@@ -13,4 +13,4 @@ photo:
 published: true
 ---
 
-With more than 35 years of experience, I design complex itineraries and tailor-made travel solutions where every detail makes the difference. “A tailor-made journey isn't chosen from a catalogue. It is listened to, designed and created.”
+With more than 35 years of experience, she designs complex itineraries and tailor-made travel solutions where every detail makes the difference. “A tailor-made journey isn't chosen from a catalogue. It is listened to, designed and created.”
