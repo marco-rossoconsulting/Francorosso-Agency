@@ -1,6 +1,6 @@
 ---
 name: "Dionella Ferro"
-role: "Contabilità"
+role: "Accounting"
 order: 6
 email: "d.ferro@francorosso.ch"
 phone: ""

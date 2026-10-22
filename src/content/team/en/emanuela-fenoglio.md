@@ -1,6 +1,6 @@
 ---
 name: "Emanuela Fenoglio"
-role: "Administration Manager"
+role: "Administrative Manager"
 order: 5
 email: "e.fenoglio@francorosso.ch"
 phone: ""

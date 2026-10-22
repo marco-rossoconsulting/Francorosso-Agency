@@ -1,6 +1,6 @@
 ---
 name: "Berenice Galliani"
-role: "Direttrice dell'agenzia"
+role: "Travel Agency Manager"
 order: 1
 email: "b.galliani@francorosso.ch"
 phone: ""

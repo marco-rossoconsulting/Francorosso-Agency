@@ -1,6 +1,6 @@
 ---
 name: "Nadia Cominetti"
-role: "Groups & MICE Travel Consultant"
+role: "Group Tour & MICE Specialist"
 order: 4
 email: "n.cominetti@francorosso.ch"
 phone: "+41 76 623 93 40"
@@ -13,4 +13,4 @@ photo:
 published: true
 ---
 
-Handles the agency's own group departures and the whole MICE department: meetings, incentives, conventions and corporate events, from the first brief to the final report.
+With a background in tour operating specialising in Southern Africa, and a particular love for Namibia, she runs the agency's group tours and also accompanies them as tour leader. She heads the MICE department, focusing on team building and incentive travel, and contributes to the agency's marketing, from growth strategy to social media content.
